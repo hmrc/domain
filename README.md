@@ -3,24 +3,24 @@ domain
 
 Micro-library for typing and validating UK tax identifiers.
 
-### Identifiers
+#### Identifier Types
 
 Types are provided for many common tax identifiers, such as:
 
-* [Employment Reference](src/main/scala/uk/gov/hmrc/domain/EmpRef.scala)
-* [National Insurance Number](src/main/scala/uk/gov/hmrc/domain/Nino.scala)
-* Unique Taxpayer References - [Self Assessment](src/main/scala/uk/gov/hmrc/domain/SaUtr.scala), 
+* [Employment Reference (EmpRef)](src/main/scala/uk/gov/hmrc/domain/EmpRef.scala)
+* [National Insurance Number (NINO)](src/main/scala/uk/gov/hmrc/domain/Nino.scala)
+* Unique Taxpayer References (UTR) - [Self Assessment](src/main/scala/uk/gov/hmrc/domain/SaUtr.scala), 
 [Corporation Tax](src/main/scala/uk/gov/hmrc/domain/CtUtr.scala)
-* [Unique Agent Reference](src/main/scala/uk/gov/hmrc/domain/Uar.scala)
-* [Vehicle Registration Number](src/main/scala/uk/gov/hmrc/domain/Vrn.scala)
+* [Unique Agent Reference (UAR)](src/main/scala/uk/gov/hmrc/domain/Uar.scala)
+* [Vehicle Registration Number (VRN)](src/main/scala/uk/gov/hmrc/domain/Vrn.scala)
 * Agents - [Code](src/main/scala/uk/gov/hmrc/domain/AgentCode.scala), 
 [UserId](src/main/scala/uk/gov/hmrc/domain/AgentUserId.scala), 
 [PAYE Reference](src/main/scala/uk/gov/hmrc/domain/PayeAgentReference.scala)
 
-`Reads` and `Writes` have been provided for Play's JSON library for all identifiers, and format validation is present for 
-some.
+#### JSON handling
 
-JSON objects with tax identifiers as properties can be serialized or deserialized to a 
+`Reads` and `Writes` have been provided for Play's JSON library for all identifiers, and format validation is present for 
+some. JSON objects with multiple tax identifiers as properties can be serialized or deserialized to a 
 [TaxIds](src/main/scala/uk/gov/hmrc/domain/taxIds.scala):
 
 ```scala
