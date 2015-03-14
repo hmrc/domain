@@ -1,14 +1,10 @@
-import de.heikoseeberger.sbtheader.SbtHeader.autoImport._
 import sbt._
 import Keys._
 
 object HmrcBuild extends Build {
 
-  import uk.gov.hmrc.HmrcResolvers._
   import uk.gov.hmrc.PublishingSettings._
-  import uk.gov.hmrc.NexusPublishing._
   import uk.gov.hmrc.DefaultBuildSettings
-  import scala.util.Properties.envOrElse
   import DefaultBuildSettings._
   import uk.gov.hmrc.{SbtBuildInfo, ShellPrompt}
 
@@ -28,7 +24,7 @@ object HmrcBuild extends Build {
       targetJvm := "jvm-1.7",
       shellPrompt := ShellPrompt(appVersion),
       libraryDependencies ++= appDependencies,
-      crossScalaVersions := Seq("2.11.5"),
+      crossScalaVersions := Seq("2.11.6"),
       resolvers := Seq(
         Opts.resolver.sonatypeReleases,
         Opts.resolver.sonatypeSnapshots,
@@ -37,7 +33,6 @@ object HmrcBuild extends Build {
       )
     )
     .settings(publishAllArtefacts: _*)
-    .settings(nexusPublishingSettings: _*)
     .settings(SbtBuildInfo(): _*)
     .settings(SonatypeBuild(): _*)
     .settings(Headers(): _ *)
@@ -46,11 +41,11 @@ object HmrcBuild extends Build {
 object Dependencies {
 
   object Compile {
-    val playJson = "com.typesafe.play" %% "play-json" % "2.3.7" % "provided"
+    val playJson = "com.typesafe.play" %% "play-json" % "2.3.8" % "provided"
   }
 
   sealed abstract class Test(scope: String) {
-    val scalaTest = "org.scalatest" %% "scalatest" % "2.2.1" % scope
+    val scalaTest = "org.scalatest" %% "scalatest" % "2.2.4" % scope
     val pegdown = "org.pegdown" % "pegdown" % "1.4.2" % scope
   }
 
@@ -75,9 +70,9 @@ object SonatypeBuild {
           </license>
         </licenses>
           <scm>
-            <connection>scm:git@github.tools.tax.service.gov.uk:HMRC/play-microservice.git</connection>
-            <developerConnection>scm:git@github.tools.tax.service.gov.uk:HMRC/play-microservice.git</developerConnection>
-            <url>git@github.tools.tax.service.gov.uk:HMRC/play-microservice.git</url>
+            <connection>scm:git@github.tools.tax.service.gov.uk:HMRC/domain.git</connection>
+            <developerConnection>scm:git@github.tools.tax.service.gov.uk:HMRC/domain.git</developerConnection>
+            <url>git@github.tools.tax.service.gov.uk:HMRC/domain.git</url>
           </scm>
           <developers>
             <developer>
@@ -93,11 +88,6 @@ object SonatypeBuild {
             <developer>
               <id>xnejp03</id>
               <name>Petr Nejedly</name>
-              <url>http://www.equalexperts.com</url>
-            </developer>
-            <developer>
-              <id>alvarovilaplana</id>
-              <name>Alvaro Vilaplana</name>
               <url>http://www.equalexperts.com</url>
             </developer>
             <developer>
