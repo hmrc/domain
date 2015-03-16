@@ -45,5 +45,7 @@ taxIds.ctUtr // None
 
 Add the following to your SBT build:
 ```scala
-libraryDependencies += "uk.gov.hmrc" % "domain" % "2.0.0"
+resolvers += Resolver.bintrayRepo("hmrc", "releases")
+
+libraryDependencies += "uk.gov.hmrc" % "domain" % "2.6.0"
 ```
