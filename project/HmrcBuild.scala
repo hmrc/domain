@@ -8,7 +8,7 @@ object HmrcBuild extends Build {
   import DefaultBuildSettings._
   import uk.gov.hmrc.{SbtBuildInfo, ShellPrompt}
 
-  val appVersion = "2.6.0-SNAPSHOT"
+  val appVersion = "2.6.0"
 
   val appDependencies = Seq(
     Dependencies.Compile.playJson,
@@ -34,7 +34,7 @@ object HmrcBuild extends Build {
     )
     .settings(publishAllArtefacts: _*)
     .settings(SbtBuildInfo(): _*)
-    .settings(SonatypeBuild(): _*)
+    .settings(POMMetadata(): _*)
     .settings(Headers(): _ *)
 }
 
@@ -55,12 +55,9 @@ object Dependencies {
 
 }
 
-object SonatypeBuild {
-
-  import xerial.sbt.Sonatype._
+object POMMetadata {
 
   def apply() = {
-    sonatypeSettings ++ Seq(
       pomExtra := {
         <url>https://www.gov.uk/government/organisations/hm-revenue-customs</url>
         <licenses>
