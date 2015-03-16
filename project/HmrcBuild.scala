@@ -58,7 +58,7 @@ object Dependencies {
 object POMMetadata {
 
   def apply() = {
-      pomExtra := {
+      pomExtra :=
         <url>https://www.gov.uk/government/organisations/hm-revenue-customs</url>
         <licenses>
           <license>
@@ -103,8 +103,6 @@ object POMMetadata {
               <url>http://www.zuhlke.co.uk</url>
             </developer>
           </developers>
-      }
-    )
   }
 }
 
