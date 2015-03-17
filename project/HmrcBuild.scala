@@ -95,10 +95,9 @@ object Headers {
 
   import de.heikoseeberger.sbtheader.SbtHeader.autoImport._
   import de.heikoseeberger.sbtheader.license.Apache2_0
+  import de.heikoseeberger.sbtheader.SbtHeader
 
   def apply() = Seq(
-    headers := Map("scala" -> Apache2_0("2015", "HM Revenue & Customs")),
-    (compile in Compile) <<= (compile in Compile) dependsOn (createHeaders in Compile),
-    (compile in Test) <<= (compile in Test) dependsOn (createHeaders in Test)
-  )
+    headers := Map("scala" -> Apache2_0("2015", "HM Revenue & Customs"))
+  ) ++ SbtHeader.automate(Compile, Test)
 }
