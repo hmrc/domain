@@ -67,9 +67,9 @@ object POMMetadata {
           </license>
         </licenses>
           <scm>
-            <connection>scm:git@github.tools.tax.service.gov.uk:HMRC/domain.git</connection>
-            <developerConnection>scm:git@github.tools.tax.service.gov.uk:HMRC/domain.git</developerConnection>
-            <url>git@github.tools.tax.service.gov.uk:HMRC/domain.git</url>
+            <connection>scm:git@github.com:hmrc/domain.git</connection>
+            <developerConnection>scm:git@github.com:hmrc/domain.git</developerConnection>
+            <url>git@github.com:hmrc/domain.git</url>
           </scm>
           <developers>
             <developer>
@@ -78,23 +78,8 @@ object POMMetadata {
               <url>http://www.equalexperts.com</url>
             </developer>
             <developer>
-              <id>jakobgrunig</id>
-              <name>Jakob Grunig</name>
-              <url>http://www.equalexperts.com</url>
-            </developer>
-            <developer>
               <id>xnejp03</id>
               <name>Petr Nejedly</name>
-              <url>http://www.equalexperts.com</url>
-            </developer>
-            <developer>
-              <id>vaughansharman</id>
-              <name>Vaughan Sharman</name>
-              <url>http://www.equalexperts.com</url>
-            </developer>
-            <developer>
-              <id>davesammut</id>
-              <name>Dave Sammut</name>
               <url>http://www.equalexperts.com</url>
             </developer>
             <developer>
