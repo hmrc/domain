@@ -8,7 +8,7 @@ object HmrcBuild extends Build {
   import DefaultBuildSettings._
   import uk.gov.hmrc.{SbtBuildInfo, ShellPrompt}
 
-  val appVersion = "2.7.0-SNAPSHOT"
+  val appVersion = "2.7.0"
 
   val appDependencies = Seq(
     Dependencies.Compile.playJson,
