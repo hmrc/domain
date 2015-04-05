@@ -1,5 +1,6 @@
 domain
 ======
+[![Build Status](https://travis-ci.org/hmrc/domain.svg)](https://travis-ci.org/hmrc/domain) [ ![Download](https://api.bintray.com/packages/hmrc/releases/domain/images/download.svg) ](https://bintray.com/hmrc/releases/domain/_latestVersion)
 
 Micro-library for typing and validating UK tax identifiers.
 
