@@ -48,5 +48,5 @@ Add the following to your SBT build:
 ```scala
 resolvers += Resolver.bintrayRepo("hmrc", "releases")
 
-libraryDependencies += "uk.gov.hmrc" % "domain" % "2.6.0"
+libraryDependencies += "uk.gov.hmrc" % "domain" % "x.x.x"
 ```
