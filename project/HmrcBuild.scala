@@ -24,7 +24,7 @@ object HmrcBuild extends Build {
   import uk.gov.hmrc.{SbtBuildInfo, ShellPrompt}
   import de.heikoseeberger.sbtheader.AutomateHeaderPlugin
 
-  val appVersion = "2.8.0-SNAPSHOT"
+  val appVersion = "2.8.1-SNAPSHOT"
 
   val appDependencies = Seq(
     Dependencies.Compile.playJson,
