@@ -18,13 +18,13 @@ package uk.gov.hmrc.domain
 
 import play.api.libs.json.{Reads, Writes}
 
-case class Nino(nino: String) extends TaxIdentifier with SimpleName {
-  require(Nino.isValid(nino), s"$nino is not a valid nino.")
-  override lazy val toString = nino
+case class Nino(override val value: String) extends TaxIdentifier with SimpleName {
+  require(Nino.isValid(value), s"$value is not a valid nino.")
+  override lazy val toString = value
 
-  def value = nino
+  override val name = "nino"
 
-  val name = "nino"
+  def formatted = value.grouped(2).mkString(" ")
 }
 
 object Nino {
@@ -37,4 +37,6 @@ object Nino {
   private def hasValidPrefix(nino: String) = invalidPrefixes.find(nino.startsWith).isEmpty
 
   def isValid(nino: String) = nino != null && hasValidPrefix(nino) && nino.matches(validNinoFormat)
+
+
 }

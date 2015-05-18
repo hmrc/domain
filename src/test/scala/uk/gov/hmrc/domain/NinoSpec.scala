@@ -66,5 +66,11 @@ class NinoSpec extends WordSpec with Matchers {
     }
   }
 
+  "Formatting a Nino" should {
+    "produce a formatted nino" in {
+      Nino("CS100700A").formatted shouldBe "CS 10 07 00 A"
+    }
+  }
+
   def validateNino(nino: String) = Nino.isValid(nino)
 }
