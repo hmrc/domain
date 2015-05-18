@@ -24,7 +24,7 @@ case class Nino(nino: String) extends TaxIdentifier with SimpleName {
 
   def value = nino
 
-  override val name = "nino"
+  val name = "nino"
 
   def formatted = value.grouped(2).mkString(" ")
 }
