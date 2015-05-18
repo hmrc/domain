@@ -18,9 +18,11 @@ package uk.gov.hmrc.domain
 
 import play.api.libs.json.{Reads, Writes}
 
-case class Nino(override val value: String) extends TaxIdentifier with SimpleName {
+case class Nino(nino: String) extends TaxIdentifier with SimpleName {
   require(Nino.isValid(value), s"$value is not a valid nino.")
   override lazy val toString = value
+
+  def value = nino
 
   override val name = "nino"
 
