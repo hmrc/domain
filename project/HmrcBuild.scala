@@ -13,18 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import sbt.Keys._
 import sbt._
-import Keys._
 
 object HmrcBuild extends Build {
 
-  import uk.gov.hmrc.PublishingSettings._
-  import uk.gov.hmrc.DefaultBuildSettings
-  import DefaultBuildSettings._
-  import uk.gov.hmrc.{SbtBuildInfo, ShellPrompt}
-  import de.heikoseeberger.sbtheader.AutomateHeaderPlugin
-
-  val appVersion = "2.9.0-SNAPSHOT"
+  import uk.gov.hmrc.DefaultBuildSettings._
+  import uk.gov.hmrc.SbtAutoBuildPlugin
+  import uk.gov.hmrc.versioning.SbtGitVersioning
 
   val appDependencies = Seq(
     Dependencies.Compile.playJson,
@@ -33,26 +29,16 @@ object HmrcBuild extends Build {
   )
 
   lazy val domain = (project in file("."))
-    .enablePlugins(AutomateHeaderPlugin)
-    .settings(version := appVersion)
-    .settings(scalaSettings : _*)
-    .settings(defaultSettings() : _*)
+    .enablePlugins(SbtAutoBuildPlugin, SbtGitVersioning)
     .settings(
       targetJvm := "jvm-1.7",
-      shellPrompt := ShellPrompt(appVersion),
       libraryDependencies ++= appDependencies,
       crossScalaVersions := Seq("2.11.6"),
       resolvers := Seq(
-        Opts.resolver.sonatypeReleases,
-        Opts.resolver.sonatypeSnapshots,
-        "typesafe-releases" at "http://repo.typesafe.com/typesafe/releases/",
-        "typesafe-snapshots" at "http://repo.typesafe.com/typesafe/snapshots/"
+        Resolver.bintrayRepo("hmrc", "releases"),
+        "typesafe-releases" at "http://repo.typesafe.com/typesafe/releases/"
       )
     )
-    .settings(publishAllArtefacts: _*)
-    .settings(SbtBuildInfo(): _*)
-    .settings(POMMetadata(): _*)
-    .settings(HeaderSettings())
 }
 
 object Dependencies {
@@ -70,48 +56,4 @@ object Dependencies {
 
   object IntegrationTest extends Test("it")
 
-}
-
-object POMMetadata {
-
-  def apply() = {
-      pomExtra :=
-        <url>https://www.gov.uk/government/organisations/hm-revenue-customs</url>
-        <licenses>
-          <license>
-            <name>Apache 2</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-          </license>
-        </licenses>
-          <scm>
-            <connection>scm:git@github.com:hmrc/domain.git</connection>
-            <developerConnection>scm:git@github.com:hmrc/domain.git</developerConnection>
-            <url>git@github.com:hmrc/domain.git</url>
-          </scm>
-          <developers>
-            <developer>
-              <id>duncancrawford</id>
-              <name>Duncan Crawford</name>
-              <url>http://www.equalexperts.com</url>
-            </developer>
-            <developer>
-              <id>xnejp03</id>
-              <name>Petr Nejedly</name>
-              <url>http://www.equalexperts.com</url>
-            </developer>
-            <developer>
-              <id>howyp</id>
-              <name>Howard Perrin</name>
-              <url>http://www.zuhlke.co.uk</url>
-            </developer>
-          </developers>
-  }
-}
-
-object HeaderSettings {
-
-  import de.heikoseeberger.sbtheader.HeaderPlugin.autoImport._
-  import de.heikoseeberger.sbtheader.license.Apache2_0
-
-  def apply() = headers := Map("scala" -> Apache2_0("2015", "HM Revenue & Customs"))
 }
