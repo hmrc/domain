@@ -44,7 +44,7 @@ object HmrcBuild extends Build {
 object Dependencies {
 
   object Compile {
-    val playJson = "com.typesafe.play" %% "play-json" % "2.3.8" % "provided"
+    val playJson = "com.typesafe.play" %% "play-json" % "2.3.9" % "provided"
   }
 
   sealed abstract class Test(scope: String) {

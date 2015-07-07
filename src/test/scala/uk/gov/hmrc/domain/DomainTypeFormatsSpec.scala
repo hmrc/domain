@@ -66,6 +66,21 @@ class DomainTypeFormatsSpec extends WordSpec with Matchers {
     }
   }
 
+  "AtedUtr reader" should {
+
+    "be able to read obsolete AtedUtr structure from Mongo" in {
+      val dbStructure = JsObject(Seq("utr" -> JsString("12345")))
+      val result = AtedUtr.atedUtrRead.reads(dbStructure)
+      result.get shouldBe AtedUtr("12345")
+    }
+
+    "be able to read string representation of AtedUtr" in {
+      val restStructure = JsString("12345")
+      val result = AtedUtr.atedUtrRead.reads(restStructure)
+      result.get shouldBe AtedUtr("12345")
+    }
+  }
+
   "Uar reader" should {
 
     "be able to read obsolete Uar structure from Mongo" in {
