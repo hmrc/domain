@@ -26,8 +26,32 @@ class AtedUtrSpec extends WordSpec with Matchers {
       AtedUtr.isValid("JARN1234567") should equal(true)
     }
 
-    "fail with empty string" in {
+    "fail with an empty string" in {
       AtedUtr.isValid("") should equal(false)
+    }
+
+    "fail when chars 1-4 are not alpha" in {
+
+    }
+
+    "fail when it does not start with 4 alphas" in {
+
+    }
+
+    "fail when the last 7 chars are not digits" in {
+
+    }
+
+    "fail when it does not end in 7 digits" in {
+
+    }
+
+    "fail when chars 2-4 are not ARN" in {
+      AtedUtr.isValid("JBBC1234567") should equal(true)
+    }
+
+    "fail when the check character at pos 1 is incorrect" in {
+
     }
   }
 

@@ -28,5 +28,5 @@ object AtedUtr {
   implicit val atedUtrWrite: Writes[AtedUtr] = new SimpleObjectWrites[AtedUtr](_.value)
   implicit val atedUtrRead: Reads[AtedUtr] = new SimpleObjectReads[AtedUtr]("utr", AtedUtr.apply)
 
-  def isValid(utr: String) = true
+  def isValid(utr: String) = !utr.isEmpty
 }
