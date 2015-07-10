@@ -16,17 +16,21 @@
 
 package uk.gov.hmrc.domain
 
-import play.api.libs.json.{Reads, Writes}
+import org.scalatest.{Matchers, WordSpec}
 
-case class AtedUtr(utr: String) extends TaxIdentifier with SimpleName {
-  override lazy val toString = utr
-  val name = "atedutr"
-  def value = utr
-}
+class AtedUtrSpec extends WordSpec with Matchers {
 
-object AtedUtr {
-  implicit val atedUtrWrite: Writes[AtedUtr] = new SimpleObjectWrites[AtedUtr](_.value)
-  implicit val atedUtrRead: Reads[AtedUtr] = new SimpleObjectReads[AtedUtr]("utr", AtedUtr.apply)
+  "validation" should {
 
-  def isValid(utr: String) = true
+    "pass with valid format and check digit" in {
+      AtedUtr.isValid("JARN1234567") should equal(true)
+    }
+
+    "fail with empty string" in {
+      AtedUtr.isValid("") should equal(false)
+    }
+  }
+
+
+
 }
