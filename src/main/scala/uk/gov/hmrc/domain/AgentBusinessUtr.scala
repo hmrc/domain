@@ -37,15 +37,16 @@ object AgentBusinessUtr {
   private val checkString = "ABCDEFGHXJKLMNYPQRSTZVW"
   private val mod = 23
   private val weights = List(9, 10, 11, 12, 13, 8, 7, 6, 5, 4)
+  private val offset = 1
 
   private def getCheckCharacter(utr: String): Char = {
-    var sum = weights.zipWithIndex.collect {
+    val sum = weights.zipWithIndex.collect {
       case (weight, index)  => {
-        val char = utr.charAt(index+1)
+        val char = utr.charAt(index + offset)
         if(char.isLetter) {
-          weight * (utr.charAt(index+1).asDigit + mod)
+          weight * (utr.charAt(index + offset).asDigit + mod)
         } else {
-          weight * utr.charAt(index+1).asDigit
+          weight * utr.charAt(index + offset).asDigit
         }
       }
     }.sum

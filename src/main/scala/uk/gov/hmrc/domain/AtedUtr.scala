@@ -39,7 +39,7 @@ object AtedUtr {
   private val weights = List(9, 10, 11, 12, 13, 8, 7, 6, 5, 4, 3, 2, 1)
 
   private def getCheckCharacter(utr: String): Char = {
-    var sum = weights.zipWithIndex.collect {
+    val sum = weights.zipWithIndex.collect {
       case (weight, index)  => weight * utr.charAt(index+2).asDigit
     }.sum
     checkString.charAt(sum % mod)
