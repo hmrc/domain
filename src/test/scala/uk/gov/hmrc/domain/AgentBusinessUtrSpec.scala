@@ -18,40 +18,42 @@ package uk.gov.hmrc.domain
 
 import org.scalatest.{Matchers, WordSpec}
 
-class AtedUtrSpec extends WordSpec with Matchers {
+class AgentBusinessUtrSpec extends WordSpec with Matchers {
 
   "validation" should {
 
     "pass with valid format and check digit" in {
-      AtedUtr.isValid("JARN1234567") should equal(true)
+      AgentBusinessUtr.isValid("JARN1234567") should equal(true)
     }
 
     "fail with an empty string" in {
-      AtedUtr.isValid("") should equal(false)
+      AgentBusinessUtr.isValid("") should equal(false)
     }
 
     "fail when chars 1-4 are not alpha" in {
-
+      AgentBusinessUtr.isValid("1ARN1234567") should equal(false)
+      AgentBusinessUtr.isValid("11RN1234567") should equal(false)
+      AgentBusinessUtr.isValid("111N1234567") should equal(false)
     }
 
     "fail when it does not start with 4 alphas" in {
-
+      AgentBusinessUtr.isValid("") should equal(false)
     }
 
     "fail when the last 7 chars are not digits" in {
-
+      AgentBusinessUtr.isValid("") should equal(false)
     }
 
     "fail when it does not end in 7 digits" in {
-
+      AgentBusinessUtr.isValid("") should equal(false)
     }
 
     "fail when chars 2-4 are not ARN" in {
-      AtedUtr.isValid("JBBC1234567") should equal(true)
+      AgentBusinessUtr.isValid("JBBC1234567") should equal(false)
     }
 
     "fail when the check character at pos 1 is incorrect" in {
-
+      AgentBusinessUtr.isValid("BARN1234567") should equal(false)
     }
   }
 
