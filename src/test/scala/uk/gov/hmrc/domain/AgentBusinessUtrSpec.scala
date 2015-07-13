@@ -57,6 +57,4 @@ class AgentBusinessUtrSpec extends WordSpec with Matchers {
     }
   }
 
-
-
 }
