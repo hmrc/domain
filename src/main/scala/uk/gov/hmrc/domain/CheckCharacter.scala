@@ -24,16 +24,12 @@ trait CheckCharacter {
 
   protected def getCheckCharacter(utr: String, offset: Int): Char = {
     val sum = weights.zipWithIndex.collect {
-      case (weight, index)  => {
-        if (index + offset < utr.length) {
-          val char = utr.charAt(index + offset)
-          if (char.isLetter) {
-            weight * (char.asDigit + mod)
-          } else {
-            weight * char.asDigit
-          }
+      case (weight, index) if (index + offset < utr.length) => {
+        val char = utr.charAt(index + offset)
+        if (char.isLetter) {
+          weight * (char.asDigit + mod)
         } else {
-          0
+          weight * char.asDigit
         }
       }
     }.sum
