@@ -15,7 +15,7 @@
  */
 
 package uk.gov.hmrc.domain
-`
+
 import play.api.libs.json.{Reads, Writes}
 
 case class AgentBusinessUtr(value: String) extends TaxIdentifier {
@@ -35,14 +35,18 @@ object AgentBusinessUtr {
   private val checkString = "ABCDEFGHXJKLMNYPQRSTZVW"
   private val mod = 23
   private val weights = List(9, 10, 11, 12, 13, 8, 7, 6, 5, 4)
+
   private def getCheckCharacter(utr: String): Char = {
     var sum = weights.zipWithIndex.collect {
-      case (weight, index) if index < 5 => {
-        weight * utr.charAt(index).asDigit
+      case (weight, index)  => {
+        if(index < 5) {
+          weight * (utr.charAt(index+1).asDigit + mod)
+        } else {
+          weight * utr.charAt(index+1).asDigit
+        }
       }
     }.sum
-    val mod = sum % 23
-    checkString.charAt(mod)
+    checkString.charAt(sum % mod)
   }
 
 }
