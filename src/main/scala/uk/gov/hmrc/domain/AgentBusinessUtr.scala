@@ -41,7 +41,8 @@ object AgentBusinessUtr {
   private def getCheckCharacter(utr: String): Char = {
     var sum = weights.zipWithIndex.collect {
       case (weight, index)  => {
-        if(index < 5) {
+        val char = utr.charAt(index+1)
+        if(char.isLetter) {
           weight * (utr.charAt(index+1).asDigit + mod)
         } else {
           weight * utr.charAt(index+1).asDigit
