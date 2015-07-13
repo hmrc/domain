@@ -30,7 +30,5 @@ object AtedUtr extends CheckCharacter {
 
   private val validFormat = "^[Xx][a-zA-Z]\\d{2}00000\\d{6}$"
 
-  def isValid(utr: String) = !utr.isEmpty && utr.matches(validFormat) && isCheckCorrect(utr.toUpperCase)
-
-  private def isCheckCorrect(utr: String): Boolean = utr.charAt(1) == getCheckCharacter(utr, 2)
+  def isValid(utr: String) = !utr.isEmpty && utr.matches(validFormat) && isCheckCorrect(utr.toUpperCase, 1, 2)
 }

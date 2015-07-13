@@ -30,8 +30,5 @@ object AgentBusinessUtr extends CheckCharacter {
 
   private val validFormat = "^[a-zA-Z][Aa][Rr][Nn]\\d{7}$"
 
-  def isValid(utr: String): Boolean = !utr.isEmpty && utr.matches(validFormat) && isCheckCorrect(utr.toUpperCase)
-
-  private def isCheckCorrect(utr: String): Boolean = utr.head == getCheckCharacter(utr, 1)
-
+  def isValid(utr: String): Boolean = !utr.isEmpty && utr.matches(validFormat) && isCheckCorrect(utr.toUpperCase, 0, 1)
 }

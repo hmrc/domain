@@ -22,7 +22,9 @@ trait CheckCharacter {
   protected val mod = 23
   protected val weights = List(9, 10, 11, 12, 13, 8, 7, 6, 5, 4, 3, 2, 1)
 
-  protected def getCheckCharacter(utr: String, offset: Int): Char = {
+  protected def isCheckCorrect(utr: String, checkPosition: Int, offset: Int): Boolean = utr.charAt(checkPosition) == getCheckCharacter(utr, offset)
+
+  private def getCheckCharacter(utr: String, offset: Int): Char = {
     val sum = weights.zipWithIndex.collect {
       case (weight, index) if (index + offset < utr.length) => {
         val char = utr.charAt(index + offset)
