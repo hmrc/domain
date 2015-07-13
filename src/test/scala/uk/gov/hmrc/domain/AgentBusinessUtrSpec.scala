@@ -24,6 +24,7 @@ class AgentBusinessUtrSpec extends WordSpec with Matchers {
 
     "pass with valid format and check digit" in {
       AgentBusinessUtr.isValid("JARN1234567") should equal(true)
+      AgentBusinessUtr.isValid("jarn1234567") should equal(true)
     }
 
     "fail with an empty string" in {
@@ -55,6 +56,7 @@ class AgentBusinessUtrSpec extends WordSpec with Matchers {
     "fail when the check character at pos 1 is incorrect" in {
       AgentBusinessUtr.isValid("BARN1234567") should equal(false)
     }
+
   }
 
 }

@@ -28,5 +28,20 @@ object AtedUtr {
   implicit val atedUtrWrite: Writes[AtedUtr] = new SimpleObjectWrites[AtedUtr](_.value)
   implicit val atedUtrRead: Reads[AtedUtr] = new SimpleObjectReads[AtedUtr]("utr", AtedUtr.apply)
 
-  def isValid(utr: String) = !utr.isEmpty
+  private val validFormat = "^[Xx][a-zA-Z]\\d{2}00000\\d{6}$"
+
+  def isValid(utr: String) = !utr.isEmpty && utr.matches(validFormat) && isCheckCorrect(utr.toUpperCase)
+
+  private def isCheckCorrect(utr: String): Boolean = utr.charAt(1) == getCheckCharacter(utr)
+
+  private val checkString = "ABCDEFGHXJKLMNYPQRSTZVW"
+  private val mod = 23
+  private val weights = List(9, 10, 11, 12, 13, 8, 7, 6, 5, 4, 3, 2, 1)
+
+  private def getCheckCharacter(utr: String): Char = {
+    var sum = weights.zipWithIndex.collect {
+      case (weight, index)  => weight * utr.charAt(index+2).asDigit
+    }.sum
+    checkString.charAt(sum % mod)
+  }
 }
