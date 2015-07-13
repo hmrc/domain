@@ -24,7 +24,7 @@ case class AgentBusinessUtr(utr: String) extends TaxIdentifier with SimpleName {
   def value = utr
 }
 
-object AgentBusinessUtr {
+object AgentBusinessUtr extends CheckCharacter {
   implicit val agentBusinessUtrWrite: Writes[AgentBusinessUtr] = new SimpleObjectWrites[AgentBusinessUtr](_.value)
   implicit val agentBusinessUtrRead: Reads[AgentBusinessUtr] = new SimpleObjectReads[AgentBusinessUtr]("utr", AgentBusinessUtr.apply)
 
@@ -32,24 +32,6 @@ object AgentBusinessUtr {
 
   def isValid(utr: String): Boolean = !utr.isEmpty && utr.matches(validFormat) && isCheckCorrect(utr.toUpperCase)
 
-  private def isCheckCorrect(utr: String): Boolean = utr.head == getCheckCharacter(utr)
-
-  private val checkString = "ABCDEFGHXJKLMNYPQRSTZVW"
-  private val mod = 23
-  private val weights = List(9, 10, 11, 12, 13, 8, 7, 6, 5, 4)
-
-  private def getCheckCharacter(utr: String): Char = {
-    var sum = weights.zipWithIndex.collect {
-      case (weight, index)  => {
-        val char = utr.charAt(index+1)
-        if(char.isLetter) {
-          weight * (utr.charAt(index+1).asDigit + mod)
-        } else {
-          weight * utr.charAt(index+1).asDigit
-        }
-      }
-    }.sum
-    checkString.charAt(sum % mod)
-  }
+  private def isCheckCorrect(utr: String): Boolean = utr.head == getCheckCharacter(utr, 1)
 
 }

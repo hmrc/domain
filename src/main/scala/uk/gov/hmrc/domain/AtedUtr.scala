@@ -24,7 +24,7 @@ case class AtedUtr(utr: String) extends TaxIdentifier with SimpleName {
   def value = utr
 }
 
-object AtedUtr {
+object AtedUtr extends CheckCharacter {
   implicit val atedUtrWrite: Writes[AtedUtr] = new SimpleObjectWrites[AtedUtr](_.value)
   implicit val atedUtrRead: Reads[AtedUtr] = new SimpleObjectReads[AtedUtr]("utr", AtedUtr.apply)
 
@@ -32,16 +32,6 @@ object AtedUtr {
 
   def isValid(utr: String) = !utr.isEmpty && utr.matches(validFormat) && isCheckCorrect(utr.toUpperCase)
 
-  private def isCheckCorrect(utr: String): Boolean = utr.charAt(1) == getCheckCharacter(utr)
+  private def isCheckCorrect(utr: String): Boolean = utr.charAt(1) == getCheckCharacter(utr, 2)
 
-  private val checkString = "ABCDEFGHXJKLMNYPQRSTZVW"
-  private val mod = 23
-  private val weights = List(9, 10, 11, 12, 13, 8, 7, 6, 5, 4, 3, 2, 1)
-
-  private def getCheckCharacter(utr: String): Char = {
-    var sum = weights.zipWithIndex.collect {
-      case (weight, index)  => weight * utr.charAt(index+2).asDigit
-    }.sum
-    checkString.charAt(sum % mod)
-  }
 }
