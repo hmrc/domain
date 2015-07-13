@@ -18,13 +18,15 @@ package uk.gov.hmrc.domain
 
 import play.api.libs.json.{Reads, Writes}
 
-case class AgentBusinessUtr(value: String) extends TaxIdentifier {
-  override lazy val toString = value
+case class AgentBusinessUtr(utr: String) extends TaxIdentifier with SimpleName {
+  override lazy val toString = utr
+  val name = "agentbusinessutr"
+  def value = utr
 }
 
 object AgentBusinessUtr {
   implicit val agentBusinessUtrWrite: Writes[AgentBusinessUtr] = new SimpleObjectWrites[AgentBusinessUtr](_.value)
-  implicit val agentBusinessUtrRead: Reads[AgentBusinessUtr] = new SimpleObjectReads[AgentBusinessUtr]("agentBusinessUtr", AgentBusinessUtr.apply)
+  implicit val agentBusinessUtrRead: Reads[AgentBusinessUtr] = new SimpleObjectReads[AgentBusinessUtr]("utr", AgentBusinessUtr.apply)
 
   private val validFormat = "^[a-zA-Z][Aa][Rr][Nn]\\d{7}$"
 
