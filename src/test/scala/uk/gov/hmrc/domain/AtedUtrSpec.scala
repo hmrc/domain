@@ -74,7 +74,7 @@ class AtedUtrSpec extends WordSpec with Matchers {
     }
 
     "fail when the check character at pos 2 is incorrect" in {
-      AtedUtr.isValid("XA1200000100001") should equal(false)
+      AtedUtr.isValid("XB1200000100001") should equal(false)
     }
 
   }
