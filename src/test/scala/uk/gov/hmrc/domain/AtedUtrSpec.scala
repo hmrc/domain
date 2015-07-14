@@ -79,4 +79,10 @@ class AtedUtrSpec extends WordSpec with Matchers {
 
   }
 
+  "Creating an AtedUtr" should {
+    "fail if the utr is not valid" in {
+      an [IllegalArgumentException] should be thrownBy AtedUtr("INVALID_ATED_UTR")
+    }
+  }
+
 }

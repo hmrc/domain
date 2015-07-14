@@ -69,15 +69,15 @@ class DomainTypeFormatsSpec extends WordSpec with Matchers {
   "AtedUtr reader" should {
 
     "be able to read obsolete AtedUtr structure from Mongo" in {
-      val dbStructure = JsObject(Seq("utr" -> JsString("12345")))
+      val dbStructure = JsObject(Seq("utr" -> JsString("XN1200000100001")))
       val result = AtedUtr.atedUtrRead.reads(dbStructure)
-      result.get shouldBe AtedUtr("12345")
+      result.get shouldBe AtedUtr("XN1200000100001")
     }
 
     "be able to read string representation of AtedUtr" in {
-      val restStructure = JsString("12345")
+      val restStructure = JsString("XN1200000100001")
       val result = AtedUtr.atedUtrRead.reads(restStructure)
-      result.get shouldBe AtedUtr("12345")
+      result.get shouldBe AtedUtr("XN1200000100001")
     }
   }
 
