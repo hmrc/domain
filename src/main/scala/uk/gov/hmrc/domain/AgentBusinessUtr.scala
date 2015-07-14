@@ -18,18 +18,18 @@ package uk.gov.hmrc.domain
 
 import play.api.libs.json.{Reads, Writes}
 
-case class AtedUtr(utr: String) extends TaxIdentifier with SimpleName {
-  require(AtedUtr.isValid(utr))
+case class AgentBusinessUtr(utr: String) extends TaxIdentifier with SimpleName {
+  require(AgentBusinessUtr.isValid(utr))
   override lazy val toString = utr
-  val name = "atedutr"
+  val name = "agentbusinessutr"
   def value = utr
 }
 
-object AtedUtr extends CheckCharacter {
-  implicit val atedUtrWrite: Writes[AtedUtr] = new SimpleObjectWrites[AtedUtr](_.value)
-  implicit val atedUtrRead: Reads[AtedUtr] = new SimpleObjectReads[AtedUtr]("utr", AtedUtr.apply)
+object AgentBusinessUtr extends CheckCharacter {
+  implicit val agentBusinessUtrWrite: Writes[AgentBusinessUtr] = new SimpleObjectWrites[AgentBusinessUtr](_.value)
+  implicit val agentBusinessUtrRead: Reads[AgentBusinessUtr] = new SimpleObjectReads[AgentBusinessUtr]("utr", AgentBusinessUtr.apply)
 
-  private val validFormat = "^[Xx][a-zA-Z]\\d{2}00000\\d{6}$"
+  private val validFormat = "^[a-zA-Z][Aa][Rr][Nn]\\d{7}$"
 
-  def isValid(utr: String) = !utr.isEmpty && utr.matches(validFormat) && isCheckCorrect(utr.toUpperCase, 1, 2)
+  def isValid(utr: String): Boolean = !utr.isEmpty && utr.matches(validFormat) && isCheckCorrect(utr.toUpperCase, 0, 1)
 }

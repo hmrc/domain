@@ -16,7 +16,8 @@ Types are provided for many common tax identifiers, such as:
 * [Vehicle Registration Number (VRN)](src/main/scala/uk/gov/hmrc/domain/Vrn.scala)
 * Agents - [Code](src/main/scala/uk/gov/hmrc/domain/AgentCode.scala), 
 [UserId](src/main/scala/uk/gov/hmrc/domain/AgentUserId.scala), 
-[PAYE Reference](src/main/scala/uk/gov/hmrc/domain/PayeAgentReference.scala)
+[PAYE Reference](src/main/scala/uk/gov/hmrc/domain/PayeAgentReference.scala),
+[Agent Business](src/main/scala/uk/gov/hmrc/domain/AgentBusinessUtr.scala)
 
 #### JSON handling
 

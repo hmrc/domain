@@ -37,6 +37,7 @@ case class TaxIds(private val valuesAsList: TaxIds.TaxIdWithName*) {
   lazy val vrn = as[Vrn]
   lazy val uar = as[Uar]
   lazy val org = as[Org]
+  lazy val agentBusinessUtr = as[AgentBusinessUtr]
 }
 
 object TaxIds {
@@ -75,7 +76,8 @@ object TaxIds {
     SerialisableTaxId("atedutr", AtedUtr.apply),
     SerialisableTaxId("vrn",   Vrn.apply),
     SerialisableTaxId("uar",   Uar.apply),
-    SerialisableTaxId("org",   Org.apply)
+    SerialisableTaxId("org",   Org.apply),
+    SerialisableTaxId("agentbusinessutr", AgentBusinessUtr.apply)
   )
 }
 
