@@ -179,4 +179,20 @@ class DomainTypeFormatsSpec extends WordSpec with Matchers {
     }
 
   }
+
+  "PsaUtr reader" should {
+
+    "be able to read obsolete PsaUtr from Mongo" in {
+      val dbStructure = JsObject(Seq("utr" -> JsString("A1234567")))
+      val result = PsaUtr.psaUtrRead.reads(dbStructure)
+      result.get shouldBe PsaUtr("A1234567")
+    }
+
+    "be able to read string representation of PsaUtr" in {
+      val restStructure = JsString("A1234567")
+      val result = PsaUtr.psaUtrRead.reads(restStructure)
+      result.get shouldBe PsaUtr("A1234567")
+    }
+
+  }
 }
