@@ -21,6 +21,7 @@ import play.api.libs.json._
 import scala.util.{Failure, Success, Try}
 
 case class TaxIds(private val valuesAsList: TaxIds.TaxIdWithName*) {
+
   import scala.reflect._
 
   require(valuesAsList.nonEmpty, "TaxIds must have at least one TaxIdentifier")
@@ -38,6 +39,7 @@ case class TaxIds(private val valuesAsList: TaxIds.TaxIdWithName*) {
   lazy val uar = as[Uar]
   lazy val org = as[Org]
   lazy val agentBusinessUtr = as[AgentBusinessUtr]
+  lazy val psaId = as[PsaId]
 }
 
 object TaxIds {
@@ -70,14 +72,15 @@ object TaxIds {
   implicit def format(implicit serialisableTaxIds: SerialisableTaxId*): Format[TaxIds] = Format(reads(serialisableTaxIds.toSet), writes(serialisableTaxIds.map(_.taxIdName).toSet))
 
   val defaultSerialisableIds = Seq(
-    SerialisableTaxId("nino",  Nino.apply),
+    SerialisableTaxId("nino", Nino.apply),
     SerialisableTaxId("sautr", SaUtr.apply),
     SerialisableTaxId("ctutr", CtUtr.apply),
     SerialisableTaxId("atedutr", AtedUtr.apply),
-    SerialisableTaxId("vrn",   Vrn.apply),
-    SerialisableTaxId("uar",   Uar.apply),
-    SerialisableTaxId("org",   Org.apply),
-    SerialisableTaxId("agentbusinessutr", AgentBusinessUtr.apply)
+    SerialisableTaxId("vrn", Vrn.apply),
+    SerialisableTaxId("uar", Uar.apply),
+    SerialisableTaxId("org", Org.apply),
+    SerialisableTaxId("agentbusinessutr", AgentBusinessUtr.apply),
+    SerialisableTaxId("psaid", PsaId.apply)
   )
 }
 
