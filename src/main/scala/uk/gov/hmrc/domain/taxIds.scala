@@ -20,17 +20,17 @@ import play.api.libs.json._
 
 import scala.util.{Failure, Success, Try}
 
-case class TaxIds(private val valuesAsList: TaxIds.TaxIdWithName*) {
+case class TaxIds(values: Set[TaxIds.TaxIdWithName]) {
+  import scala.reflect.ClassTag
 
-  import scala.reflect._
+  require(values.nonEmpty, "TaxIds must have at least one TaxIdentifier")
+  require(!TaxIds.hasDuplicates(values.toSeq), "TaxIds cannot have TaxIdentifers with the same name")
 
-  require(valuesAsList.nonEmpty, "TaxIds must have at least one TaxIdentifier")
-  require(!TaxIds.hasDuplicates(valuesAsList), "TaxIds cannot have TaxIdentifers with the same name")
-
-  val values = valuesAsList.toSet
-
-  private def as[A <: TaxIds.TaxIdWithName](implicit tag: ClassTag[A]): Option[A] = values.find(id => tag.runtimeClass.isInstance(id)) map (id => tag.runtimeClass.cast(id).asInstanceOf[A])
-
+  private def as[A <: TaxIds.TaxIdWithName: ClassTag]: Option[A] = 
+    values.collect {
+      case a: A => a
+    }.headOption
+  
   lazy val nino = as[Nino]
   lazy val saUtr = as[SaUtr]
   lazy val ctUtr = as[CtUtr]
@@ -42,10 +42,16 @@ case class TaxIds(private val valuesAsList: TaxIds.TaxIdWithName*) {
   lazy val psaId = as[PsaId]
 }
 
+
 object TaxIds {
 
   type TaxIdWithName = TaxIdentifier with SimpleName
 
+  def apply(values: TaxIdWithName*): TaxIds = {
+    require(!hasDuplicates(values), "TaxIds cannot have TaxIdentifers with the same name")
+    TaxIds(values.toSet)
+  }
+  
   def hasDuplicates(values: Seq[TaxIdWithName]): Boolean = {
     values.size != values.map(_ name).toSet.size
   }

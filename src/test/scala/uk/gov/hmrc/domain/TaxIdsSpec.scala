@@ -33,7 +33,7 @@ class TaxIdsSpec extends WordSpec with Matchers with LoneElement {
     }
 
     "fail to create a TaxIds object with no tax identifiers" in {
-      val ex = the[IllegalArgumentException] thrownBy new TaxIds()
+      val ex = the[IllegalArgumentException] thrownBy TaxIds()
       ex should have('message("requirement failed: TaxIds must have at least one TaxIdentifier"))
     }
   }
