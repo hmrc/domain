@@ -18,36 +18,36 @@ package uk.gov.hmrc.domain
 
 import org.scalatest.{WordSpec, Matchers}
 
-class PsaUtrSpec extends WordSpec with Matchers {
+class PsaIdSpec extends WordSpec with Matchers {
 
   "validation" must {
 
     "fail with an empty string" in {
-      PsaUtr.isValid("") should equal(false)
+      PsaId.isValid("") should equal(false)
     }
 
     "fail when the first character is not an alpha" in {
-      PsaUtr.isValid("12345678") should equal(false)
+      PsaId.isValid("12345678") should equal(false)
     }
 
     "fail when the last 7 characters are not numeric" in {
-      PsaUtr.isValid("aa234567") should equal(false)
-      PsaUtr.isValid("a1a34567") should equal(false)
-      PsaUtr.isValid("a12a4567") should equal(false)
-      PsaUtr.isValid("a123a567") should equal(false)
-      PsaUtr.isValid("a1234a67") should equal(false)
-      PsaUtr.isValid("a12345a7") should equal(false)
-      PsaUtr.isValid("a123456a") should equal(false)
+      PsaId.isValid("aa234567") should equal(false)
+      PsaId.isValid("a1a34567") should equal(false)
+      PsaId.isValid("a12a4567") should equal(false)
+      PsaId.isValid("a123a567") should equal(false)
+      PsaId.isValid("a1234a67") should equal(false)
+      PsaId.isValid("a12345a7") should equal(false)
+      PsaId.isValid("a123456a") should equal(false)
     }
 
     "fail when longer than 8 characters" in {
-      PsaUtr.isValid("a1234567a") should equal(false)
-      PsaUtr.isValid("a12345678") should equal(false)
+      PsaId.isValid("a1234567a") should equal(false)
+      PsaId.isValid("a12345678") should equal(false)
     }
 
     "pass when 1 alpha followed by 7 characters" in {
-      PsaUtr.isValid("a1234567") should equal(true)
-      PsaUtr.isValid("B1234567") should equal(true)
+      PsaId.isValid("a1234567") should equal(true)
+      PsaId.isValid("B1234567") should equal(true)
     }
   }
 

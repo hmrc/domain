@@ -12,7 +12,7 @@ Types are provided for many common tax identifiers, such as:
 * [National Insurance Number (NINO)](src/main/scala/uk/gov/hmrc/domain/Nino.scala)
 * Unique Taxpayer References (UTR) - [Self Assessment](src/main/scala/uk/gov/hmrc/domain/SaUtr.scala), 
 [Corporation Tax](src/main/scala/uk/gov/hmrc/domain/CtUtr.scala), [Annual Tax on Enveloped Dwellings](src/main/scala/uk/gov/hmrc/domain/AtedUtr.scala),
-[PSA ID](src/main/scala/uk/gov/hmrc/domain/PsaUtr.scala)
+[Pension Scheme Administrator ID](src/main/scala/uk/gov/hmrc/domain/PsaId.scala)
 * [Unique Agent Reference (UAR)](src/main/scala/uk/gov/hmrc/domain/Uar.scala)
 * [Vehicle Registration Number (VRN)](src/main/scala/uk/gov/hmrc/domain/Vrn.scala)
 * Agents - [Code](src/main/scala/uk/gov/hmrc/domain/AgentCode.scala), 

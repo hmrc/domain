@@ -19,18 +19,18 @@ package uk.gov.hmrc.domain
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.domain.{SimpleObjectReads, SimpleObjectWrites, SimpleName, TaxIdentifier}
 
-case class PsaUtr(utr: String) extends TaxIdentifier with SimpleName {
-  require(PsaUtr.isValid(utr))
-  override lazy val toString = utr
-  val name = "psautr"
-  def value = utr
+case class PsaId(id: String) extends TaxIdentifier with SimpleName {
+  require(PsaId.isValid(id))
+  override lazy val toString = id
+  val name = "psaid"
+  def value = id
 }
 
-object PsaUtr {
-  implicit val psaUtrWrite: Writes[PsaUtr] = new SimpleObjectWrites[PsaUtr](_.value)
-  implicit val psaUtrRead: Reads[PsaUtr] = new SimpleObjectReads[PsaUtr]("utr", PsaUtr.apply)
+object PsaId {
+  implicit val psaIdWrite: Writes[PsaId] = new SimpleObjectWrites[PsaId](_.value)
+  implicit val psaIdRead: Reads[PsaId] = new SimpleObjectReads[PsaId]("id", PsaId.apply)
 
   private val validFormat = "^[a-zA-Z]\\d{7}$"
 
-  def isValid(utr: String) = !utr.isEmpty && utr.matches(validFormat)
+  def isValid(id: String) = !id.isEmpty && id.matches(validFormat)
 }
