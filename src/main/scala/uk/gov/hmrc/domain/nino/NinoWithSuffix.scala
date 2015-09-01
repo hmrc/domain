@@ -19,24 +19,42 @@ package uk.gov.hmrc.domain.nino
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.domain.{SimpleObjectReads, SimpleObjectWrites, TaxIdentifier, SimpleName}
 
-case class NinoWithSuffix(nino: String) extends TaxIdentifier with SimpleName {
-  require(NinoWithSuffix.isValid(nino), s"$nino is not a valid nino.")
+trait Nino extends TaxIdentifier with SimpleName {
+  def nino: String
+  final def value = nino
+  final val name = "nino"
   override lazy val toString = nino
-
-  def value = nino
-  val name = "nino"
 
   def formatted = value.grouped(2).mkString(" ")
 }
 
+object Nino {
+  val invalidPrefixes = List("BG", "GB", "NK", "KN", "TN", "NT", "ZZ")
+  def isPrefixValid(nino: String) = invalidPrefixes.find(nino.startsWith).isEmpty
+}
+
+case class NinoWithSuffix(nino: String) extends Nino {
+  require(NinoWithSuffix.isValid(nino), s"$nino is not a valid nino.")
+}
+
 object NinoWithSuffix {
-  implicit val ninoWrite: Writes[NinoWithSuffix] = new SimpleObjectWrites[NinoWithSuffix](_.value)
-  implicit val ninoRead: Reads[NinoWithSuffix] = new SimpleObjectReads[NinoWithSuffix]("nino", NinoWithSuffix.apply)
+  implicit val ninoWithSuffixWrite: Writes[NinoWithSuffix] = new SimpleObjectWrites[NinoWithSuffix](_.value)
+  implicit val ninoWithSuffixRead: Reads[NinoWithSuffix] = new SimpleObjectReads[NinoWithSuffix]("nino", NinoWithSuffix.apply)
 
   private val validNinoFormat = "[[A-Z]&&[^DFIQUV]][[A-Z]&&[^DFIQUVO]] ?\\d{2} ?\\d{2} ?\\d{2} ?[A-Z]{1}"
-  private val invalidPrefixes = List("BG", "GB", "NK", "KN", "TN", "NT", "ZZ")
 
-  private def hasValidPrefix(nino: String) = invalidPrefixes.find(nino.startsWith).isEmpty
+  def isValid(nino: String) = nino != null && Nino.isPrefixValid(nino) && nino.matches(validNinoFormat)
+}
 
-  def isValid(nino: String) = nino != null && hasValidPrefix(nino) && nino.matches(validNinoFormat)
+case class NinoWithoutSuffix(nino: String) extends Nino {
+  require(NinoWithoutSuffix.isValid(nino), s"$nino is not a valid nino.")
+}
+
+object NinoWithoutSuffix {
+  implicit val ninoWithoutSuffixWrite: Writes[NinoWithoutSuffix] = new SimpleObjectWrites[NinoWithoutSuffix](_.value)
+  implicit val ninoWithoutSuffixRead: Reads[NinoWithoutSuffix] = new SimpleObjectReads[NinoWithoutSuffix]("nino", NinoWithoutSuffix.apply)
+
+  private val validNinoFormat = "[[A-Z]&&[^DFIQUV]][[A-Z]&&[^DFIQUVO]] ?\\d{2} ?\\d{2} ?\\d{2}"
+
+  def isValid(nino: String) = nino != null && Nino.isPrefixValid(nino) && nino.matches(validNinoFormat)
 }
