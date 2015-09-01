@@ -19,8 +19,8 @@ package uk.gov.hmrc.domain.nino
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.domain.{SimpleObjectReads, SimpleObjectWrites, TaxIdentifier, SimpleName}
 
-case class Nino(nino: String) extends TaxIdentifier with SimpleName {
-  require(Nino.isValid(nino), s"$nino is not a valid nino.")
+case class NinoWithSuffix(nino: String) extends TaxIdentifier with SimpleName {
+  require(NinoWithSuffix.isValid(nino), s"$nino is not a valid nino.")
   override lazy val toString = nino
 
   def value = nino
@@ -29,9 +29,9 @@ case class Nino(nino: String) extends TaxIdentifier with SimpleName {
   def formatted = value.grouped(2).mkString(" ")
 }
 
-object Nino {
-  implicit val ninoWrite: Writes[Nino] = new SimpleObjectWrites[Nino](_.value)
-  implicit val ninoRead: Reads[Nino] = new SimpleObjectReads[Nino]("nino", Nino.apply)
+object NinoWithSuffix {
+  implicit val ninoWrite: Writes[NinoWithSuffix] = new SimpleObjectWrites[NinoWithSuffix](_.value)
+  implicit val ninoRead: Reads[NinoWithSuffix] = new SimpleObjectReads[NinoWithSuffix]("nino", NinoWithSuffix.apply)
 
   private val validNinoFormat = "[[A-Z]&&[^DFIQUV]][[A-Z]&&[^DFIQUVO]] ?\\d{2} ?\\d{2} ?\\d{2} ?[A-Z]{1}"
   private val invalidPrefixes = List("BG", "GB", "NK", "KN", "TN", "NT", "ZZ")

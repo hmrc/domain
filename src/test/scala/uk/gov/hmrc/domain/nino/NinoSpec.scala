@@ -16,12 +16,16 @@
 
 package uk.gov.hmrc.domain.nino
 
+import java.io.Serializable
+
 import org.scalatest.{Matchers, WordSpec}
 
 class NinoSpec extends WordSpec with Matchers {
 
+  val validNinoWithoutSpaces = "AB123456C"
+
   val validNinos = List(
-    "without spaces" -> "AB123456C",
+    "without spaces" -> validNinoWithoutSpaces,
     "with spaces" -> "AB 12 34 56 C"
   )
 
@@ -30,8 +34,8 @@ class NinoSpec extends WordSpec with Matchers {
   val invalidPrefixes = startLettersWithOSecond ::: invalidStartLetterCombinations ::: List("BG", "GB", "NK", "KN", "TN", "NT", "ZZ")
 
   val invalidNinos = List(
-    "valid number with leading space" -> " AB123456C",
-    "valid number with trailing space" -> "AB123456C ",
+    "valid number with leading space" -> s" $validNinoWithoutSpaces",
+    "valid number with trailing space" -> s"$validNinoWithoutSpaces ",
     "empty string" -> "",
     "only space" -> "    ",
     "total garbage 1" -> "XXX",
@@ -63,21 +67,21 @@ class NinoSpec extends WordSpec with Matchers {
   "Creating a Nino" should {
     for ((description, value) <- validNinos) {
       s"pass with valid number $description" in {
-        Nino(value) should be (a [Nino])
+        NinoWithSuffix(value) should be (a [NinoWithSuffix])
       }
     }
     for ((description, value) <- invalidNinos) {
       s"fail with $description" in {
-        an[IllegalArgumentException] should be thrownBy Nino(value)
+        an[IllegalArgumentException] should be thrownBy NinoWithSuffix(value)
       }
     }
   }
 
   "Formatting a Nino" should {
     "produce a formatted nino" in {
-      Nino("CS100700A").formatted shouldBe "CS 10 07 00 A"
+      NinoWithSuffix("CS100700A").formatted shouldBe "CS 10 07 00 A"
     }
   }
 
-  def validateNino(nino: String) = Nino.isValid(nino)
+  def validateNino(nino: String) = NinoWithSuffix.isValid(nino)
 }
