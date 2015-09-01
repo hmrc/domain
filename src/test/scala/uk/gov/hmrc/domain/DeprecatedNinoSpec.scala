@@ -18,7 +18,7 @@ package uk.gov.hmrc.domain
 
 import org.scalatest.{WordSpec, Matchers}
 
-class NinoSpec extends WordSpec with Matchers {
+class DeprecatedNinoSpec extends WordSpec with Matchers {
 
   "The validation of a nino" should {
     "pass with valid number without spaces" in { validateNino("AB123456C") should equal (true) }

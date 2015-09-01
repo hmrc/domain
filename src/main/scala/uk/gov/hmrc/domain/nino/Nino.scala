@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.domain
+package uk.gov.hmrc.domain.nino
 
 import play.api.libs.json.{Reads, Writes}
+import uk.gov.hmrc.domain.{SimpleObjectReads, SimpleObjectWrites, TaxIdentifier, SimpleName}
 
-@deprecated(message = "Use uk.gov.hmrc.domain.nino.Nino instead", since = "1/09/2015")
 case class Nino(nino: String) extends TaxIdentifier with SimpleName {
   require(Nino.isValid(nino), s"$nino is not a valid nino.")
   override lazy val toString = nino
@@ -29,7 +29,6 @@ case class Nino(nino: String) extends TaxIdentifier with SimpleName {
   def formatted = value.grouped(2).mkString(" ")
 }
 
-@deprecated(message = "Use uk.gov.hmrc.domain.nino.Nino instead", since = "1/09/2015")
 object Nino {
   implicit val ninoWrite: Writes[Nino] = new SimpleObjectWrites[Nino](_.value)
   implicit val ninoRead: Reads[Nino] = new SimpleObjectReads[Nino]("nino", Nino.apply)
