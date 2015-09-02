@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.domain.nino
+package uk.gov.hmrc.domain
 
-import org.scalatest.{FreeSpec, Matchers, WordSpec}
+import org.scalatest.{FreeSpec, Matchers}
 
 class NinoSpec extends FreeSpec with Matchers {
 

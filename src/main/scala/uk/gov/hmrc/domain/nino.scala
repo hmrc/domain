@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.domain.nino
+package uk.gov.hmrc.domain
+
 
 import play.api.libs.json.{Reads, Writes}
 import uk.gov.hmrc.domain.{SimpleObjectReads, SimpleObjectWrites, TaxIdentifier, SimpleName}
@@ -50,11 +51,14 @@ object SuffixedNino {
   implicit val ninoWithSuffixWrite: Writes[SuffixedNino] = new SimpleObjectWrites[SuffixedNino](_.value)
   implicit val ninoWithSuffixRead: Reads[SuffixedNino] = new SimpleObjectReads[SuffixedNino]("nino", SuffixedNino.apply)
 
+  @deprecated(message = "Nino has been replaced by ShortNino, SuffixedNino and ShortOrSuffixedNino", since = "1/09/2015")
+  val ninoWrite = ninoWithSuffixWrite
+  @deprecated(message = "Nino has been replaced by ShortNino, SuffixedNino and ShortOrSuffixedNino", since = "1/09/2015")
+  val ninoRead = ninoWithSuffixRead
+
   private val validNinoFormat = ShortNino.validNinoFormat + " ?[A-Z]{1}"
 
   def isValid(nino: String) = nino != null && ShortOrSuffixedNino.isPrefixValid(nino) && nino.matches(validNinoFormat)
-
-  implicit def toNino(suffixedNino: SuffixedNino): uk.gov.hmrc.domain.Nino = uk.gov.hmrc.domain.Nino(suffixedNino.nino)
 }
 
 case class ShortNino(nino: String) extends ShortOrSuffixedNino {
