@@ -40,7 +40,7 @@ object ShortOrSuffixedNino {
 case class SuffixedNino(nino: String) extends ShortOrSuffixedNino {
   require(SuffixedNino.isValid(nino), s"$nino is not a valid suffixed nino.")
 
-  def shorten = ShortNino(nino.substring(0,nino.length - 1).trim())
+  def shorten = ShortNino(nino.init.trim())
 }
 
 trait NinoValidation {
