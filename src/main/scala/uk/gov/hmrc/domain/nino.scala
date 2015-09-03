@@ -16,9 +16,9 @@
 
 package uk.gov.hmrc.domain
 
-
 import play.api.libs.json.{Reads, Writes}
-import uk.gov.hmrc.domain.{SimpleObjectReads, SimpleObjectWrites, TaxIdentifier, SimpleName}
+
+import scala.util.Try
 
 sealed trait ShortOrSuffixedNino extends TaxIdentifier with SimpleName {
   def nino: String
@@ -30,15 +30,11 @@ sealed trait ShortOrSuffixedNino extends TaxIdentifier with SimpleName {
 }
 
 object ShortOrSuffixedNino {
-  val invalidPrefixes = List("BG", "GB", "NK", "KN", "TN", "NT", "ZZ")
-  def isPrefixValid(nino: String) = invalidPrefixes.find(nino.startsWith).isEmpty
-  def apply = parse _
-  def parse(nino: String): ShortOrSuffixedNino = {
-    //TODO this should be able to use a Try or similar
-    if (SuffixedNino.isValid(nino)) SuffixedNino(nino)
-    else if (ShortNino.isValid(nino)) ShortNino(nino)
-    else throw new IllegalArgumentException(s"$nino is not a valid short or suffixed nino")
-  }
+  implicit val shortOrSuffixedNinoWrite: Writes[ShortOrSuffixedNino] = new SimpleObjectWrites[ShortOrSuffixedNino](_.value)
+  implicit val shortOrSuffixedNinoRead: Reads[ShortOrSuffixedNino] = new SimpleObjectReads[ShortOrSuffixedNino]("nino", ShortOrSuffixedNino.apply)
+
+  def parse(nino: String): Option[ShortOrSuffixedNino] = SuffixedNino.parse(nino) orElse ShortNino.parse(nino)
+  def apply(nino: String) = parse(nino) getOrElse (throw new IllegalArgumentException(s"$nino is not a valid short or suffixed nino"))
 }
 
 case class SuffixedNino(nino: String) extends ShortOrSuffixedNino {
@@ -47,7 +43,17 @@ case class SuffixedNino(nino: String) extends ShortOrSuffixedNino {
   def shorten = ShortNino(nino.substring(0,nino.length - 1).trim())
 }
 
-object SuffixedNino {
+trait NinoValidation {
+  private val invalidPrefixes = List("BG", "GB", "NK", "KN", "TN", "NT", "ZZ")
+  private val formatRegex = "[[A-Z]&&[^DFIQUV]][[A-Z]&&[^DFIQUVO]] ?\\d{2} ?\\d{2} ?\\d{2}"
+  private def isPrefixValid(nino: String) = invalidPrefixes.find(nino.startsWith).isEmpty
+
+  private[domain] def suffixRegex: String
+
+  def isValid(nino: String) = nino != null && isPrefixValid(nino) && nino.matches(formatRegex + suffixRegex)
+}
+
+object SuffixedNino extends NinoValidation {
   implicit val ninoWithSuffixWrite: Writes[SuffixedNino] = new SimpleObjectWrites[SuffixedNino](_.value)
   implicit val ninoWithSuffixRead: Reads[SuffixedNino] = new SimpleObjectReads[SuffixedNino]("nino", SuffixedNino.apply)
 
@@ -56,20 +62,20 @@ object SuffixedNino {
   @deprecated(message = "Nino has been replaced by ShortNino, SuffixedNino and ShortOrSuffixedNino", since = "1/09/2015")
   val ninoRead = ninoWithSuffixRead
 
-  private val validNinoFormat = ShortNino.validNinoFormat + " ?[A-Z]{1}"
+  override val suffixRegex = " ?[A-Z]{1}"
 
-  def isValid(nino: String) = nino != null && ShortOrSuffixedNino.isPrefixValid(nino) && nino.matches(validNinoFormat)
+  def parse(nino: String) = Try(SuffixedNino(nino)).toOption
 }
 
 case class ShortNino(nino: String) extends ShortOrSuffixedNino {
   require(ShortNino.isValid(nino), s"$nino is not a valid short nino.")
 }
 
-object ShortNino {
+object ShortNino extends NinoValidation {
   implicit val ninoWithoutSuffixWrite: Writes[ShortNino] = new SimpleObjectWrites[ShortNino](_.value)
   implicit val ninoWithoutSuffixRead: Reads[ShortNino] = new SimpleObjectReads[ShortNino]("nino", ShortNino.apply)
 
-  private[domain] val validNinoFormat = "[[A-Z]&&[^DFIQUV]][[A-Z]&&[^DFIQUVO]] ?\\d{2} ?\\d{2} ?\\d{2}"
+  override val suffixRegex = ""
 
-  def isValid(nino: String) = nino != null && ShortOrSuffixedNino.isPrefixValid(nino) && nino.matches(validNinoFormat)
+  def parse(nino: String) = Try(ShortNino(nino)).toOption
 }

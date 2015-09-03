@@ -74,13 +74,26 @@ class NinoSpec extends FreeSpec with Matchers {
 
     "Creating should" - {
       for ((description, value) <- validNinos) {
-        s"pass with valid number $description: '$value'" in {
+        s"create an object with valid number $description: '$value'" in {
           SuffixedNino(value) should be(a[SuffixedNino])
         }
       }
       for ((description, value) <- invalidNinos) {
-        s"fail with $description: '$value'" in {
+        s"throw an exception with $description: '$value'" in {
           an[IllegalArgumentException] should be thrownBy SuffixedNino(value)
+        }
+      }
+    }
+
+    "Parsing should" - {
+      for ((description, value) <- validNinos) {
+        s"create an object with valid number $description: '$value'" in {
+          SuffixedNino.parse(value).get should be (a[SuffixedNino])
+        }
+      }
+      for ((description, value) <- invalidNinos) {
+        s"return None with $description: '$value'" in {
+          SuffixedNino.parse(value) should be (empty)
         }
       }
     }
@@ -97,15 +110,28 @@ class NinoSpec extends FreeSpec with Matchers {
       }
     }
 
-    "Parsing as a ShortOrSuffixedNino should" - {
+    "Creating as a ShortOrSuffixedNino should" - {
       for ((description, value) <- validNinos) {
-        s"extract to SuffixedNino for valid number $description: '$value'" in {
-          ShortOrSuffixedNino.parse(value) should (be (a [ShortOrSuffixedNino]) and be (a [SuffixedNino]))
+        s"extract to SuffixedNino a valid number $description: '$value'" in {
+          ShortOrSuffixedNino(value) should (be (a [ShortOrSuffixedNino]) and be (a [SuffixedNino]))
         }
       }
       for ((description, value) <- invalidNinos.filter { case(_,v) => v != validNino }) {
         s"fail with $description: '$value'" in {
-          an[IllegalArgumentException] should be thrownBy ShortOrSuffixedNino.parse(value)
+          an[IllegalArgumentException] should be thrownBy ShortOrSuffixedNino(value)
+        }
+      }
+    }
+
+    "Parsing as a ShortOrSuffixedNino should" - {
+      for ((description, value) <- validNinos) {
+        s"extract to ShortNino a valid number $description: '$value'" in {
+          ShortOrSuffixedNino.parse(value).get should (be (a [ShortOrSuffixedNino]) and be (a [SuffixedNino]))
+        }
+      }
+      for ((description, value) <- invalidNinos.filter { case(_,v) => v != validNino }) {
+        s"fail with $description: '$value'" in {
+          ShortOrSuffixedNino.parse(value) should be (empty)
         }
       }
     }
@@ -147,32 +173,58 @@ class NinoSpec extends FreeSpec with Matchers {
 
     "Creating should" - {
       for ((description, value) <- validNinos) {
-        s"pass with valid number $description: '$value'" in {
+        s"create an object with valid number $description: '$value'" in {
           ShortNino(value) should be(a[ShortNino])
         }
       }
       for ((description, value) <- invalidNinos) {
-        s"fail with $description: '$value'" in {
+        s"throw an exception with $description: '$value'" in {
           an[IllegalArgumentException] should be thrownBy ShortNino(value)
+        }
+      }
+    }
+
+    "Parsing should" - {
+      for ((description, value) <- validNinos) {
+        s"create an object with valid number $description: '$value'" in {
+          ShortNino.parse(value).get should be (a[ShortNino])
+        }
+      }
+      for ((description, value) <- invalidNinos) {
+        s"return None with $description: '$value'" in {
+          ShortNino.parse(value) should be (empty)
         }
       }
     }
 
     "Formatting should" - {
       "produce a formatted nino" in {
-        SuffixedNino("CS100700A").formatted shouldBe "CS 10 07 00 A"
+        ShortNino("CS100700").formatted shouldBe "CS 10 07 00"
+      }
+    }
+
+    "Creating as a ShortOrSuffixedNino should" - {
+      for ((description, value) <- validNinos) {
+        s"extract to ShortNino a valid number $description: '$value'" in {
+          ShortOrSuffixedNino(value) should (be (a [ShortOrSuffixedNino]) and be (a [ShortNino]))
+        }
+      }
+      for ((description, value) <- invalidNinos.filter { case(_,v) => v != (validNino + validSuffix) }) {
+        s"fail with $description: '$value'" in {
+          an[IllegalArgumentException] should be thrownBy ShortOrSuffixedNino(value)
+        }
       }
     }
 
     "Parsing as a ShortOrSuffixedNino should" - {
       for ((description, value) <- validNinos) {
         s"extract to ShortNino a valid number $description: '$value'" in {
-          ShortOrSuffixedNino.parse(value) should (be (a [ShortOrSuffixedNino]) and be (a [ShortNino]))
+          ShortOrSuffixedNino.parse(value).get should (be (a [ShortOrSuffixedNino]) and be (a [ShortNino]))
         }
       }
       for ((description, value) <- invalidNinos.filter { case(_,v) => v != (validNino + validSuffix) }) {
         s"fail with $description: '$value'" in {
-          an[IllegalArgumentException] should be thrownBy ShortOrSuffixedNino.parse(value)
+          ShortOrSuffixedNino.parse(value) should be (empty)
         }
       }
     }
