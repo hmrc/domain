@@ -16,61 +16,217 @@
 
 package uk.gov.hmrc.domain
 
-import org.scalatest.{WordSpec, Matchers}
+import org.scalatest.{FreeSpec, Matchers}
 
-class NinoSpec extends WordSpec with Matchers {
+class NinoSpec extends FreeSpec with Matchers {
 
-  "The validation of a nino" should {
-    "pass with valid number without spaces" in { validateNino("AB123456C") should equal (true) }
-    "pass with valid number with spaces" in { validateNino("AB 12 34 56 C") should equal (true) }
-    "fail with valid number with leading space" in { validateNino(" AB123456C") should equal (false) }
-    "fail with valid number with trailing space" in { validateNino("AB123456C ") should equal (false) }
-    "fail with empty string" in { validateNino("") should equal (false) }
-    "fail with only space" in { validateNino("    ") should equal (false) }
-    "fail with total garbage" in {
-      validateNino("XXX") should equal (false)
-      validateNino("werionownadefwe") should equal (false)
-      validateNino("@£%!)(*&^") should equal (false)
-      validateNino("123456") should equal (false)
-    }
-    "fail with only one starting letter" in {
-      validateNino("A123456C") should equal (false)
-      validateNino("A1234567C") should equal (false)
-    }
-    "fail with three starting letters" in {
-      validateNino("ABC12345C") should equal (false)
-      validateNino("ABC123456C") should equal (false)
-    }
-    "fail with lowercase letters" in {
-      validateNino("ab123456c") should equal (false)
-    }
-    "fail with less than 6 middle digits" in { validateNino("AB12345C") should equal (false) }
-    "fail with more than 6 middle digits" in { validateNino("AB1234567C") should equal (false) }
+  val validNino = "AB123456"
+  val validSuffix = "C"
 
-    "fail if we start with invalid characters" in {
-      val invalidStartLetterCombinations = List('D', 'F', 'I', 'Q', 'U', 'V').combinations(2).map(_.mkString("")).toList
-      val invalidPrefixes = List("BG", "GB", "NK", "KN", "TN", "NT", "ZZ")
-      for (v <- invalidStartLetterCombinations ::: invalidPrefixes) {
-        validateNino(v + "123456C") should equal (false)
+  val alwaysInvalidNinos = List(
+    "empty string" -> "",
+    "only space" -> "    ",
+    "total garbage 1" -> "XXX",
+    "total garbage 2" -> "werionownadefwe",
+    "total garbage 3" -> "@£%!)(*&^",
+    "total garbage 4" -> "123456"
+  )
+
+  val startLettersWithOSecond = ('A' to 'Z').map(_ + "O").toList
+  val invalidStartLetterCombinations = List('D', 'F', 'I', 'Q', 'U', 'V').combinations(2).map(_.mkString("")).toList
+  val invalidPrefixes = startLettersWithOSecond ::: invalidStartLetterCombinations ::: List("BG", "GB", "NK", "KN", "TN", "NT", "ZZ")
+
+  "For SuffixedNino" - {
+    val validNinoWithSuffix = validNino + validSuffix
+    val validNinos = List(
+      "without spaces" -> validNinoWithSuffix,
+      "with spaces" -> "AB 12 34 56 C"
+    )
+
+    val invalidNinos =
+      List(
+        "valid number without a suffix" -> validNino,
+        "valid number with leading space" -> s" $validNinoWithSuffix",
+        "valid number with trailing space" -> s"$validNinoWithSuffix ",
+        "only one starting letter and 8 total characters" -> "A123456C",
+        "only one starting letter and 9 total characters" -> "A1234567C",
+        "three starting letters and 9 total characters" -> "ABC12345C",
+        "three starting letters and 10 total characters" -> "ABC123456C",
+        "lowercase letters" -> "ab123456c",
+        "less than 6 middle digits" -> "AB12345C",
+        "more than 6 middle digits" -> "AB1234567C"
+      ) ++
+        alwaysInvalidNinos ++
+        invalidPrefixes.map(p => (s"numbers staring with $p", p + "123456C"))
+
+    "The validation should" - {
+      for ((description, value) <- validNinos) {
+        s"pass with valid number $description: '$value'" in {
+          SuffixedNino.isValid(value) should equal(true)
+        }
+      }
+      for ((description, value) <- invalidNinos) {
+        s"fail with $description: '$value'" in {
+          SuffixedNino.isValid(value) should equal(false)
+        }
       }
     }
 
-    "fail if the second letter O" in {
-      validateNino("AO123456C") should equal (false)
+    "Creating should" - {
+      for ((description, value) <- validNinos) {
+        s"create an object with valid number $description: '$value'" in {
+          SuffixedNino(value) should be(a[SuffixedNino])
+        }
+      }
+      for ((description, value) <- invalidNinos) {
+        s"throw an exception with $description: '$value'" in {
+          an[IllegalArgumentException] should be thrownBy SuffixedNino(value)
+        }
+      }
+    }
+
+    "Parsing should" - {
+      for ((description, value) <- validNinos) {
+        s"create an object with valid number $description: '$value'" in {
+          SuffixedNino.parse(value).get should be (a[SuffixedNino])
+        }
+      }
+      for ((description, value) <- invalidNinos) {
+        s"return None with $description: '$value'" in {
+          SuffixedNino.parse(value) should be (empty)
+        }
+      }
+    }
+
+    "a valid instance should be able to be" - {
+      "formatted" in {
+        SuffixedNino("CS100700A").formatted shouldBe "CS 10 07 00 A"
+      }
+      "shortened without spaces" in {
+        SuffixedNino("CS100700A").shorten shouldBe ShortNino("CS100700")
+      }
+      "shortened with spaces" in {
+        SuffixedNino("CS 10 07 00 A").shorten shouldBe ShortNino("CS 10 07 00")
+      }
+    }
+
+    "Creating as a ShortOrSuffixedNino should" - {
+      for ((description, value) <- validNinos) {
+        s"extract to SuffixedNino a valid number $description: '$value'" in {
+          ShortOrSuffixedNino(value) should (be (a [ShortOrSuffixedNino]) and be (a [SuffixedNino]))
+        }
+      }
+      for ((description, value) <- invalidNinos.filter { case(_,v) => v != validNino }) {
+        s"fail with $description: '$value'" in {
+          an[IllegalArgumentException] should be thrownBy ShortOrSuffixedNino(value)
+        }
+      }
+    }
+
+    "Parsing as a ShortOrSuffixedNino should" - {
+      for ((description, value) <- validNinos) {
+        s"extract to ShortNino a valid number $description: '$value'" in {
+          ShortOrSuffixedNino.parse(value).get should (be (a [ShortOrSuffixedNino]) and be (a [SuffixedNino]))
+        }
+      }
+      for ((description, value) <- invalidNinos.filter { case(_,v) => v != validNino }) {
+        s"fail with $description: '$value'" in {
+          ShortOrSuffixedNino.parse(value) should be (empty)
+        }
+      }
     }
   }
 
-  "Creating a Nino" should {
-    "fail if the nino is not valid" in {
-      an [IllegalArgumentException] should be thrownBy Nino("INVALID_NINO")
+  "For ShortNino" - {
+    val validNinos = List(
+      "without spaces" -> validNino,
+      "with spaces" -> "AB 12 34 56"
+    )
+    val invalidNinos =
+      List(
+        "valid number with a suffix" -> (validNino + validSuffix),
+        "valid number with leading space" -> s" $validNino",
+        "valid number with trailing space" -> s"$validNino ",
+        "only one starting letter and 7 total characters" -> "A123456",
+        "only one starting letter and 8 total characters" -> "A1234567",
+        "three starting letters and 8 total characters" -> "ABC12345",
+        "three starting letters and 9 total characters" -> "ABC123456",
+        "lowercase letters" -> "ab123456",
+        "less than 6 middle digits" -> "AB12345",
+        "more than 6 middle digits" -> "AB1234567"
+      ) ++
+        alwaysInvalidNinos ++
+        invalidPrefixes.map(p => (s"numbers staring with $p", p + "123456C"))
+
+    "The validation should" - {
+      for ((description, value) <- validNinos) {
+        s"pass with valid number $description: '$value'" in {
+          ShortNino.isValid(value) should equal(true)
+        }
+      }
+      for ((description, value) <- invalidNinos) {
+        s"fail with $description: '$value'" in {
+          ShortNino.isValid(value) should equal(false)
+        }
+      }
+    }
+
+    "Creating should" - {
+      for ((description, value) <- validNinos) {
+        s"create an object with valid number $description: '$value'" in {
+          ShortNino(value) should be(a[ShortNino])
+        }
+      }
+      for ((description, value) <- invalidNinos) {
+        s"throw an exception with $description: '$value'" in {
+          an[IllegalArgumentException] should be thrownBy ShortNino(value)
+        }
+      }
+    }
+
+    "Parsing should" - {
+      for ((description, value) <- validNinos) {
+        s"create an object with valid number $description: '$value'" in {
+          ShortNino.parse(value).get should be (a[ShortNino])
+        }
+      }
+      for ((description, value) <- invalidNinos) {
+        s"return None with $description: '$value'" in {
+          ShortNino.parse(value) should be (empty)
+        }
+      }
+    }
+
+    "Formatting should" - {
+      "produce a formatted nino" in {
+        ShortNino("CS100700").formatted shouldBe "CS 10 07 00"
+      }
+    }
+
+    "Creating as a ShortOrSuffixedNino should" - {
+      for ((description, value) <- validNinos) {
+        s"extract to ShortNino a valid number $description: '$value'" in {
+          ShortOrSuffixedNino(value) should (be (a [ShortOrSuffixedNino]) and be (a [ShortNino]))
+        }
+      }
+      for ((description, value) <- invalidNinos.filter { case(_,v) => v != (validNino + validSuffix) }) {
+        s"fail with $description: '$value'" in {
+          an[IllegalArgumentException] should be thrownBy ShortOrSuffixedNino(value)
+        }
+      }
+    }
+
+    "Parsing as a ShortOrSuffixedNino should" - {
+      for ((description, value) <- validNinos) {
+        s"extract to ShortNino a valid number $description: '$value'" in {
+          ShortOrSuffixedNino.parse(value).get should (be (a [ShortOrSuffixedNino]) and be (a [ShortNino]))
+        }
+      }
+      for ((description, value) <- invalidNinos.filter { case(_,v) => v != (validNino + validSuffix) }) {
+        s"fail with $description: '$value'" in {
+          ShortOrSuffixedNino.parse(value) should be (empty)
+        }
+      }
     }
   }
-
-  "Formatting a Nino" should {
-    "produce a formatted nino" in {
-      Nino("CS100700A").formatted shouldBe "CS 10 07 00 A"
-    }
-  }
-
-  def validateNino(nino: String) = Nino.isValid(nino)
 }
