@@ -21,7 +21,7 @@ import uk.gov.hmrc.domain.{SimpleObjectReads, SimpleObjectWrites, SimpleName, Ta
 
 case class PsaId(id: String) extends TaxIdentifier with SimpleName {
   require(PsaId.isValid(id))
-  override lazy val toString = id
+  override def toString = id
   val name = "psaid"
   def value = id
 }

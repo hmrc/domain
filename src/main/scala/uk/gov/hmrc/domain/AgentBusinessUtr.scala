@@ -20,7 +20,7 @@ import play.api.libs.json.{Reads, Writes}
 
 case class AgentBusinessUtr(utr: String) extends TaxIdentifier with SimpleName {
   require(AgentBusinessUtr.isValid(utr))
-  override lazy val toString = utr
+  override def toString = utr
   val name = "agentbusinessutr"
   def value = utr
 }
