@@ -20,7 +20,7 @@ import play.api.libs.json.{Reads, Writes}
 
 case class Nino(nino: String) extends TaxIdentifier with SimpleName {
   require(Nino.isValid(nino), s"$nino is not a valid nino.")
-  override lazy val toString = nino
+  override def toString = nino
 
   def value = nino
 
