@@ -20,7 +20,7 @@ import play.api.libs.json.{Reads, Writes}
 
 
 case class SaUtr(utr: String) extends TaxIdentifier with SimpleName {
-  override lazy val toString = utr
+  override def toString = utr
   def value = utr
   val name = "sautr"
 }

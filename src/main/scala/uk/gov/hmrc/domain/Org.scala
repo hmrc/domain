@@ -19,7 +19,7 @@ package uk.gov.hmrc.domain
 import play.api.libs.json.{Reads, Writes}
 
 case class Org(org: String) extends TaxIdentifier with SimpleName {
-  override lazy val toString = value
+  override def toString = value
   val name = "org"
   def value = org
 }
