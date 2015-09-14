@@ -21,7 +21,7 @@ import java.net.{URLDecoder, URLEncoder}
 import play.api.libs.json._
 
 case class EmpRef(taxOfficeNumber: String, taxOfficeReference: String) extends TaxIdentifier {
-  override lazy val toString = value
+  override def toString = value
 
   def value = taxOfficeNumber + "/" + taxOfficeReference
 
