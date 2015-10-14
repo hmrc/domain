@@ -14,7 +14,7 @@ Types are provided for many common tax identifiers, such as:
 [Corporation Tax](src/main/scala/uk/gov/hmrc/domain/CtUtr.scala), [Annual Tax on Enveloped Dwellings](src/main/scala/uk/gov/hmrc/domain/AtedUtr.scala),
 [Pension Scheme Administrator ID](src/main/scala/uk/gov/hmrc/domain/PsaId.scala),[Alcohol Wholesale Registration Scheme](src/main/scala/uk/gov/hmrc/domain/AwrsUtr.scala)
 * [Unique Agent Reference (UAR)](src/main/scala/uk/gov/hmrc/domain/Uar.scala)
-* [Vehicle Registration Number (VRN)](src/main/scala/uk/gov/hmrc/domain/Vrn.scala)
+* [VAT Registration Number (VRN)](src/main/scala/uk/gov/hmrc/domain/Vrn.scala)
 * Agents - [Code](src/main/scala/uk/gov/hmrc/domain/AgentCode.scala), 
 [UserId](src/main/scala/uk/gov/hmrc/domain/AgentUserId.scala), 
 [PAYE Reference](src/main/scala/uk/gov/hmrc/domain/PayeAgentReference.scala),
