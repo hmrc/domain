@@ -17,7 +17,6 @@
 package uk.gov.hmrc.domain
 
 import play.api.libs.json.{Reads, Writes}
-import uk.gov.hmrc.domain.{SimpleObjectReads, SimpleObjectWrites, SimpleName, TaxIdentifier}
 
 case class PsaId(id: String) extends TaxIdentifier with SimpleName {
   require(PsaId.isValid(id))
