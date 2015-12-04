@@ -19,9 +19,6 @@ package uk.gov.hmrc.domain
 class Random(random: scala.util.Random = new scala.util.Random) {
   def this(seed: Int) = this(new scala.util.Random(seed))
 
-  private val invalidFirstPrefixCharacters = List("D", "F", "I", "Q", "U", "V")
-  private val invalidSecordPrefixCharacters = "O" :: invalidFirstPrefixCharacters
-
   private def generateCharacterByRange(start: Char, end: Char): String =
     (start + random.nextInt(end - start)).toChar.toString
 
@@ -32,8 +29,8 @@ class Random(random: scala.util.Random = new scala.util.Random) {
   }
 
   private def generatePrefix: String = {
-    val prefix = generatePrefixCharacter(invalidFirstPrefixCharacters) +
-      generatePrefixCharacter(invalidSecordPrefixCharacters)
+    val prefix = generatePrefixCharacter(Nino.invalidFirstPrefixCharacters) +
+      generatePrefixCharacter(Nino.invalidSecordPrefixCharacters)
     if (Nino.invalidPrefixes.contains(prefix)) generatePrefix
     else prefix
   }
