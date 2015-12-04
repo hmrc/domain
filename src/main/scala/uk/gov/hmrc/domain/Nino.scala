@@ -34,7 +34,7 @@ object Nino {
   implicit val ninoRead: Reads[Nino] = new SimpleObjectReads[Nino]("nino", Nino.apply)
 
   private val validNinoFormat = "[[A-Z]&&[^DFIQUV]][[A-Z]&&[^DFIQUVO]] ?\\d{2} ?\\d{2} ?\\d{2} ?[A-Z]{1}"
-  private val invalidPrefixes = List("BG", "GB", "NK", "KN", "TN", "NT", "ZZ")
+  val invalidPrefixes = List("BG", "GB", "NK", "KN", "TN", "NT", "ZZ")
 
   private def hasValidPrefix(nino: String) = invalidPrefixes.find(nino.startsWith).isEmpty
 
