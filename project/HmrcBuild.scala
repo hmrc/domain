@@ -25,7 +25,8 @@ object HmrcBuild extends Build {
   val appDependencies = Seq(
     Dependencies.Compile.playJson,
     Dependencies.Test.scalaTest,
-    Dependencies.Test.pegdown
+    Dependencies.Test.pegdown,
+    Dependencies.Test.scalaCheck
   )
 
   lazy val domain = (project in file("."))
@@ -50,6 +51,7 @@ object Dependencies {
   sealed abstract class Test(scope: String) {
     val scalaTest = "org.scalatest" %% "scalatest" % "2.2.4" % scope
     val pegdown = "org.pegdown" % "pegdown" % "1.5.0" % scope
+    val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.12.5" % scope
   }
 
   object Test extends Test("test")
