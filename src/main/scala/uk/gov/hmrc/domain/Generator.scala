@@ -16,7 +16,9 @@
 
 package uk.gov.hmrc.domain
 
-class Random(random: scala.util.Random = new scala.util.Random) {
+import scala.util.Random
+
+class Generator(random: Random = new Random) {
   def this(seed: Int) = this(new scala.util.Random(seed))
 
   def nextNino: Nino = {

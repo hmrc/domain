@@ -23,7 +23,7 @@ import org.scalatest.prop.Checkers
 class RandomSpec extends WordSpec with Checkers {
   "Nino Generation" should {
     "generate valid NINOs for all random seeds" in {
-      check(Prop.forAll { (seed: Int) => Nino.isValid(new Random(seed).nextNino.nino) })
+      check(Prop.forAll { (seed: Int) => Nino.isValid(new Generator(seed).nextNino.nino) })
     }
   }
 }
