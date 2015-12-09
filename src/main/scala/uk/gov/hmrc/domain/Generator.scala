@@ -16,20 +16,15 @@
 
 package uk.gov.hmrc.domain
 
-import play.api.libs.json.{Reads, Writes}
+import scala.util.Random
 
-case class PsaId(id: String) extends TaxIdentifier with SimpleName {
-  require(PsaId.isValid(id))
-  override def toString = id
-  val name = "psaid"
-  def value = id
-}
+class Generator(random: Random = new Random) {
+  def this(seed: Int) = this(new scala.util.Random(seed))
 
-object PsaId {
-  implicit val psaIdWrite: Writes[PsaId] = new SimpleObjectWrites[PsaId](_.value)
-  implicit val psaIdRead: Reads[PsaId] = new SimpleObjectReads[PsaId]("id", PsaId.apply)
-
-  private val validFormat = "^[a-zA-Z]\\d{7}$"
-
-  def isValid(id: String) = !id.isEmpty && id.matches(validFormat)
+  def nextNino: Nino = {
+    val prefix = Nino.validPrefixes(random.nextInt(Nino.validPrefixes.length))
+    val number = random.nextInt(1000000)
+    val suffix = Nino.validSuffixes(random.nextInt(Nino.validSuffixes.length))
+    Nino(f"$prefix$number%06d$suffix")
+  }
 }

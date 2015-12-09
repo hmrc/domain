@@ -39,4 +39,9 @@ object Nino {
   private def hasValidPrefix(nino: String) = invalidPrefixes.find(nino.startsWith).isEmpty
 
   def isValid(nino: String) = nino != null && hasValidPrefix(nino) && nino.matches(validNinoFormat)
+
+  private[domain] val validFirstCharacters = ('A' to 'Z').filterNot(List('D', 'F', 'I', 'Q', 'U', 'V').contains).map(_.toString)
+  private[domain] val validSecondCharacters = ('A' to 'Z').filterNot(List('D', 'F', 'I', 'O', 'Q', 'U', 'V').contains).map(_.toString)
+  val validPrefixes = validFirstCharacters.flatMap(a => validSecondCharacters.map(a + _)).filterNot(invalidPrefixes.contains(_))
+  val validSuffixes = ('A' to 'D').map(_.toString)
 }

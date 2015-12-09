@@ -16,20 +16,14 @@
 
 package uk.gov.hmrc.domain
 
-import play.api.libs.json.{Reads, Writes}
+import org.scalacheck.Prop
+import org.scalatest.WordSpec
+import org.scalatest.prop.Checkers
 
-case class PsaId(id: String) extends TaxIdentifier with SimpleName {
-  require(PsaId.isValid(id))
-  override def toString = id
-  val name = "psaid"
-  def value = id
-}
-
-object PsaId {
-  implicit val psaIdWrite: Writes[PsaId] = new SimpleObjectWrites[PsaId](_.value)
-  implicit val psaIdRead: Reads[PsaId] = new SimpleObjectReads[PsaId]("id", PsaId.apply)
-
-  private val validFormat = "^[a-zA-Z]\\d{7}$"
-
-  def isValid(id: String) = !id.isEmpty && id.matches(validFormat)
+class GeneratorSpec extends WordSpec with Checkers {
+  "Nino Generation" should {
+    "generate valid NINOs for all random seeds" in {
+      check(Prop.forAll { (seed: Int) => Nino.isValid(new Generator(seed).nextNino.nino) })
+    }
+  }
 }
