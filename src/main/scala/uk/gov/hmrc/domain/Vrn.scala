@@ -24,7 +24,7 @@ case class Vrn(vrn: String) extends TaxIdentifier with SimpleName {
   def value = vrn
 }
 
-object Vrn {
+object Vrn extends (String => Vrn) {
   implicit val vrnWrite: Writes[Vrn] = new SimpleObjectWrites[Vrn](_.value)
   implicit val vrnRead: Reads[Vrn] = new SimpleObjectReads[Vrn]("vrn", Vrn.apply)
 }

@@ -28,7 +28,7 @@ case class EmpRef(taxOfficeNumber: String, taxOfficeReference: String) extends T
   def encodedValue = URLEncoder.encode(value, "UTF-8")
 }
 
-object EmpRef {
+object EmpRef extends ((String, String) => EmpRef){
 
   implicit val empRefWrite: Writes[EmpRef] = new SimpleObjectWrites[EmpRef](_.value)
   implicit val empRefRead: Reads[EmpRef] = new Reads[EmpRef] {

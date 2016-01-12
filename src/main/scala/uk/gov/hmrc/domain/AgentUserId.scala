@@ -22,7 +22,7 @@ case class AgentUserId(value: String) extends TaxIdentifier {
   override def toString = value
 }
 
-object AgentUserId {
+object AgentUserId extends (String => AgentUserId) {
   implicit val agentUserIdWrite: Writes[AgentUserId] = new SimpleObjectWrites[AgentUserId](_.value)
   implicit val agentUserIdRead: Reads[AgentUserId] = new SimpleObjectReads[AgentUserId]("agentUserId", AgentUserId.apply)
 }

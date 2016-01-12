@@ -25,7 +25,7 @@ case class AgentBusinessUtr(utr: String) extends TaxIdentifier with SimpleName {
   def value = utr
 }
 
-object AgentBusinessUtr extends CheckCharacter {
+object AgentBusinessUtr extends CheckCharacter with (String => AgentBusinessUtr) {
   implicit val agentBusinessUtrWrite: Writes[AgentBusinessUtr] = new SimpleObjectWrites[AgentBusinessUtr](_.value)
   implicit val agentBusinessUtrRead: Reads[AgentBusinessUtr] = new SimpleObjectReads[AgentBusinessUtr]("utr", AgentBusinessUtr.apply)
 

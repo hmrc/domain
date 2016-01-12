@@ -25,7 +25,7 @@ case class CtUtr(utr: String) extends TaxIdentifier with SimpleName {
   def value = utr
 }
 
-object CtUtr {
+object CtUtr extends (String => CtUtr) {
   implicit val ctUtrWrite: Writes[CtUtr] = new SimpleObjectWrites[CtUtr](_.value)
   implicit val ctUtrRead: Reads[CtUtr] = new SimpleObjectReads[CtUtr]("utr", CtUtr.apply)
 }

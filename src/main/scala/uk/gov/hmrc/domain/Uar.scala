@@ -24,7 +24,7 @@ case class Uar(uar: String) extends TaxIdentifier with SimpleName {
   def value = uar
 }
 
-object Uar {
+object Uar extends (String => Uar) {
   implicit val uarWrite: Writes[Uar] = new SimpleObjectWrites[Uar](_.value)
   implicit val uarRead: Reads[Uar] = new SimpleObjectReads[Uar]("uar", Uar.apply)
 }
