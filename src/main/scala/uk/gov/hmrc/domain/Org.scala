@@ -24,7 +24,7 @@ case class Org(org: String) extends TaxIdentifier with SimpleName {
   def value = org
 }
 
-object Org {
+object Org  extends (String => Org) {
   implicit val orgWrite: Writes[Org] = new SimpleObjectWrites[Org](_.value)
   implicit val orgRead: Reads[Org] = new SimpleObjectReads[Org]("org", Org.apply)
 }

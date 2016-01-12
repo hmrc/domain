@@ -29,7 +29,7 @@ case class Nino(nino: String) extends TaxIdentifier with SimpleName {
   def formatted = value.grouped(2).mkString(" ")
 }
 
-object Nino {
+object Nino extends (String => Nino) {
   implicit val ninoWrite: Writes[Nino] = new SimpleObjectWrites[Nino](_.value)
   implicit val ninoRead: Reads[Nino] = new SimpleObjectReads[Nino]("nino", Nino.apply)
 

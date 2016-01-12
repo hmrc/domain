@@ -22,7 +22,7 @@ case class AgentCode(value: String) extends TaxIdentifier {
   override def toString = value
 }
 
-object AgentCode {
+object AgentCode extends (String => AgentCode) {
   implicit val agentCodeWrite: Writes[AgentCode] = new SimpleObjectWrites[AgentCode](_.value)
   implicit val agentCodeRead: Reads[AgentCode] = new SimpleObjectReads[AgentCode]("agentCode", AgentCode.apply)
 }

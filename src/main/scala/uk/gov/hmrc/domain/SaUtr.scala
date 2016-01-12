@@ -25,7 +25,7 @@ case class SaUtr(utr: String) extends TaxIdentifier with SimpleName {
   val name = "sautr"
 }
 
-object SaUtr {
+object SaUtr extends (String => SaUtr) {
   implicit val saUtrWrite: Writes[SaUtr] = new SimpleObjectWrites[SaUtr](_.value)
   implicit val saUtrRead: Reads[SaUtr] = new SimpleObjectReads[SaUtr]("utr", SaUtr.apply)
 }
