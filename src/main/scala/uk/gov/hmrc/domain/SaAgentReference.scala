@@ -22,7 +22,7 @@ case class SaAgentReference(value: String) extends TaxIdentifier{
   override lazy val toString = value
 }
 
-object SaAgentReference {
+object SaAgentReference extends (String => SaAgentReference) {
   implicit val agencySaReferenceWrite: Writes[SaAgentReference] = new SimpleObjectWrites[SaAgentReference](_.value)
   implicit val agencySaReferenceRead: Reads[SaAgentReference] = new SimpleObjectReads[SaAgentReference]("saAgentReference", SaAgentReference.apply)
 }
