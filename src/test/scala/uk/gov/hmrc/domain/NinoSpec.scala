@@ -58,6 +58,10 @@ class NinoSpec extends WordSpec with Matchers {
     "fail if the second letter O" in {
       validateNino("AO123456C") should equal (false)
     }
+
+    "fail if the suffix is E" in {
+      validateNino("AB123456E") should equal (false)
+    }
   }
 
   "Creating a Nino" should {
