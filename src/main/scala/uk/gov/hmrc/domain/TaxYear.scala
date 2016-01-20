@@ -19,7 +19,7 @@ package uk.gov.hmrc.domain
 import scala.util.matching.Regex
 import scala.util.matching.Regex.Match
 
-case class TaxYear(value: String) {
+case class TaxYear(value: String) extends TaxIdentifier {
   require(TaxYear.isValid(value), "TaxYear requires hyphen separated consecutive years with format YYYY-YY")
 
   override def toString = value

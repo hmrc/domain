@@ -18,7 +18,7 @@ package uk.gov.hmrc.domain
 
 import scala.util.Try
 
-case class Period(value: String) {
+case class Period(value: String) extends TaxIdentifier {
   require(Period.isValid(value), "Period must be an integer between 1 and 12")
 
   override def toString = value
