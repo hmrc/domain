@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 HM Revenue & Customs
+ * Copyright 2016 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ object AtedUtr extends CheckCharacter with (String => AtedUtr) {
   implicit val atedUtrRead: Reads[AtedUtr] = new SimpleObjectReads[AtedUtr]("utr", AtedUtr.apply)
 
   private val validFormat = "^[Xx][a-zA-Z]\\d{2}00000\\d{6}$"
+  private val validFormatNew = "^[Xx][A-Z]AT00000\\d{6}$"
 
-  def isValid(utr: String) = !utr.isEmpty && utr.matches(validFormat) && isCheckCorrect(utr.toUpperCase, 1, 2)
+  def isValid(utr: String) = !utr.isEmpty && (utr.matches(validFormat) || utr.matches(validFormatNew)) && isCheckCorrect(utr.toUpperCase, 1, 2)
 }

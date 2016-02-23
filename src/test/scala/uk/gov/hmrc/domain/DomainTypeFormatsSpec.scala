@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 HM Revenue & Customs
+ * Copyright 2016 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -74,11 +74,24 @@ class DomainTypeFormatsSpec extends WordSpec with Matchers {
       result.get shouldBe AtedUtr("XN1200000100001")
     }
 
+    "be able to read obsolete new AtedUtr structure from Mongo" in {
+      val dbStructure = JsObject(Seq("utr" -> JsString("XTAT00000100001")))
+      val result = AtedUtr.atedUtrRead.reads(dbStructure)
+      result.get shouldBe AtedUtr("XTAT00000100001")
+    }
+
     "be able to read string representation of AtedUtr" in {
       val restStructure = JsString("XN1200000100001")
       val result = AtedUtr.atedUtrRead.reads(restStructure)
       result.get shouldBe AtedUtr("XN1200000100001")
     }
+
+    "be able to read string representation of new AtedUtr" in {
+      val restStructure = JsString("XTAT00000100001")
+      val result = AtedUtr.atedUtrRead.reads(restStructure)
+      result.get shouldBe AtedUtr("XTAT00000100001")
+    }
+
   }
 
   "Uar reader" should {
