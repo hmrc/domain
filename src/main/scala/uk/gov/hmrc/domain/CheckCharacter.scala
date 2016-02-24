@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 HM Revenue & Customs
+ * Copyright 2016 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,14 +26,13 @@ trait CheckCharacter {
 
   private def getCheckCharacter(utr: String, offset: Int): Char = {
     val sum = weights.zipWithIndex.collect {
-      case (weight, index) if (index + offset < utr.length) => {
+      case (weight, index) if index + offset < utr.length =>
         val char = utr.charAt(index + offset)
         if (char.isLetter) {
           weight * (char.asDigit + mod)
         } else {
           weight * char.asDigit
         }
-      }
     }.sum
 
     checkString.charAt(sum % mod)
