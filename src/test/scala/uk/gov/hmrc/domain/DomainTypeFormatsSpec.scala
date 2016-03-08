@@ -211,29 +211,15 @@ class DomainTypeFormatsSpec extends WordSpec with Matchers {
 
   "PspId reader" should {
     "be able to read obsolete PspId from Mongo" in {
-      val dbStructure = JsObject(Seq("id" -> JsString("A1234567")))
+      val dbStructure = JsObject(Seq("id" -> JsString("12345678")))
       val result = PspId.pspIdRead.reads(dbStructure)
-      result.get shouldBe PspId("A1234567")
+      result.get shouldBe PspId("12345678")
     }
 
     "be able to read string representation of PspId" in {
-      val restStructure = JsString("A1234567")
+      val restStructure = JsString("12345678")
       val result = PspId.pspIdRead.reads(restStructure)
-      result.get shouldBe PspId("A1234567")
-    }
-  }
-
-  "SharedWorkspaceId reader" should {
-    "be able to read obsolete SharedWorkspaceId from Mongo" in {
-      val dbStructure = JsObject(Seq("id" -> JsString("A1234567")))
-      val result = SharedWorkspaceId.sharedWorkspaceIdRead.reads(dbStructure)
-      result.get shouldBe SharedWorkspaceId("A1234567")
-    }
-
-    "be able to read string representation of SharedWorkspaceId" in {
-      val restStructure = JsString("A1234567")
-      val result = SharedWorkspaceId.sharedWorkspaceIdRead.reads(restStructure)
-      result.get shouldBe SharedWorkspaceId("A1234567")
+      result.get shouldBe PspId("12345678")
     }
   }
 

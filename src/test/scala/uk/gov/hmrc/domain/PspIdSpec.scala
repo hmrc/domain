@@ -25,5 +25,23 @@ class PspIdSpec extends WordSpec with Matchers {
     "fail with an empty string" in {
       PspId.isValid("") should equal(false)
     }
+
+    "fail when there are non-numeric characters" in {
+      PspId.isValid("aa234567") should equal(false)
+      PspId.isValid("a1a34567") should equal(false)
+      PspId.isValid("a12a4567") should equal(false)
+      PspId.isValid("a123a567") should equal(false)
+      PspId.isValid("a1234a67") should equal(false)
+      PspId.isValid("a12345a7") should equal(false)
+      PspId.isValid("a123456a") should equal(false)
+    }
+
+    "fail when longer than 8 characters" in {
+      PspId.isValid("123456789") should equal(false)
+    }
+
+    "pass when 8 digits" in {
+      PspId.isValid("12345678") should equal(true)
+    }
   }
 }

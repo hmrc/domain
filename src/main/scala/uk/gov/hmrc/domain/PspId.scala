@@ -29,7 +29,7 @@ object PspId  extends (String => PspId) {
   implicit val pspIdWrite: Writes[PspId] = new SimpleObjectWrites[PspId](_.value)
   implicit val pspIdRead: Reads[PspId] = new SimpleObjectReads[PspId]("id", PspId.apply)
 
-  private val validFormat = "^[a-zA-Z]\\d{7}$"
+  private val validFormat = "^\\d{8}$"
 
-  def isValid(id: String) = !id.isEmpty
+  def isValid(id: String) = !id.isEmpty && id.matches(validFormat)
 }
