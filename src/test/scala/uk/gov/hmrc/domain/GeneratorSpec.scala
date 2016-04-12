@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 HM Revenue & Customs
+ * Copyright 2016 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,9 +21,24 @@ import org.scalatest.WordSpec
 import org.scalatest.prop.Checkers
 
 class GeneratorSpec extends WordSpec with Checkers {
+
   "Nino Generation" should {
     "generate valid NINOs for all random seeds" in {
       check(Prop.forAll { (seed: Int) => Nino.isValid(new Generator(seed).nextNino.nino) })
     }
   }
+
+  "AtedUtr Generation" should {
+
+    "generate valid AtedUtrs for all random seeds" in {
+      check(Prop.forAll { (seed: Int) => AtedUtr.isValid(new Generator(seed).nextAtedUtr.utr)})
+    }
+
+    "generate a batch of unique AtedUtrs" in {
+      val atedUtrs = new Generator().atedUtrBatch(100000)
+      assert(atedUtrs.distinct.length == atedUtrs.length)
+    }
+
+  }
+
 }
