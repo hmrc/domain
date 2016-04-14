@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 HM Revenue & Customs
+ * Copyright 2016 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ case class AgentBusinessUtr(utr: String) extends TaxIdentifier with SimpleName {
   def value = utr
 }
 
-object AgentBusinessUtr extends CheckCharacter with (String => AgentBusinessUtr) {
+object AgentBusinessUtr extends Modulus23Check with (String => AgentBusinessUtr) {
   implicit val agentBusinessUtrWrite: Writes[AgentBusinessUtr] = new SimpleObjectWrites[AgentBusinessUtr](_.value)
   implicit val agentBusinessUtrRead: Reads[AgentBusinessUtr] = new SimpleObjectReads[AgentBusinessUtr]("utr", AgentBusinessUtr.apply)
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 HM Revenue & Customs
+ * Copyright 2016 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,10 @@
 
 package uk.gov.hmrc.domain
 
+import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
-class Generator(random: Random = new Random) {
+class Generator(random: Random = new Random) extends Modulus23Check {
   def this(seed: Int) = this(new scala.util.Random(seed))
 
   def nextNino: Nino = {
@@ -27,4 +28,25 @@ class Generator(random: Random = new Random) {
     val suffix = Nino.validSuffixes(random.nextInt(Nino.validSuffixes.length))
     Nino(f"$prefix$number%06d$suffix")
   }
+
+  def atedUtrBatch(amountToGenerate: Int): List[AtedUtr] = {
+    require(amountToGenerate <= 900000, throw new IllegalArgumentException("Can't generate more than 9000000 unique AtedUtrs, specify a smaller value for amount"))
+    val atedUtrs: ListBuffer[AtedUtr] = ListBuffer()
+    var start = 100000
+    for (a <- 0 until amountToGenerate) {
+      val stringToWeight = s"AT00000$start"
+      val checkChar = calculateCheckCharacter(stringToWeight)
+      atedUtrs.++=(Seq(AtedUtr(s"X$checkChar$stringToWeight")))
+      start = start + 1
+    }
+    atedUtrs.toList
+  }
+
+  def nextAtedUtr: AtedUtr = {
+    val suffix = f"${random.nextInt(9) + 1}${random.nextInt(100000)}%05d"
+    val weighting = s"AT00000$suffix"
+    val checkCharacter  = calculateCheckCharacter(weighting)
+    AtedUtr(f"X${checkCharacter}AT00000$suffix")
+  }
+
 }
