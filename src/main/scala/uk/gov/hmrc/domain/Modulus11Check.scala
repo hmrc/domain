@@ -16,15 +16,10 @@
 
 package uk.gov.hmrc.domain
 
-import play.api.libs.json.{Reads, Writes}
+trait Modulus11Check extends ModulusCheck {
 
-case class AwrsUtr(utr: String) extends TaxIdentifier with SimpleName {
-  override def toString = utr
-  val name = "awrsutr"
-  def value = utr
-}
+  override protected val checkString = "21987654321"
+  override protected val mod = 11
+  override protected val weights = List(6, 7, 8, 9, 10, 5, 4, 3, 2)
 
-object AwrsUtr extends (String => AwrsUtr) {
-  implicit val awrsUtrWrite: Writes[AwrsUtr] = new SimpleObjectWrites[AwrsUtr](_.value)
-  implicit val awrsUtrRead: Reads[AwrsUtr] = new SimpleObjectReads[AwrsUtr]("utr", AwrsUtr.apply)
 }

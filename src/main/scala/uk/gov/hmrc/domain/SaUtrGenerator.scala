@@ -16,15 +16,14 @@
 
 package uk.gov.hmrc.domain
 
-import play.api.libs.json.{Reads, Writes}
+import scala.util.Random
 
-case class AwrsUtr(utr: String) extends TaxIdentifier with SimpleName {
-  override def toString = utr
-  val name = "awrsutr"
-  def value = utr
-}
+class SaUtrGenerator(random: Random = new Random) extends Modulus11Check {
+  def this(seed: Int) = this(new scala.util.Random(seed))
 
-object AwrsUtr extends (String => AwrsUtr) {
-  implicit val awrsUtrWrite: Writes[AwrsUtr] = new SimpleObjectWrites[AwrsUtr](_.value)
-  implicit val awrsUtrRead: Reads[AwrsUtr] = new SimpleObjectReads[AwrsUtr]("utr", AwrsUtr.apply)
+  def nextSaUtr: SaUtr = {
+    val suffix = f"${random.nextInt(100000)}%09d"
+    val checkCharacter  = calculateCheckCharacter(suffix)
+    SaUtr(s"$checkCharacter$suffix")
+  }
 }

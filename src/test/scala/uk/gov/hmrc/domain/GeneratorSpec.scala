@@ -40,5 +40,4 @@ class GeneratorSpec extends WordSpec with Checkers {
     }
 
   }
-
 }
