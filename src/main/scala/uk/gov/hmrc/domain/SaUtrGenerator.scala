@@ -16,10 +16,14 @@
 
 package uk.gov.hmrc.domain
 
-trait Modulus23Check extends ModulusCheck {
+import scala.util.Random
 
-  override protected val checkString = "ABCDEFGHXJKLMNYPQRSTZVW"
-  override protected val mod = 23
-  override protected val weights = List(9, 10, 11, 12, 13, 8, 7, 6, 5, 4, 3, 2, 1)
+class SaUtrGenerator(random: Random = new Random) extends Modulus11Check {
+  def this(seed: Int) = this(new scala.util.Random(seed))
 
+  def nextSaUtr: SaUtr = {
+    val suffix = f"${random.nextInt(100000)}%09d"
+    val checkCharacter  = calculateCheckCharacter(suffix)
+    SaUtr(s"$checkCharacter$suffix")
+  }
 }
