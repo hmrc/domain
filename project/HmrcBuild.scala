@@ -26,7 +26,8 @@ object HmrcBuild extends Build {
     Dependencies.Compile.playJson,
     Dependencies.Test.scalaTest,
     Dependencies.Test.pegdown,
-    Dependencies.Test.scalaCheck
+    Dependencies.Test.scalaCheck,
+    Dependencies.Test.referenceCheck
   )
 
   lazy val domain = (project in file("."))
@@ -52,6 +53,7 @@ object Dependencies {
     val scalaTest = "org.scalatest" %% "scalatest" % "2.2.4" % scope
     val pegdown = "org.pegdown" % "pegdown" % "1.5.0" % scope
     val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.12.5" % scope
+    val referenceCheck = "uk.gov.hmrc" %% "reference-checker" % "2.0.0" % scope
   }
 
   object Test extends Test("test")

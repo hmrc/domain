@@ -16,15 +16,16 @@
 
 package uk.gov.hmrc.domain
 
-import play.api.libs.json.{Reads, Writes}
+import org.scalacheck.Prop
+import org.scalatest.WordSpec
+import org.scalatest.prop.Checkers
+import uk.gov.hmrc.referencechecker.SelfAssessmentReferenceChecker
 
-case class AwrsUtr(utr: String) extends TaxIdentifier with SimpleName {
-  override def toString = utr
-  val name = "awrsutr"
-  def value = utr
-}
+class SaUtrGeneratorSpec extends WordSpec with Checkers {
 
-object AwrsUtr extends (String => AwrsUtr) {
-  implicit val awrsUtrWrite: Writes[AwrsUtr] = new SimpleObjectWrites[AwrsUtr](_.value)
-  implicit val awrsUtrRead: Reads[AwrsUtr] = new SimpleObjectReads[AwrsUtr]("utr", AwrsUtr.apply)
+  "SaUtr Generation" should {
+    "generate valid SaUtrs for all random seeds" in {
+      check(Prop.forAll { (seed: Int) => SelfAssessmentReferenceChecker.isValid(new SaUtrGenerator(seed).nextSaUtr.utr)})
+    }
+  }
 }
