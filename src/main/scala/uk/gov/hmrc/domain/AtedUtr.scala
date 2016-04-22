@@ -29,8 +29,12 @@ object AtedUtr extends Modulus23Check with (String => AtedUtr) {
   implicit val atedUtrWrite: Writes[AtedUtr] = new SimpleObjectWrites[AtedUtr](_.value)
   implicit val atedUtrRead: Reads[AtedUtr] = new SimpleObjectReads[AtedUtr]("utr", AtedUtr.apply)
 
-  private val validFormat = "^[Xx][a-zA-Z]\\d{2}00000\\d{6}$"
-  private val validFormatNew = "^[Xx][A-Z]AT00000\\d{6}$"
+  private val validFormats = Seq(
+    """^[Xx][a-zA-Z]\d{2}00000\d{6}$""",
+    """^[Xx][A-Z]AT00000\d{6}$"""
+  )
 
-  def isValid(utr: String) = !utr.isEmpty && (utr.matches(validFormat) || utr.matches(validFormatNew)) && isCheckCorrect(utr.toUpperCase, 1, 2)
+  def isValid(utr: String) =
+    validFormats.exists(utr.matches) &&
+      isCheckCorrect(utr.toUpperCase, 1)
 }
