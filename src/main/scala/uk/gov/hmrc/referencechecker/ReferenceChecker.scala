@@ -18,13 +18,13 @@ package uk.gov.hmrc.referencechecker
 
 import scala.util.Try
 
-trait ReferenceChecker {
+sealed trait ReferenceChecker {
 
   val letterToNumber: Map[Char, Int]
   val weights: List[Int]
 
   val refRegex: String
-  def extraChecks: List[String=>Boolean] = List(ref => ref.matches(refRegex))
+  def extraChecks: List[String=>Boolean] = List(_.matches(refRegex))
   def mainCheck(reference:String, weightedSum:Int): Boolean
 
   def referenceToValidate(reference:String): String = reference
@@ -113,9 +113,10 @@ trait UtrReferenceChecker extends ModulusReferenceChecker {
 }
 
 object SelfAssessmentReferenceChecker extends UtrReferenceChecker {
-  override def prepareReference(reference: String) = if (reference.startsWith("K")) reference.drop(1)
-                                                     else if (reference.endsWith("K")) reference.dropRight(1)
-                                                     else reference
+  override def prepareReference(reference: String) =
+    if (reference.startsWith("K")) reference.drop(1)
+    else if (reference.endsWith("K")) reference.dropRight(1)
+    else reference
 }
 
 object CorporationTaxReferenceChecker extends UtrReferenceChecker

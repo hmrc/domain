@@ -19,25 +19,13 @@ package uk.gov.hmrc.domain
 import org.scalacheck.Prop
 import org.scalatest.WordSpec
 import org.scalatest.prop.Checkers
+import uk.gov.hmrc.referencechecker.SelfAssessmentReferenceChecker
 
-class GeneratorSpec extends WordSpec with Checkers {
+class SaUtrGeneratorSpec extends WordSpec with Checkers {
 
-  "Nino Generation" should {
-    "generate valid NINOs for all random seeds" in {
-      check(Prop.forAll { (seed: Int) => Nino.isValid(new Generator(seed).nextNino.nino) })
+  "SaUtr Generation" should {
+    "generate valid SaUtrs for all random seeds" in {
+      check(Prop.forAll { (seed: Int) => SelfAssessmentReferenceChecker.isValid(new SaUtrGenerator(seed).nextSaUtr.utr)})
     }
-  }
-
-  "AtedUtr Generation" should {
-
-    "generate valid AtedUtrs for all random seeds" in {
-      check(Prop.forAll { (seed: Int) => AtedUtr.isValid(new Generator(seed).nextAtedUtr.utr)})
-    }
-
-    "generate a batch of unique AtedUtrs" in {
-      val atedUtrs = new Generator().atedUtrBatch(100000)
-      assert(atedUtrs.distinct.length == atedUtrs.length)
-    }
-
   }
 }
