@@ -48,14 +48,10 @@ object Dependencies {
     val playJson = "com.typesafe.play" %% "play-json" % "2.3.9" % "provided"
   }
 
-  sealed abstract class Test(scope: String) {
-    val scalaTest = "org.scalatest" %% "scalatest" % "2.2.4" % scope
-    val pegdown = "org.pegdown" % "pegdown" % "1.5.0" % scope
-    val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.12.5" % scope
+  object Test {
+    val scalaTest = "org.scalatest" %% "scalatest" % "2.2.4" % "test"
+    val pegdown = "org.pegdown" % "pegdown" % "1.5.0" % "test"
+    val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.12.5" % "test"
   }
-
-  object Test extends Test("test")
-
-  object IntegrationTest extends Test("it")
 
 }
