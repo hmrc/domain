@@ -45,7 +45,7 @@ object HmrcBuild extends Build {
 object Dependencies {
 
   object Compile {
-    val playJson = "com.typesafe.play" %% "play-json" % "2.3.9" % "provided"
+    val playJson = "com.typesafe.play" %% "play-json" % "2.5.8" % "provided"
   }
 
   object Test {
