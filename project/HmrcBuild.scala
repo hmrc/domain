@@ -32,9 +32,7 @@ object HmrcBuild extends Build {
   lazy val domain = (project in file("."))
     .enablePlugins(SbtAutoBuildPlugin, SbtGitVersioning)
     .settings(
-      scalaVersion := "2.11.11",
       libraryDependencies ++= appDependencies,
-      crossScalaVersions := Seq("2.11.11"),
       resolvers := Seq(
         Resolver.bintrayRepo("hmrc", "releases"),
         "typesafe-releases" at "http://repo.typesafe.com/typesafe/releases/"
