@@ -32,9 +32,9 @@ object HmrcBuild extends Build {
   lazy val domain = (project in file("."))
     .enablePlugins(SbtAutoBuildPlugin, SbtGitVersioning)
     .settings(
-      scalaVersion := "2.11.7",
+      scalaVersion := "2.11.11",
       libraryDependencies ++= appDependencies,
-      crossScalaVersions := Seq("2.11.7"),
+      crossScalaVersions := Seq("2.11.11"),
       resolvers := Seq(
         Resolver.bintrayRepo("hmrc", "releases"),
         "typesafe-releases" at "http://repo.typesafe.com/typesafe/releases/"
@@ -49,9 +49,9 @@ object Dependencies {
   }
 
   object Test {
-    val scalaTest = "org.scalatest" %% "scalatest" % "2.2.4" % "test"
-    val pegdown = "org.pegdown" % "pegdown" % "1.5.0" % "test"
-    val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.12.5" % "test"
+    val scalaTest = "org.scalatest" %% "scalatest" % "3.0.1" % "test"
+    val pegdown = "org.pegdown" % "pegdown" % "1.6.0" % "test"
+    val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.13.5" % "test"
   }
 
 }

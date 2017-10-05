@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 HM Revenue & Customs
+ * Copyright 2017 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,11 @@
 
 package uk.gov.hmrc.domain
 
-import org.scalatest.{ShouldMatchers, WordSpec}
+import org.scalatest.{WordSpec}
 import play.api.libs.json.{JsError, JsNumber, JsString, JsSuccess}
+import org.scalatest.Matchers._
 
-class TaxCodeFormatsSpec extends WordSpec with ShouldMatchers {
+class TaxCodeFormatsSpec extends WordSpec {
   import TaxCodeFormats._
 
   "TaxCode reads" should {

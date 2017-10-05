@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 HM Revenue & Customs
+ * Copyright 2017 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,10 @@
 
 package uk.gov.hmrc.domain
 
-import org.scalatest.{WordSpec, ShouldMatchers}
+import org.scalatest.Matchers._
+import org.scalatest.WordSpec
 
-class TaxCodeSpec extends WordSpec with ShouldMatchers {
+class TaxCodeSpec extends WordSpec {
   "Tax code" should {
     val legalCodes = Seq("0T", "D0", "D1", "123456L", "100P", "100Y", "K500", "BR", "NT")
 
@@ -28,7 +29,7 @@ class TaxCodeSpec extends WordSpec with ShouldMatchers {
     legalCodes.foreach { code =>
       s"construct a legal tax code for $code" in {
         val taxCode = new TaxCode(code)
-        taxCode.code shouldBe code
+        taxCode.code shouldBe  code
       }
     }
 
