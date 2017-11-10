@@ -22,11 +22,15 @@ case class Nino(nino: String) extends TaxIdentifier with SimpleName {
   require(Nino.isValid(nino), s"$nino is not a valid nino.")
   override def toString = nino
 
+  private val LengthWithoutSuffix: Int = 8
+
   def value = nino
 
   val name = "nino"
 
   def formatted = value.grouped(2).mkString(" ")
+
+  def withoutSuffix = value.take(LengthWithoutSuffix)
 }
 
 object Nino extends (String => Nino) {
