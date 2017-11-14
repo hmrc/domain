@@ -76,5 +76,11 @@ class NinoSpec extends WordSpec with Matchers {
     }
   }
 
+  "Removing a suffix" should {
+    "produce a nino without a suffix" in {
+      Nino("AA111111A").withoutSuffix shouldBe "AA111111"
+    }
+  }
+
   def validateNino(nino: String) = Nino.isValid(nino)
 }
