@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,10 +43,10 @@ object EmpRef extends ((String, String) => EmpRef){
   }
 
   def fromIdentifiers(slashSeparatedIdentifiers: String): EmpRef = {
-    val empRefPattern = """([^/]*)/([^/]*)""".r
+    val empRefPattern = """(\d{3})/([a-zA-Z0-9]+)""".r
     URLDecoder.decode(slashSeparatedIdentifiers, "UTF-8") match {
       case empRefPattern(first, second) => EmpRef(first, second)
-      case _ => throw new IllegalArgumentException("EmpRef requires two identifiers separated by a slash")
+      case _ => throw new IllegalArgumentException("EmpRef is three numbers, a slash, and then numbers and letters")
     }
   }
 
