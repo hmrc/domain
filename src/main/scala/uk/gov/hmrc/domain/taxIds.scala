@@ -88,7 +88,9 @@ object TaxIds {
     SerialisableTaxId("uar", Uar.apply),
     SerialisableTaxId("org", Org.apply),
     SerialisableTaxId("agentbusinessutr", AgentBusinessUtr.apply),
-    SerialisableTaxId("psaid", PsaId.apply)
+    SerialisableTaxId("psaid", PsaId.apply),
+    SerialisableTaxId("HMRC-OBTDS-ORG", HmrcObtdsOrg.apply),
+    SerialisableTaxId("HMRC-MTD-VAT", HmrcMtdVat.apply)
   )
 }
 
