@@ -238,4 +238,21 @@ class DomainTypeFormatsSpec extends WordSpec with Matchers {
     }
   }
 
+  "HmrcObtdsOrg reader" should {
+
+    "be able to read string representation of HmrcObtdsOrg" in {
+      val restStructure = JsString("1234567890")
+      val result = HmrcObtdsOrg.orgRead.reads(restStructure)
+      result.get shouldBe HmrcObtdsOrg("1234567890")
+    }
+  }
+  "HmrcMtdVat reader" should {
+
+    "be able to read string representation of HmrcMtdVat" in {
+      val restStructure = JsString("1234567890")
+      val result = HmrcMtdVat.orgRead.reads(restStructure)
+      result.get shouldBe HmrcMtdVat("1234567890")
+    }
+  }
+
 }
