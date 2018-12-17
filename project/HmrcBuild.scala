@@ -33,11 +33,7 @@ object HmrcBuild extends Build {
   lazy val domain = (project in file("."))
     .enablePlugins(SbtAutoBuildPlugin, SbtGitVersioning, SbtArtifactory)
     .settings(
-      libraryDependencies ++= appDependencies,
-      resolvers := Seq(
-        Resolver.bintrayRepo("hmrc", "releases"),
-        "typesafe-releases" at "http://repo.typesafe.com/typesafe/releases/"
-      )
+      libraryDependencies ++= appDependencies
     )
     .settings(majorVersion := 5)
     .settings(makePublicallyAvailableOnBintray := true)
