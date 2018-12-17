@@ -13,14 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import sbt.Keys._
 import sbt._
+import uk.gov.hmrc.SbtArtifactory.autoImport.makePublicallyAvailableOnBintray
+import uk.gov.hmrc.{SbtArtifactory, SbtAutoBuildPlugin}
+import uk.gov.hmrc.versioning.SbtGitVersioning
+import uk.gov.hmrc.versioning.SbtGitVersioning.autoImport.majorVersion
 
 object HmrcBuild extends Build {
-
-  import uk.gov.hmrc.DefaultBuildSettings._
-  import uk.gov.hmrc.SbtAutoBuildPlugin
-  import uk.gov.hmrc.versioning.SbtGitVersioning
 
   val appDependencies = Seq(
     Dependencies.Compile.playJson,
@@ -30,14 +31,12 @@ object HmrcBuild extends Build {
   )
 
   lazy val domain = (project in file("."))
-    .enablePlugins(SbtAutoBuildPlugin, SbtGitVersioning)
+    .enablePlugins(SbtAutoBuildPlugin, SbtGitVersioning, SbtArtifactory)
     .settings(
-      libraryDependencies ++= appDependencies,
-      resolvers := Seq(
-        Resolver.bintrayRepo("hmrc", "releases"),
-        "typesafe-releases" at "http://repo.typesafe.com/typesafe/releases/"
-      )
+      libraryDependencies ++= appDependencies
     )
+    .settings(majorVersion := 5)
+    .settings(makePublicallyAvailableOnBintray := true)
 }
 
 object Dependencies {
