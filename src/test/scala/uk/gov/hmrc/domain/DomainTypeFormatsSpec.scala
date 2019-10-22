@@ -17,7 +17,7 @@
 package uk.gov.hmrc.domain
 
 import org.scalatest.{Matchers, WordSpec}
-import play.api.libs.json.{JsError, JsObject, JsString}
+import play.api.libs.json._
 
 class DomainTypeFormatsSpec extends WordSpec with Matchers {
 
@@ -172,6 +172,12 @@ class DomainTypeFormatsSpec extends WordSpec with Matchers {
     "be able to read string representation of EmpRef" in {
       val restStructure = JsString("12345/ref")
       val result = EmpRef.empRefRead.reads(restStructure)
+      result.get shouldBe EmpRef("12345", "ref")
+    }
+
+    s"be able to read an employer reference from a play-authorised-frontend EpayeAccount case class"  in {
+      val epayeAccount = Json.obj("links" -> "/epaye/12345%2Fref", "empRef" -> "12345/ref")
+      val result = EmpRef.empRefRead.reads(epayeAccount)
       result.get shouldBe EmpRef("12345", "ref")
     }
 

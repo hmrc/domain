@@ -34,6 +34,8 @@ object EmpRef extends ((String, String) => EmpRef){
   implicit val empRefRead: Reads[EmpRef] = new Reads[EmpRef] {
     override def reads(js: JsValue): JsResult[EmpRef] = js match {
       case v: JsString => v.validate[String].map(EmpRef.fromIdentifiers)
+      case v: JsObject if v.keys.contains("empRef") =>
+        (v \ "empRef").validate[String].map(EmpRef.fromIdentifiers)
       case v: JsObject => for {
         ton <- (v \ "taxOfficeNumber").validate[String]
         tor <- (v \ "taxOfficeReference").validate[String]
