@@ -12,6 +12,9 @@ lazy val domain = (project in file("."))
       ),
       play26 = Seq(
         "com.typesafe.play" %% "play-json"  % "2.6.13"
+      ),
+      play27 = Seq(
+        "com.typesafe.play" %% "play-json"  % "2.7.4"
       )
     ),
     crossScalaVersions := List("2.11.12", "2.12.8"),
