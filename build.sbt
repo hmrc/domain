@@ -17,7 +17,7 @@ lazy val domain = (project in file("."))
         "com.typesafe.play" %% "play-json"  % "2.7.4"
       )
     ),
-    crossScalaVersions := List("2.11.12", "2.12.8"),
+    crossScalaVersions := List("2.11.12", "2.12.12"),
     majorVersion := 5,
     makePublicallyAvailableOnBintray := true
   ).settings(PlayCrossCompilation.playCrossCompilationSettings)
