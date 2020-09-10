@@ -24,12 +24,12 @@ class TaxCodeSpec extends WordSpec {
     val legalCodes = Seq("0T", "D0", "D1", "123456L", "100P", "100Y", "K500", "BR", "NT")
 
     val illegalCodes = Seq("1234567", "1A3456P", "123456H", "123456A", "NI", "69 L", " 69L", "K0500", "6O9L", "OT",
-                           "69LM1", "69LW1", "500K", "474Lwk1/mth1", "474L/X", "474L/1", "D")
+      "69LM1", "69LW1", "500K", "474Lwk1/mth1", "474L/X", "474L/1", "D")
 
     legalCodes.foreach { code =>
       s"construct a legal tax code for $code" in {
         val taxCode = new TaxCode(code)
-        taxCode.code shouldBe  code
+        taxCode.code shouldBe code
       }
     }
 

@@ -39,7 +39,7 @@ class ModulusCheckerSpec extends WordSpecLike with Matchers with GeneratorDriven
       val checkSum = Gen.listOfN(9, Gen.chooseNum(0, 9))
 
       val weights = List(6, 7, 8, 9, 10, 5, 4, 3, 2)
-      val remainderLookupTable = List(2,1,9,8,7,6,5,4,3,2,1)
+      val remainderLookupTable = List(2, 1, 9, 8, 7, 6, 5, 4, 3, 2, 1)
 
       forAll(checkSum) { (ints: Seq[Int]) =>
         val remainder = (ints, weights).zipped.map {
@@ -56,7 +56,6 @@ class ModulusCheckerSpec extends WordSpecLike with Matchers with GeneratorDriven
     val ValidReferences = Seq("1097172564", "2108834503", "2234567890")
     val InvalidReferences = Seq("", "123456", "5550000621", "inv@lid123")
 
-
     "return true for a valid reference" in {
       checkAllValid(CorporationTaxReferenceChecker, ValidReferences)
     }
@@ -64,7 +63,6 @@ class ModulusCheckerSpec extends WordSpecLike with Matchers with GeneratorDriven
     "return false for an invalid reference" in {
       checkAllInvalid(CorporationTaxReferenceChecker, InvalidReferences)
     }
-
 
     "return true for correctly generated references" in {
       val checkSum = Gen.listOfN(9, Gen.chooseNum(0, 9))
@@ -179,8 +177,8 @@ class ModulusCheckerSpec extends WordSpecLike with Matchers with GeneratorDriven
 
   "The SDLT reference checker" should {
 
-    val ValidReferences = Seq("123456789MA", "918273645MV", "576682142MP", "586110842MR", "143245939MZ", "345726781MA","335626481MS", "680686481MW","430622221MH","222222222MQ", "123456789MA")
-    val InvalidReferences = Seq("", "12345", "233795664MB", "946725624MQ", "848785828MB","151617181MC","273647567MJ", "632926282MQ","246485202MQ","426442202MQ","486848282MA","222222222MX", "A23456789MA", "1A3456789MA", "12A456789MA", "123A56789MA", "1234A6789MA", "12345A789MA", "123456A89MA", "1234567A9MA", "12345678AMA", "576682142MPZ", "123456789MAAAAAAA", "123456789DA", "123456789M2")
+    val ValidReferences = Seq("123456789MA", "918273645MV", "576682142MP", "586110842MR", "143245939MZ", "345726781MA", "335626481MS", "680686481MW", "430622221MH", "222222222MQ", "123456789MA")
+    val InvalidReferences = Seq("", "12345", "233795664MB", "946725624MQ", "848785828MB", "151617181MC", "273647567MJ", "632926282MQ", "246485202MQ", "426442202MQ", "486848282MA", "222222222MX", "A23456789MA", "1A3456789MA", "12A456789MA", "123A56789MA", "1234A6789MA", "12345A789MA", "123456A89MA", "1234567A9MA", "12345678AMA", "576682142MPZ", "123456789MAAAAAAA", "123456789DA", "123456789M2")
 
     "return true for a valid reference" in {
       checkAllValid(SdltReferenceChecker, ValidReferences)

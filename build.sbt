@@ -21,3 +21,6 @@ lazy val domain = (project in file("."))
     majorVersion := 5,
     makePublicallyAvailableOnBintray := true
   ).settings(PlayCrossCompilation.playCrossCompilationSettings)
+  .settings(ScalariformSettings())
+  .settings(ScoverageSettings())
+  .settings(SilencerSettings())

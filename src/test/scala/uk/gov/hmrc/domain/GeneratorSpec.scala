@@ -31,7 +31,7 @@ class GeneratorSpec extends WordSpec with Checkers {
   "AtedUtr Generation" should {
 
     "generate valid AtedUtrs for all random seeds" in {
-      check(Prop.forAll { (seed: Int) => AtedUtr.isValid(new Generator(seed).nextAtedUtr.utr)})
+      check(Prop.forAll { (seed: Int) => AtedUtr.isValid(new Generator(seed).nextAtedUtr.utr) })
     }
 
     "generate a batch of unique AtedUtrs" in {

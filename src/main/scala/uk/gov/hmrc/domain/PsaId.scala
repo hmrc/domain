@@ -25,7 +25,7 @@ case class PsaId(id: String) extends TaxIdentifier with SimpleName {
   def value = id
 }
 
-object PsaId  extends (String => PsaId) {
+object PsaId extends (String => PsaId) {
   implicit val psaIdWrite: Writes[PsaId] = new SimpleObjectWrites[PsaId](_.value)
   implicit val psaIdRead: Reads[PsaId] = new SimpleObjectReads[PsaId]("id", PsaId.apply)
 

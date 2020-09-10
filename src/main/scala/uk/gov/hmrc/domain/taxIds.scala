@@ -26,11 +26,11 @@ case class TaxIds(values: Set[TaxIds.TaxIdWithName]) {
   require(values.nonEmpty, "TaxIds must have at least one TaxIdentifier")
   require(!TaxIds.hasDuplicates(values.toSeq), "TaxIds cannot have TaxIdentifers with the same name")
 
-  private def as[A <: TaxIds.TaxIdWithName: ClassTag]: Option[A] = 
+  private def as[A <: TaxIds.TaxIdWithName: ClassTag]: Option[A] =
     values.collect {
       case a: A => a
     }.headOption
-  
+
   lazy val nino = as[Nino]
   lazy val saUtr = as[SaUtr]
   lazy val ctUtr = as[CtUtr]
@@ -43,7 +43,6 @@ case class TaxIds(values: Set[TaxIds.TaxIdWithName]) {
   lazy val psaId = as[PsaId]
 }
 
-
 object TaxIds {
 
   type TaxIdWithName = TaxIdentifier with SimpleName
@@ -52,7 +51,7 @@ object TaxIds {
     require(!hasDuplicates(values), "TaxIds cannot have TaxIdentifers with the same name")
     TaxIds(values.toSet)
   }
-  
+
   def hasDuplicates(values: Seq[TaxIdWithName]): Boolean = {
     values.size != values.map(_ name).toSet.size
   }
@@ -64,7 +63,7 @@ object TaxIds {
       }.flatten[TaxIdWithName]
       Try(TaxIds(ids: _*)) match {
         case Success(taxIds) => JsSuccess(taxIds)
-        case Failure(cause) => JsError(cause.getMessage)
+        case Failure(cause)  => JsError(cause.getMessage)
       }
     }
   }
@@ -72,7 +71,7 @@ object TaxIds {
   def writes(serialisableTaxIdsNames: Set[String]): Writes[TaxIds] = new Writes[TaxIds] {
     override def writes(ids: TaxIds) = {
       val values: Set[TaxIdWithName] = ids.values.filterNot(p => !serialisableTaxIdsNames.contains(p.name))
-      JsObject(values.map { id => id.name -> Json.toJson(id.value)}.toSeq)
+      JsObject(values.map { id => id.name -> Json.toJson(id.value) }.toSeq)
     }
   }
 

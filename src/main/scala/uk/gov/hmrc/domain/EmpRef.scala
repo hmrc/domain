@@ -28,7 +28,7 @@ case class EmpRef(taxOfficeNumber: String, taxOfficeReference: String) extends T
   def encodedValue = URLEncoder.encode(value, "UTF-8")
 }
 
-object EmpRef extends ((String, String) => EmpRef){
+object EmpRef extends ((String, String) => EmpRef) {
 
   implicit val empRefWrite: Writes[EmpRef] = new SimpleObjectWrites[EmpRef](_.value)
   implicit val empRefRead: Reads[EmpRef] = new Reads[EmpRef] {
@@ -46,7 +46,7 @@ object EmpRef extends ((String, String) => EmpRef){
     val empRefPattern = """([^/]*)/([^/]*)""".r
     URLDecoder.decode(slashSeparatedIdentifiers, "UTF-8") match {
       case empRefPattern(first, second) => EmpRef(first, second)
-      case _ => throw new IllegalArgumentException("EmpRef requires two identifiers separated by a slash")
+      case _                            => throw new IllegalArgumentException("EmpRef requires two identifiers separated by a slash")
     }
   }
 

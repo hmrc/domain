@@ -23,7 +23,7 @@ class SaUtrGenerator(random: Random = new Random) extends Modulus11Check {
 
   def nextSaUtr: SaUtr = {
     val suffix = f"${random.nextInt(100000)}%09d"
-    val checkCharacter  = calculateCheckCharacter(suffix)
+    val checkCharacter = calculateCheckCharacter(suffix)
     SaUtr(s"$checkCharacter$suffix")
   }
 }

@@ -30,10 +30,10 @@ class SimpleObjectReads[T](val fieldName: String, val constructor: String => T) 
 
       case v: JsString => v.validate[String].map(constructor)
       case v: JsObject => (v \ fieldName).validate[String].map(constructor)
-      case noParsed => JsError(s"Could not read Json value of $fieldName in $noParsed")
+      case noParsed    => JsError(s"Could not read Json value of $fieldName in $noParsed")
     }
   } match {
-    case Success(jsResult) => jsResult
+    case Success(jsResult)  => jsResult
     case Failure(exception) => JsError(exception.getMessage())
   }
 }

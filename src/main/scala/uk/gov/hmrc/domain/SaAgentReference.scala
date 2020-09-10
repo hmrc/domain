@@ -18,7 +18,7 @@ package uk.gov.hmrc.domain
 
 import play.api.libs.json.{Reads, Writes}
 
-case class SaAgentReference(value: String) extends TaxIdentifier{
+case class SaAgentReference(value: String) extends TaxIdentifier {
   override lazy val toString = value
 }
 
