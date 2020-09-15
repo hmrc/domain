@@ -32,6 +32,6 @@ object AgentBusinessUtr extends Modulus23Check with (String => AgentBusinessUtr)
   private val validFormat = "^[a-zA-Z][Aa][Rr][Nn]\\d{7}$"
 
   def isValid(utr: String): Boolean =
-      utr.matches(validFormat) &&
+    utr.matches(validFormat) &&
       isCheckCorrect(utr.toUpperCase, 0)
 }

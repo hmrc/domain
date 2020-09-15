@@ -24,7 +24,7 @@ case class HmrcMtdVat(org: String) extends TaxIdentifier with SimpleName {
   def value = org
 }
 
-object HmrcMtdVat  extends (String => HmrcMtdVat) {
+object HmrcMtdVat extends (String => HmrcMtdVat) {
   implicit val orgWrite: Writes[HmrcMtdVat] = new SimpleObjectWrites[HmrcMtdVat](_.value)
   implicit val orgRead: Reads[HmrcMtdVat] = new SimpleObjectReads[HmrcMtdVat]("HMRC-MTD-VAT", HmrcMtdVat.apply)
 }

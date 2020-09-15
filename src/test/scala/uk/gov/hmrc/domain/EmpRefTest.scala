@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.domain
 
-import org.scalatest.{ Matchers, WordSpec }
+import org.scalatest.{Matchers, WordSpec}
 
 class EmpRefTest extends WordSpec with Matchers {
   "Creating a new EmpRef from a single string" should {
@@ -25,11 +25,11 @@ class EmpRefTest extends WordSpec with Matchers {
     }
 
     "throw an InvalidArgumentException if there is not a forward slash" in {
-      an [IllegalArgumentException] should be thrownBy { EmpRef.fromIdentifiers("noslash") }
+      an[IllegalArgumentException] should be thrownBy { EmpRef.fromIdentifiers("noslash") }
     }
 
     "throw an InvalidArgumentException if there is more than one forward slash" in {
-      an [IllegalArgumentException] should be thrownBy { EmpRef.fromIdentifiers("lots/of/slashes") }
+      an[IllegalArgumentException] should be thrownBy { EmpRef.fromIdentifiers("lots/of/slashes") }
     }
   }
 }

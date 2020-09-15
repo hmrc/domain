@@ -139,7 +139,7 @@ class DomainTypeFormatsSpec extends WordSpec with Matchers {
     }
   }
 
- "Nino reader" should {
+  "Nino reader" should {
 
     "be able to read obsolete Nino structure from Mongo" in {
       val dbStructure = JsObject(Seq("nino" -> JsString("AB123456D")))
@@ -147,11 +147,11 @@ class DomainTypeFormatsSpec extends WordSpec with Matchers {
       result.get shouldBe Nino("AB123456D")
     }
 
-   "return JsError if the nino is invalid" in {
-     val dbStructure = JsObject(Seq("nino" -> JsString("AB123456")))
-     val result = Nino.ninoRead.reads(dbStructure)
-     result shouldBe a[JsError]
-   }
+    "return JsError if the nino is invalid" in {
+      val dbStructure = JsObject(Seq("nino" -> JsString("AB123456")))
+      val result = Nino.ninoRead.reads(dbStructure)
+      result shouldBe a[JsError]
+    }
 
     "be able to read string representation of Nino" in {
       val restStructure = JsString("ZY987654C")
@@ -159,7 +159,6 @@ class DomainTypeFormatsSpec extends WordSpec with Matchers {
       result.get shouldBe Nino("ZY987654C")
     }
   }
-
 
   "EmpRef reader" should {
 

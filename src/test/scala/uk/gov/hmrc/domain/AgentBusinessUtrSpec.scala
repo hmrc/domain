@@ -61,7 +61,7 @@ class AgentBusinessUtrSpec extends WordSpec with Matchers {
 
   "Creating an AgentBusinessUtr" should {
     "fail if the utr is not valid" in {
-      an [IllegalArgumentException] should be thrownBy AgentBusinessUtr("INVALID_UTR")
+      an[IllegalArgumentException] should be thrownBy AgentBusinessUtr("INVALID_UTR")
     }
   }
 

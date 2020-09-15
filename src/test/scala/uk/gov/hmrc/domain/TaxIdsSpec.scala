@@ -19,12 +19,11 @@ package uk.gov.hmrc.domain
 import org.scalatest.{LoneElement, Matchers, WordSpec}
 import play.api.libs.json.{JsError, Json}
 
-
 class TaxIdsSpec extends WordSpec with Matchers with LoneElement {
 
   val nino = Nino("NM439088A")
   val saUtr = SaUtr("some-sa-utr")
-  implicit val format =  TaxIds.format(TaxIds.defaultSerialisableIds :_*)
+  implicit val format = TaxIds.format(TaxIds.defaultSerialisableIds: _*)
 
   "TaxIds constructor" should {
     "fail to create a TaxIds object with duplicate tax identifiers" in {
@@ -94,7 +93,7 @@ class TaxIdsSpec extends WordSpec with Matchers with LoneElement {
         override def value: String = customId
         override val name: String = "customTaxId"
       }
-      implicit val format =  TaxIds.format(SerialisableTaxId("customTaxId", CustomTaxId.apply))
+      implicit val format = TaxIds.format(SerialisableTaxId("customTaxId", CustomTaxId.apply))
       val expected = CustomTaxId("some-custom-value")
       val input =
         """{

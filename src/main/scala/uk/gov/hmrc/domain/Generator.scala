@@ -45,7 +45,7 @@ class Generator(random: Random = new Random) extends Modulus23Check {
   def nextAtedUtr: AtedUtr = {
     val suffix = f"${random.nextInt(9) + 1}${random.nextInt(100000)}%05d"
     val weighting = s"AT00000$suffix"
-    val checkCharacter  = calculateCheckCharacter(weighting)
+    val checkCharacter = calculateCheckCharacter(weighting)
     AtedUtr(f"X${checkCharacter}AT00000$suffix")
   }
 
