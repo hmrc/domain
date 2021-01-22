@@ -52,7 +52,7 @@ Add the following to your SBT build:
 ```scala
 resolvers += Resolver.bintrayRepo("hmrc", "releases")
 
-libraryDependencies += "uk.gov.hmrc" % "domain" % "[INSERT VERSION]"
+libraryDependencies += "uk.gov.hmrc" %% "domain" % "[INSERT VERSION]"
 ```
 
 Use versions >=2.11.0 for Java 7 and Play json 2.3.x
