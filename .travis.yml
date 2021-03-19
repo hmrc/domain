@@ -3,6 +3,5 @@ jdk: openjdk8
 script: sbt +test
 matrix:
   include:
-    - env: PLAY_VERSION=2.5
     - env: PLAY_VERSION=2.6
     - env: PLAY_VERSION=2.7
