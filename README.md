@@ -50,12 +50,11 @@ taxIds.ctUtr // None
 
 Add the following to your SBT build:
 ```scala
-resolvers += Resolver.bintrayRepo("hmrc", "releases")
-
 libraryDependencies += "uk.gov.hmrc" % "domain" % "[INSERT VERSION]"
 ```
 
-Use versions >=2.11.0 for Java 7 and Play json 2.3.x
+Use versions >=2.11.0 for Java 7 and Play json 2.3.x\
+Version 6.0.0 is scala 2.12 only and adds Play 2.8 support.
 
 ## License ##
  
