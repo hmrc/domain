@@ -1,6 +1,8 @@
 lazy val domain = (project in file("."))
   .enablePlugins(SbtAutoBuildPlugin, SbtGitVersioning, SbtArtifactory)
   .settings(
+    scalaVersion := "2.12.12",
+    majorVersion := 6,
     libraryDependencies ++= PlayCrossCompilation.dependencies(
       shared = Seq(
         "org.scalatest"     %% "scalatest"  % "3.0.1"  % "test",
@@ -12,12 +14,13 @@ lazy val domain = (project in file("."))
       ),
       play27 = Seq(
         "com.typesafe.play" %% "play-json"  % "2.7.4"
+      ),
+      play28 = Seq(
+        "com.typesafe.play" %% "play-json"  % "2.8.1"
       )
-    ),
-    crossScalaVersions := List("2.11.12", "2.12.12"),
-    majorVersion := 5,
-    makePublicallyAvailableOnBintray := true
-  ).settings(PlayCrossCompilation.playCrossCompilationSettings)
+    )
+  )
+  .settings(PlayCrossCompilation.playCrossCompilationSettings)
   .settings(ScalariformSettings())
   .settings(ScoverageSettings())
   .settings(SilencerSettings())
