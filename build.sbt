@@ -1,8 +1,8 @@
 lazy val domain = (project in file("."))
-  .enablePlugins(SbtAutoBuildPlugin, SbtGitVersioning, SbtArtifactory)
   .settings(
     scalaVersion := "2.12.12",
     majorVersion := 6,
+    isPublicArtefact := true,
     libraryDependencies ++= PlayCrossCompilation.dependencies(
       shared = Seq(
         "org.scalatest"     %% "scalatest"  % "3.0.1"  % "test",
