@@ -30,7 +30,7 @@ class Generator(random: Random = new Random) extends Modulus23Check {
   }
 
   def atedUtrBatch(amountToGenerate: Int): List[AtedUtr] = {
-    require(amountToGenerate <= 900000, throw new IllegalArgumentException("Can't generate more than 9000000 unique AtedUtrs, specify a smaller value for amount"))
+    require(amountToGenerate <= 900000, throw new IllegalArgumentException("Can't generate more than 900000 unique AtedUtrs, specify a smaller value for amount"))
     val atedUtrs: ListBuffer[AtedUtr] = ListBuffer()
     var start = 100000
     for (a <- 0 until amountToGenerate) {
@@ -47,6 +47,26 @@ class Generator(random: Random = new Random) extends Modulus23Check {
     val weighting = s"AT00000$suffix"
     val checkCharacter = calculateCheckCharacter(weighting)
     AtedUtr(f"X${checkCharacter}AT00000$suffix")
+  }
+
+  def nextAgentBusinessUtr: AgentBusinessUtr = {
+    val suffix = f"${random.nextInt(1000000)}%07d"
+    val weighting = s"ARN$suffix"
+    val checkCharacter  = calculateCheckCharacter(weighting)
+    AgentBusinessUtr(f"${checkCharacter}ARN$suffix")
+  }
+
+  def agentBusinessUtrBatch(amountToGenerate: Int): List[AgentBusinessUtr] = {
+    require(amountToGenerate <= 9999999, throw new IllegalArgumentException("Can't generate more than 9999999 unique AgentBusinessUtr, specify a smaller value for amount"))
+    val agentBusinessUtrs: ListBuffer[AgentBusinessUtr] = ListBuffer()
+    var start = 0
+    for (a <- 0 until amountToGenerate) {
+      val stringToWeight = f"ARN$start%07d"
+      val checkChar = calculateCheckCharacter(stringToWeight)
+      agentBusinessUtrs.++=(Seq(AgentBusinessUtr(s"$checkChar$stringToWeight")))
+      start = start + 1
+    }
+    agentBusinessUtrs.toList
   }
 
 }
