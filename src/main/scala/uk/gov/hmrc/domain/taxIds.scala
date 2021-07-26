@@ -41,6 +41,7 @@ case class TaxIds(values: Set[TaxIds.TaxIdWithName]) {
   lazy val org = as[Org]
   lazy val agentBusinessUtr = as[AgentBusinessUtr]
   lazy val psaId = as[PsaId]
+  lazy val itsa = as[Itsa]
 }
 
 object TaxIds {
@@ -89,7 +90,8 @@ object TaxIds {
     SerialisableTaxId("agentbusinessutr", AgentBusinessUtr.apply),
     SerialisableTaxId("psaid", PsaId.apply),
     SerialisableTaxId("HMRC-OBTDS-ORG", HmrcObtdsOrg.apply),
-    SerialisableTaxId("HMRC-MTD-VAT", HmrcMtdVat.apply)
+    SerialisableTaxId("HMRC-MTD-VAT", HmrcMtdVat.apply),
+    SerialisableTaxId("itsa", Itsa.apply),
   )
 }
 
