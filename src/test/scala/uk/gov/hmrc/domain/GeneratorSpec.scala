@@ -40,4 +40,17 @@ class GeneratorSpec extends WordSpec with Checkers {
     }
 
   }
+
+  "AgentBusinessUtr Generation" should {
+
+    "generate valid AgentBusinessUtr for all random seeds" in {
+      check(Prop.forAll { (seed: Int) => AgentBusinessUtr.isValid(new Generator(seed).nextAgentBusinessUtr.utr)})
+    }
+
+    "generate a batch of unique AgentBusinessUtr" in {
+      val agentBusinessUtrs = new Generator().agentBusinessUtrBatch(100000)
+      assert(agentBusinessUtrs.distinct.length == agentBusinessUtrs.length)
+    }
+
+  }
 }
