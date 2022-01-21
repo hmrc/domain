@@ -54,7 +54,8 @@ libraryDependencies += "uk.gov.hmrc" % "domain" % "[INSERT VERSION]"
 ```
 
 Use versions >=2.11.0 for Java 7 and Play json 2.3.x\
-Version 6.0.0 is scala 2.12 only and adds Play 2.8 support.
+Version 6.x.x is scala 2.12 only and adds Play 2.8 support.
+Version 7.x.x drops Play 2.6 and Play 2.7 support.
 
 ## License ##
  
