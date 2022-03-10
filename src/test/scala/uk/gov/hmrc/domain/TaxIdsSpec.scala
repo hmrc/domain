@@ -16,10 +16,12 @@
 
 package uk.gov.hmrc.domain
 
-import org.scalatest.{LoneElement, Matchers, WordSpec}
+import org.scalatest.LoneElement
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 import play.api.libs.json.{JsError, Json}
 
-class TaxIdsSpec extends WordSpec with Matchers with LoneElement {
+class TaxIdsSpec extends AnyWordSpec with Matchers with LoneElement {
 
   val nino = Nino("NM439088A")
   val saUtr = SaUtr("some-sa-utr")

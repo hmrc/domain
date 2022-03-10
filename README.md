@@ -53,9 +53,14 @@ Add the following to your SBT build:
 libraryDependencies += "uk.gov.hmrc" % "domain" % "[INSERT VERSION]"
 ```
 
-Use versions >=2.11.0 for Java 7 and Play json 2.3.x\
-Version 6.x.x is scala 2.12 only and adds Play 2.8 support.
-Version 7.x.x drops Play 2.6 and Play 2.7 support.
+## Version
+
+Version 8.x.x add Scala 2.13 support.
+
+Version 7.x.x drop Play 2.6 and Play 2.7 support.
+
+Version 6.x.x is Scala 2.12 only and add Play 2.8 support.
+
 
 ## License ##
  

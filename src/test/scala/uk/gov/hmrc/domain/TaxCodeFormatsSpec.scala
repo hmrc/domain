@@ -16,11 +16,11 @@
 
 package uk.gov.hmrc.domain
 
-import org.scalatest.{WordSpec}
+import org.scalatest.matchers.should.Matchers._
+import org.scalatest.wordspec.AnyWordSpec
 import play.api.libs.json.{JsError, JsNumber, JsString, JsSuccess}
-import org.scalatest.Matchers._
 
-class TaxCodeFormatsSpec extends WordSpec {
+class TaxCodeFormatsSpec extends AnyWordSpec {
   import TaxCodeFormats._
 
   "TaxCode reads" should {
