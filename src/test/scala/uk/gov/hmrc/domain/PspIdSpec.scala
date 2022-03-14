@@ -16,9 +16,10 @@
 
 package uk.gov.hmrc.domain
 
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
-class PspIdSpec extends WordSpec with Matchers {
+class PspIdSpec extends AnyWordSpec with Matchers {
 
   "validation" must {
 

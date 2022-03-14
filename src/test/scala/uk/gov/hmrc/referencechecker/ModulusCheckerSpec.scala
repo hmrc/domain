@@ -17,10 +17,11 @@
 package uk.gov.hmrc.referencechecker
 
 import org.scalacheck.Gen
-import org.scalatest.prop.GeneratorDrivenPropertyChecks
-import org.scalatest.{Matchers, WordSpecLike}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
+import org.scalatestplus.scalacheck.ScalaCheckDrivenPropertyChecks
 
-class ModulusCheckerSpec extends WordSpecLike with Matchers with GeneratorDrivenPropertyChecks {
+class ModulusCheckerSpec extends AnyWordSpecLike with Matchers with ScalaCheckDrivenPropertyChecks {
 
   "The SA reference checker" should {
 

@@ -53,13 +53,13 @@ object TaxIds {
   }
 
   def hasDuplicates(values: Seq[TaxIdWithName]): Boolean = {
-    values.size != values.map(_ name).toSet.size
+    values.size != values.map(_.name).toSet.size
   }
 
   def reads(serialisableTaxIds: Set[SerialisableTaxId]): Reads[TaxIds] = new Reads[TaxIds] {
     override def reads(json: JsValue): JsResult[TaxIds] = {
       val ids = serialisableTaxIds.toList.map { taxId =>
-        (json \ taxId.taxIdName).asOpt[String] map (taxId build)
+        (json \ taxId.taxIdName).asOpt[String] map (taxId.build)
       }.flatten[TaxIdWithName]
       Try(TaxIds(ids: _*)) match {
         case Success(taxIds) => JsSuccess(taxIds)

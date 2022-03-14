@@ -16,11 +16,11 @@
 
 package uk.gov.hmrc.domain
 
+import org.scalatest.wordspec.AnyWordSpec
 import org.scalacheck.Prop
-import org.scalatest.WordSpec
-import org.scalatest.prop.Checkers
+import org.scalatestplus.scalacheck.Checkers
 
-class GeneratorSpec extends WordSpec with Checkers {
+class GeneratorSpec extends AnyWordSpec with Checkers {
 
   "Nino Generation" should {
     "generate valid NINOs for all random seeds" in {

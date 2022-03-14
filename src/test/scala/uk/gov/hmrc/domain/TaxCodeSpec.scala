@@ -16,10 +16,10 @@
 
 package uk.gov.hmrc.domain
 
-import org.scalatest.Matchers._
-import org.scalatest.WordSpec
+import org.scalatest.matchers.should.Matchers._
+import org.scalatest.wordspec.AnyWordSpec
 
-class TaxCodeSpec extends WordSpec {
+class TaxCodeSpec extends AnyWordSpec {
   "Tax code" should {
     val legalCodes = Seq("0T", "D0", "D1", "123456L", "100P", "100Y", "K500", "BR", "NT")
 

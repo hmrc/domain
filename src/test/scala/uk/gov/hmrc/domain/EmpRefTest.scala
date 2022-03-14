@@ -16,9 +16,10 @@
 
 package uk.gov.hmrc.domain
 
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
-class EmpRefTest extends WordSpec with Matchers {
+class EmpRefTest extends AnyWordSpec with Matchers {
   "Creating a new EmpRef from a single string" should {
     "create a new EmpRef from an identifier with a forward slash" in {
       EmpRef.fromIdentifiers("123/456789") shouldBe EmpRef("123", "456789")

@@ -17,11 +17,11 @@
 package uk.gov.hmrc.domain
 
 import org.scalacheck.Prop
-import org.scalatest.WordSpec
-import org.scalatest.prop.Checkers
+import org.scalatestplus.scalacheck.Checkers
 import uk.gov.hmrc.referencechecker.SelfAssessmentReferenceChecker
+import org.scalatest.wordspec.AnyWordSpec
 
-class SaUtrGeneratorSpec extends WordSpec with Checkers {
+class SaUtrGeneratorSpec extends AnyWordSpec with Checkers {
 
   "SaUtr Generation" should {
     "generate valid SaUtrs for all random seeds" in {

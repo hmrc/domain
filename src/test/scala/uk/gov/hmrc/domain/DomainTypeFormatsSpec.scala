@@ -16,10 +16,11 @@
 
 package uk.gov.hmrc.domain
 
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 import play.api.libs.json.{JsError, JsObject, JsString}
 
-class DomainTypeFormatsSpec extends WordSpec with Matchers {
+class DomainTypeFormatsSpec extends AnyWordSpec with Matchers {
 
   "Vrn reader" should {
 
