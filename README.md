@@ -50,7 +50,7 @@ taxIds.ctUtr // None
 
 Add the following to your SBT build:
 ```scala
-libraryDependencies += "uk.gov.hmrc" % "domain" % "[INSERT VERSION]"
+libraryDependencies += "uk.gov.hmrc" %% "domain" % "[INSERT VERSION]-play-[INSERT VERSION]"
 ```
 
 ## Version
