@@ -4,6 +4,20 @@ domain
 
 Micro-library for typing and validating UK tax identifiers.
 
+#### Change History
+v9.0 - 05 Dec 23
+- add support for Play 2.9 & Play 3.0, noting Play 2.8 is still supported
+- update Scala 2.13 version
+- update library dependencies
+- add 'Change History' section to README
+
+v8.3.0 - 23 May 22
+- update broken sbt build
+
+v8.1.0 - 06 May 22
+- update library dependencies
+
+
 #### Identifier Types
 
 Types are provided for many common tax identifiers, such as:
