@@ -48,12 +48,29 @@ taxIds.ctUtr // None
 
 ### Installing
 
+#### Before version 9.x.x
 Add the following to your SBT build:
 ```scala
-libraryDependencies += "uk.gov.hmrc" %% "domain" % "[INSERT VERSION]-play-[INSERT VERSION]"
+libraryDependencies += "uk.gov.hmrc" %% "domain" % "[LIB VERSION]-play-[PLAY VERSION]"
+```
+for example
+```scala
+libraryDependencies += "uk.gov.hmrc" %% "domain" % "8.3.0-play-28"
+```
+
+#### After version 9.x.x
+Add the following to your SBT build:
+```scala
+libraryDependencies += "uk.gov.hmrc" %% "domain-play-[PLAY VERSION]" % "[LIB VERSION]"
+```
+for example
+```scala
+libraryDependencies += "uk.gov.hmrc" %% "domain-play-30" % "9.0.0"
 ```
 
 ## Version
+
+Version 9.x.x add Play 2.9 and Play 3.0 support. 
 
 Version 8.x.x add Scala 2.13 support.
 

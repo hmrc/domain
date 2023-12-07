@@ -21,6 +21,6 @@ object ScoverageSettings {
     ScoverageKeys.coverageMinimumStmtTotal := 81,
     ScoverageKeys.coverageFailOnMinimum := true,
     ScoverageKeys.coverageHighlighting := true,
-    parallelExecution in Test := false
+    (Test / parallelExecution) := false
   )
 }

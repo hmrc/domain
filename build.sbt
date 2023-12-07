@@ -1,27 +1,46 @@
 val scala2_12 = "2.12.15"
-val scala2_13 = "2.13.8"
+val scala2_13 = "2.13.12"
 
-val silencerVersion = "1.7.8"
+ThisBuild / scalaVersion       := scala2_13
+ThisBuild / majorVersion       := 9
+ThisBuild / isPublicArtefact   := true
 
 lazy val domain = (project in file("."))
-  .settings(
-    scalaVersion := scala2_12,
-    crossScalaVersions := Seq(scala2_12, scala2_13),
-    majorVersion := 8,
-    isPublicArtefact := true,
-    libraryDependencies ++= PlayCrossCompilation.dependencies(
-      shared = Seq(
-        "org.scalatest"     %% "scalatest"  % "3.2.11"  % "test",
-        "org.scalatestplus" %% "scalacheck-1-15" % "3.2.11.0" % "test",
-        "org.pegdown"       %  "pegdown"    % "1.6.0"  % "test",
-        "com.vladsch.flexmark"   %  "flexmark-all"       % "0.62.2" % "test"
-      ),
-      play28 = Seq(
-        "com.typesafe.play" %% "play-json"  % "2.8.2"
-      )
-    )
+  .settings(publish / skip := true)
+  .aggregate(
+    play28,
+    play29,
+    play30
   )
-  .settings(PlayCrossCompilation.playCrossCompilationSettings)
-  .settings(ScalariformSettings())
-  .settings(ScoverageSettings())
-  .settings(SilencerSettings(silencerVersion))
+
+lazy val commonSettings =
+  ScalariformSettings() ++ ScalariformSettings()
+
+lazy val play28 = Project("domain-play-28", file("play-28"))
+  .settings(
+    crossScalaVersions := Seq(scala2_12, scala2_13),
+    libraryDependencies ++= LibDependencies.play28 ++ LibDependencies.test,
+    sharedSources
+  )
+  .settings(commonSettings)
+
+lazy val play29 = Project("domain-play-29", file("play-29"))
+  .settings(
+    libraryDependencies ++= LibDependencies.play29 ++ LibDependencies.test,
+    sharedSources
+  )
+  .settings(commonSettings)
+
+lazy val play30 = Project("domain-play-30", file("play-30"))
+  .settings(
+    libraryDependencies ++= LibDependencies.play30 ++ LibDependencies.test,
+    sharedSources
+  )
+  .settings(commonSettings)
+
+def sharedSources = Seq(
+  Compile / unmanagedSourceDirectories   += baseDirectory.value / "../shared/src/main/scala",
+  Compile / unmanagedResourceDirectories += baseDirectory.value / "../shared/src/main/resources",
+  Test    / unmanagedSourceDirectories   += baseDirectory.value / "../shared/src/test/scala",
+  Test    / unmanagedResourceDirectories += baseDirectory.value / "../shared/src/test/resources"
+)
