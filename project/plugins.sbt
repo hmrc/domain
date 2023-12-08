@@ -5,4 +5,4 @@ addSbtPlugin("uk.gov.hmrc" % "sbt-auto-build" % "3.15.0")
 
 addSbtPlugin("org.scoverage" % "sbt-scoverage" % "2.0.9")
 
-addSbtPlugin("org.scalariform" % "sbt-scalariform" % "1.8.3")
+addSbtPlugin("org.scalariform" % "sbt-scalariform" % "1.8.3" exclude("org.scala-lang.modules", "scala-xml_2.12"))
