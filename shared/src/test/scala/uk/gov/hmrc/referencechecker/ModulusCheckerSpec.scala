@@ -43,11 +43,11 @@ class ModulusCheckerSpec extends AnyWordSpecLike with Matchers with ScalaCheckDr
       val remainderLookupTable = List(2, 1, 9, 8, 7, 6, 5, 4, 3, 2, 1)
 
       forAll(checkSum) { (ints: Seq[Int]) =>
-        val remainder = (ints, weights).zipped.map {
+        val remainder = ints.zip(weights).map {
           case (s, i) => s * i
         }.sum % 11
         val firstNumber: Int = remainderLookupTable(remainder)
-        SelfAssessmentReferenceChecker.isValid(firstNumber + ints.mkString + "K") shouldBe true
+        SelfAssessmentReferenceChecker.isValid(s"$firstNumber${ints.mkString}K") shouldBe true
       }
     }
 
@@ -72,11 +72,11 @@ class ModulusCheckerSpec extends AnyWordSpecLike with Matchers with ScalaCheckDr
       val remainderLookupTable = List(2, 1, 9, 8, 7, 6, 5, 4, 3, 2, 1)
 
       forAll(checkSum) { (ints: Seq[Int]) =>
-        val remainder = (ints, weights).zipped.map {
+        val remainder = ints.zip(weights).map {
           case (s, i) => s * i
         }.sum % 11
         val firstNumber: Int = remainderLookupTable(remainder)
-        CorporationTaxReferenceChecker.isValid(firstNumber + ints.mkString) should be (true)
+        CorporationTaxReferenceChecker.isValid(s"$firstNumber${ints.mkString}") should be (true)
       }
     }
 
@@ -102,7 +102,7 @@ class ModulusCheckerSpec extends AnyWordSpecLike with Matchers with ScalaCheckDr
 
       forAll(checkSum) { (ints: Seq[Int]) =>
         whenever(ints.size == 7) {
-          var sums = (ints, vatWeights).zipped.map {
+          var sums = ints.zip(vatWeights).map {
             case (s, i) => s * i
           }.sum
 
@@ -119,7 +119,7 @@ class ModulusCheckerSpec extends AnyWordSpecLike with Matchers with ScalaCheckDr
 
       forAll(checkSum) { (ints: Seq[Int]) =>
         whenever(ints.size == 7) {
-          var sums = (ints, vatWeights).zipped.map {
+          var sums = ints.zip(vatWeights).map {
             case (s, i) => s * i
           }.sum + 55
 

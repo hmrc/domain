@@ -19,23 +19,23 @@ package uk.gov.hmrc.domain
 import org.scalatest.LoneElement
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import play.api.libs.json.{JsError, Json}
+import play.api.libs.json.{Format, JsError, Json}
 
 class TaxIdsSpec extends AnyWordSpec with Matchers with LoneElement {
 
   val nino = Nino("NM439088A")
   val saUtr = SaUtr("some-sa-utr")
-  implicit val format = TaxIds.format(TaxIds.defaultSerialisableIds: _*)
+  implicit val format: Format[TaxIds] = TaxIds.format(TaxIds.defaultSerialisableIds: _*)
 
   "TaxIds constructor" should {
     "fail to create a TaxIds object with duplicate tax identifiers" in {
       val ex = the[IllegalArgumentException] thrownBy TaxIds(nino, nino)
-      ex should have('message("requirement failed: TaxIds cannot have TaxIdentifers with the same name"))
+      ex should have(Symbol("message")("requirement failed: TaxIds cannot have TaxIdentifers with the same name"))
     }
 
     "fail to create a TaxIds object with no tax identifiers" in {
       val ex = the[IllegalArgumentException] thrownBy TaxIds()
-      ex should have('message("requirement failed: TaxIds must have at least one TaxIdentifier"))
+      ex should have(Symbol("message")("requirement failed: TaxIds must have at least one TaxIdentifier"))
     }
   }
 
@@ -46,7 +46,7 @@ class TaxIdsSpec extends AnyWordSpec with Matchers with LoneElement {
         """{
           |"nino": "NM439088A"
         }""".stripMargin
-      Json.parse(input).as[TaxIds] should have('nino(Some(nino)))
+      Json.parse(input).as[TaxIds] should have(Symbol("nino")(Some(nino)))
     }
 
     "succeed to build a TaxIds object with two TaxIdentifiers of type Nino and SaUtr" in {
@@ -55,7 +55,7 @@ class TaxIdsSpec extends AnyWordSpec with Matchers with LoneElement {
           |"nino": "NM439088A",
           |"sautr": "some-sa-utr"
         }""".stripMargin
-      Json.parse(input).as[TaxIds] should (have('nino(Some(nino))) and have('saUtr(Some(saUtr))))
+      Json.parse(input).as[TaxIds] should (have(Symbol("nino")(Some(nino))) and have(Symbol("saUtr")(Some(saUtr))))
     }
 
     "succeed to build a TaxIds object with a TaxIdentifier of type SaUtr" in {
@@ -63,7 +63,7 @@ class TaxIdsSpec extends AnyWordSpec with Matchers with LoneElement {
         """{
           |"sautr": "some-sa-utr"
         }""".stripMargin
-      Json.parse(input).as[TaxIds] should have('saUtr(Some(saUtr)))
+      Json.parse(input).as[TaxIds] should have(Symbol("saUtr")(Some(saUtr)))
     }
 
     "fail to build a TaxIds object with more than one TaxIdentifier of the same type" ignore {

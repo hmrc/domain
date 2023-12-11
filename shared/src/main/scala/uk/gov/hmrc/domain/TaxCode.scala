@@ -23,8 +23,8 @@ case class TaxCode(code: String) {
 }
 
 object TaxCodeFormats {
-  implicit val taxCodeReads = new TaxCodeReads
-  implicit val taxCodeWrites = new TaxCodeWrites
+  implicit val taxCodeReads: TaxCodeReads = new TaxCodeReads
+  implicit val taxCodeWrites: TaxCodeWrites = new TaxCodeWrites
 
   class TaxCodeReads extends Reads[TaxCode] {
     override def reads(json: JsValue): JsResult[TaxCode] = {

@@ -4,6 +4,20 @@ domain
 
 Micro-library for typing and validating UK tax identifiers.
 
+#### Change History
+v9.0 - 05 Dec 23
+- add support for Play 2.9 & Play 3.0, noting Play 2.8 is still supported
+- update Scala 2.13 version
+- update library dependencies
+- add 'Change History' section to README
+
+v8.3.0 - 23 May 22
+- update broken sbt build
+
+v8.1.0 - 06 May 22
+- update library dependencies
+
+
 #### Identifier Types
 
 Types are provided for many common tax identifiers, such as:
@@ -48,12 +62,29 @@ taxIds.ctUtr // None
 
 ### Installing
 
+#### Before version 9.x.x
 Add the following to your SBT build:
 ```scala
-libraryDependencies += "uk.gov.hmrc" %% "domain" % "[INSERT VERSION]-play-[INSERT VERSION]"
+libraryDependencies += "uk.gov.hmrc" %% "domain" % "[LIB VERSION]-play-[PLAY VERSION]"
+```
+for example
+```scala
+libraryDependencies += "uk.gov.hmrc" %% "domain" % "8.3.0-play-28"
+```
+
+#### After version 9.x.x
+Add the following to your SBT build:
+```scala
+libraryDependencies += "uk.gov.hmrc" %% "domain-play-[PLAY VERSION]" % "[LIB VERSION]"
+```
+for example
+```scala
+libraryDependencies += "uk.gov.hmrc" %% "domain-play-30" % "9.0.0"
 ```
 
 ## Version
+
+Version 9.x.x add Play 2.9 and Play 3.0 support. 
 
 Version 8.x.x add Scala 2.13 support.
 
