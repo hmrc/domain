@@ -2,15 +2,15 @@ import sbt._
 
 object LibDependencies {
   val play28 = Seq(
-    "com.typesafe.play" %% "play" % "2.8.21"
+    "com.typesafe.play" %% "play-json" % "2.8.2"
   )
 
   val play29 = Seq(
-    "com.typesafe.play" %% s"play" % "2.9.0"
+    "com.typesafe.play" %% s"play-json" % "2.9.0"
   )
 
   val play30 = Seq(
-    "org.playframework" %% s"play" % "3.0.0"
+    "org.playframework" %% s"play-json" % "3.0.0"
   )
 
   val test = Seq(
