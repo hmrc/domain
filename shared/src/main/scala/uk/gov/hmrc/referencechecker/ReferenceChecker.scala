@@ -80,14 +80,14 @@ trait ModulusReferenceChecker extends ReferenceChecker {
 trait DifferenceReferenceChecker extends ReferenceChecker {
 
   def mainCheck(reference: String, weightedSum: Int) = {
-      def checkVatReference(sum: Int, expected: Int): Boolean = {
-        var sumLessThan97 = sum
-        while (sumLessThan97 > 97) {
-          sumLessThan97 -= 97
-        }
-        val calculatedDigits = 97 - sumLessThan97
-        calculatedDigits == expected
+    def checkVatReference(sum: Int, expected: Int): Boolean = {
+      var sumLessThan97 = sum
+      while (sumLessThan97 > 97) {
+        sumLessThan97 -= 97
       }
+      val calculatedDigits = 97 - sumLessThan97
+      calculatedDigits == expected
+    }
 
     val expected = reference.takeRight(2).toInt
     checkVatReference(weightedSum, expected) || checkVatReference(weightedSum + 55, expected)

@@ -5,6 +5,10 @@ domain
 Micro-library for typing and validating UK tax identifiers.
 
 #### Change History
+v10.0 - 17 Jun 24
+- add Scala 3.0 support. Remove Scala 2.12 support, noting Scala 2.13 is still supported.
+- update library dependencies
+
 v9.0 - 05 Dec 23
 - add support for Play 2.9 & Play 3.0, noting Play 2.8 is still supported
 - update Scala 2.13 version
@@ -17,6 +21,14 @@ v8.3.0 - 23 May 22
 v8.1.0 - 06 May 22
 - update library dependencies
 
+v8.0.0 - 14 Mar 22
+- add Scala 2.13 support
+
+v7.0.0 - 21 Jan 22
+- drop Play 2.6 and Play 2.7 support
+
+v6.0.0 - 24 Jun 21
+- Scala 2.12 only and add Play 2.8 support
 
 #### Identifier Types
 
@@ -79,19 +91,8 @@ libraryDependencies += "uk.gov.hmrc" %% "domain-play-[PLAY VERSION]" % "[LIB VER
 ```
 for example
 ```scala
-libraryDependencies += "uk.gov.hmrc" %% "domain-play-30" % "9.0.0"
+libraryDependencies += "uk.gov.hmrc" %% "domain-play-30" % "10.0.0"
 ```
-
-## Version
-
-Version 9.x.x add Play 2.9 and Play 3.0 support. 
-
-Version 8.x.x add Scala 2.13 support.
-
-Version 7.x.x drop Play 2.6 and Play 2.7 support.
-
-Version 6.x.x is Scala 2.12 only and add Play 2.8 support.
-
 
 ## License ##
  
