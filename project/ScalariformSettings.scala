@@ -15,7 +15,7 @@ object ScalariformSettings {
     .setPreference(FirstArgumentOnNewline, Preserve)
     .setPreference(FirstParameterOnNewline, Preserve)
     .setPreference(FormatXml, true)
-    .setPreference(IndentLocalDefs, true)
+    .setPreference(IndentLocalDefs, false) // incompatible with Scala3
     .setPreference(IndentPackageBlocks, true)
     .setPreference(IndentSpaces, 2)
     .setPreference(IndentWithTabs, false)
