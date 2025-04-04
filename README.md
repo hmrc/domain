@@ -5,6 +5,9 @@ domain
 Micro-library for typing and validating UK tax identifiers.
 
 #### Change History
+v11.0 - 17 Mar 25
+- update library dependencies
+
 v10.0 - 17 Jun 24
 - add Scala 3.0 support. Remove Scala 2.12 support, noting Scala 2.13 is still supported.
 - update library dependencies
