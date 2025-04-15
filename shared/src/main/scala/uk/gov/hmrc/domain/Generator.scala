@@ -30,7 +30,9 @@ class Generator(random: Random = new Random) extends Modulus23Check {
   }
 
   def atedUtrBatch(amountToGenerate: Int): List[AtedUtr] = {
-    require(amountToGenerate <= 900000, throw new IllegalArgumentException("Can't generate more than 9000000 unique AtedUtrs, specify a smaller value for amount"))
+    require(amountToGenerate <= 900000,
+            throw new IllegalArgumentException("Can't generate more than 9000000 unique AtedUtrs, specify a smaller value for amount")
+           )
     val atedUtrs: ListBuffer[AtedUtr] = ListBuffer()
     var start = 100000
     for (a <- 0 until amountToGenerate) {

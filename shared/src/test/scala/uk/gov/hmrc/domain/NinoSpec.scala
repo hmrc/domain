@@ -22,46 +22,46 @@ import org.scalatest.wordspec.AnyWordSpec
 class NinoSpec extends AnyWordSpec with Matchers {
 
   "The validation of a nino" should {
-    "pass with valid number without spaces" in { validateNino("AB123456C") should equal (true) }
-    "pass with valid number with spaces" in { validateNino("AB 12 34 56 C") should equal (true) }
-    "fail with valid number with leading space" in { validateNino(" AB123456C") should equal (false) }
-    "fail with valid number with trailing space" in { validateNino("AB123456C ") should equal (false) }
-    "fail with empty string" in { validateNino("") should equal (false) }
-    "fail with only space" in { validateNino("    ") should equal (false) }
+    "pass with valid number without spaces" in { validateNino("AB123456C") should equal(true) }
+    "pass with valid number with spaces" in { validateNino("AB 12 34 56 C") should equal(true) }
+    "fail with valid number with leading space" in { validateNino(" AB123456C") should equal(false) }
+    "fail with valid number with trailing space" in { validateNino("AB123456C ") should equal(false) }
+    "fail with empty string" in { validateNino("") should equal(false) }
+    "fail with only space" in { validateNino("    ") should equal(false) }
     "fail with total garbage" in {
-      validateNino("XXX") should equal (false)
-      validateNino("werionownadefwe") should equal (false)
-      validateNino("@£%!)(*&^") should equal (false)
-      validateNino("123456") should equal (false)
+      validateNino("XXX")             should equal(false)
+      validateNino("werionownadefwe") should equal(false)
+      validateNino("@£%!)(*&^")       should equal(false)
+      validateNino("123456")          should equal(false)
     }
     "fail with only one starting letter" in {
-      validateNino("A123456C") should equal (false)
-      validateNino("A1234567C") should equal (false)
+      validateNino("A123456C")  should equal(false)
+      validateNino("A1234567C") should equal(false)
     }
     "fail with three starting letters" in {
-      validateNino("ABC12345C") should equal (false)
-      validateNino("ABC123456C") should equal (false)
+      validateNino("ABC12345C")  should equal(false)
+      validateNino("ABC123456C") should equal(false)
     }
     "fail with lowercase letters" in {
-      validateNino("ab123456c") should equal (false)
+      validateNino("ab123456c") should equal(false)
     }
-    "fail with less than 6 middle digits" in { validateNino("AB12345C") should equal (false) }
-    "fail with more than 6 middle digits" in { validateNino("AB1234567C") should equal (false) }
+    "fail with less than 6 middle digits" in { validateNino("AB12345C") should equal(false) }
+    "fail with more than 6 middle digits" in { validateNino("AB1234567C") should equal(false) }
 
     "fail if we start with invalid characters" in {
       val invalidStartLetterCombinations = List('D', 'F', 'I', 'Q', 'U', 'V').combinations(2).map(_.mkString("")).toList
       val invalidPrefixes = List("BG", "GB", "NK", "KN", "TN", "NT", "ZZ")
       for (v <- invalidStartLetterCombinations ::: invalidPrefixes) {
-        validateNino(v + "123456C") should equal (false)
+        validateNino(v + "123456C") should equal(false)
       }
     }
 
     "fail if the second letter O" in {
-      validateNino("AO123456C") should equal (false)
+      validateNino("AO123456C") should equal(false)
     }
 
     "fail if the suffix is E" in {
-      validateNino("AB123456E") should equal (false)
+      validateNino("AB123456E") should equal(false)
     }
   }
 
@@ -83,5 +83,5 @@ class NinoSpec extends AnyWordSpec with Matchers {
     }
   }
 
-  def validateNino(nino: String) = Nino.isValid(nino)
+  def validateNino(nino: String): Boolean = Nino.isValid(nino)
 }

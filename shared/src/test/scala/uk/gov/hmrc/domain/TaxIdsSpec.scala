@@ -23,9 +23,9 @@ import play.api.libs.json.{Format, JsError, Json}
 
 class TaxIdsSpec extends AnyWordSpec with Matchers with LoneElement {
 
-  val nino = Nino("NM439088A")
-  val saUtr = SaUtr("some-sa-utr")
-  implicit val format: Format[TaxIds] = TaxIds.format(TaxIds.defaultSerialisableIds: _*)
+  val nino: Nino = Nino("NM439088A")
+  val saUtr: SaUtr = SaUtr("some-sa-utr")
+  implicit val format: Format[TaxIds] = TaxIds.format(TaxIds.defaultSerialisableIds*)
 
   "TaxIds constructor" should {
     "fail to create a TaxIds object with duplicate tax identifiers" in {
@@ -87,7 +87,7 @@ class TaxIdsSpec extends AnyWordSpec with Matchers with LoneElement {
           |"sautr": "some-sa-utr",
           |"unkownTaxId": "654654"
         }""".stripMargin
-      Json.parse(input).as[TaxIds].values.loneElement shouldBe (saUtr)
+      Json.parse(input).as[TaxIds].values.loneElement shouldBe saUtr
     }
 
     "succeed to build a TaxIds object with a new custom TaxIdentifier" in {
@@ -95,7 +95,7 @@ class TaxIdsSpec extends AnyWordSpec with Matchers with LoneElement {
         override def value: String = customId
         override val name: String = "customTaxId"
       }
-      implicit val format = TaxIds.format(SerialisableTaxId("customTaxId", CustomTaxId.apply))
+      implicit val format: Format[TaxIds] = TaxIds.format(SerialisableTaxId("customTaxId", CustomTaxId.apply))
       val expected = CustomTaxId("some-custom-value")
       val input =
         """{
@@ -118,7 +118,7 @@ class TaxIdsSpec extends AnyWordSpec with Matchers with LoneElement {
 
     "generate valid json for a TaxIds object with two TaxIdentifiers of type Nino and SaUtr" in {
       val input = TaxIds(nino, saUtr)
-      (Json.toJson(input) \ "nino").as[String] shouldBe nino.value
+      (Json.toJson(input) \ "nino").as[String]  shouldBe nino.value
       (Json.toJson(input) \ "sautr").as[String] shouldBe saUtr.value
     }
 
@@ -129,8 +129,8 @@ class TaxIdsSpec extends AnyWordSpec with Matchers with LoneElement {
       }
       val input = TaxIds(nino, saUtr, unknownId)
       val json = Json.toJson(input)
-      (json \ "nino").as[String] shouldBe nino.value
-      (json \ "sautr").as[String] shouldBe saUtr.value
+      (json \ "nino").as[String]          shouldBe nino.value
+      (json \ "sautr").as[String]         shouldBe saUtr.value
       (json \ "unknownId").asOpt[String] shouldNot be(defined)
     }
 
@@ -145,19 +145,19 @@ class TaxIdsSpec extends AnyWordSpec with Matchers with LoneElement {
 
     "return a nino is TaxIds contains one" in {
       val taxIdssWithNino = TaxIds(nino)
-      taxIdssWithNino.nino shouldBe Some(nino)
+      taxIdssWithNino.nino  shouldBe Some(nino)
       taxIdssWithNino.saUtr shouldBe None
     }
 
     "return a saUtr is TaxIds contains one" in {
       val taxIdssWithNino = TaxIds(saUtr)
       taxIdssWithNino.saUtr shouldBe Some(saUtr)
-      taxIdssWithNino.nino shouldBe None
+      taxIdssWithNino.nino  shouldBe None
     }
 
     "return a saUtr and a nino is TaxIdss contains both" in {
       val taxIdssWithNino = TaxIds(saUtr, nino)
-      taxIdssWithNino.nino shouldBe Some(nino)
+      taxIdssWithNino.nino  shouldBe Some(nino)
       taxIdssWithNino.saUtr shouldBe Some(saUtr)
     }
   }

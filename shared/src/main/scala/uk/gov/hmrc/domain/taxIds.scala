@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.domain
 
-import play.api.libs.json._
+import play.api.libs.json.*
 
 import scala.util.{Failure, Success, Try}
 
@@ -27,20 +27,20 @@ case class TaxIds(values: Set[TaxIds.TaxIdWithName]) {
   require(!TaxIds.hasDuplicates(values.toSeq), "TaxIds cannot have TaxIdentifers with the same name")
 
   private def as[A <: TaxIds.TaxIdWithName: ClassTag]: Option[A] =
-    values.collect {
-      case a: A => a
-    }.headOption
+    values.collectFirst { case a: A =>
+      a
+    }
 
-  lazy val nino = as[Nino]
-  lazy val saUtr = as[SaUtr]
-  lazy val ctUtr = as[CtUtr]
-  lazy val atedUtr = as[AtedUtr]
-  lazy val awrsUtr = as[AwrsUtr]
-  lazy val vrn = as[Vrn]
-  lazy val uar = as[Uar]
-  lazy val org = as[Org]
-  lazy val agentBusinessUtr = as[AgentBusinessUtr]
-  lazy val psaId = as[PsaId]
+  lazy val nino: Option[Nino] = as[Nino]
+  lazy val saUtr: Option[SaUtr] = as[SaUtr]
+  lazy val ctUtr: Option[CtUtr] = as[CtUtr]
+  lazy val atedUtr: Option[AtedUtr] = as[AtedUtr]
+  lazy val awrsUtr: Option[AwrsUtr] = as[AwrsUtr]
+  lazy val vrn: Option[Vrn] = as[Vrn]
+  lazy val uar: Option[Uar] = as[Uar]
+  lazy val org: Option[Org] = as[Org]
+  lazy val agentBusinessUtr: Option[AgentBusinessUtr] = as[AgentBusinessUtr]
+  lazy val psaId: Option[PsaId] = as[PsaId]
 }
 
 object TaxIds {
@@ -56,28 +56,25 @@ object TaxIds {
     values.size != values.map(_.name).toSet.size
   }
 
-  def reads(serialisableTaxIds: Set[SerialisableTaxId]): Reads[TaxIds] = new Reads[TaxIds] {
-    override def reads(json: JsValue): JsResult[TaxIds] = {
-      val ids = serialisableTaxIds.toList.map { taxId =>
-        (json \ taxId.taxIdName).asOpt[String] map (taxId.build)
-      }.flatten[TaxIdWithName]
-      Try(TaxIds(ids: _*)) match {
-        case Success(taxIds) => JsSuccess(taxIds)
-        case Failure(cause)  => JsError(cause.getMessage)
-      }
+  def reads(serialisableTaxIds: Set[SerialisableTaxId]): Reads[TaxIds] = (json: JsValue) => {
+    val ids: Seq[TaxIdWithName] = serialisableTaxIds.toList.flatMap { taxId =>
+      (json \ taxId.taxIdName).asOpt[String].map(taxId.build)
+    }
+    Try(TaxIds(ids*)) match {
+      case Success(taxIds) => JsSuccess(taxIds)
+      case Failure(cause)  => JsError(cause.getMessage)
     }
   }
 
-  def writes(serialisableTaxIdsNames: Set[String]): Writes[TaxIds] = new Writes[TaxIds] {
-    override def writes(ids: TaxIds) = {
-      val values: Set[TaxIdWithName] = ids.values.filterNot(p => !serialisableTaxIdsNames.contains(p.name))
-      JsObject(values.map { id => id.name -> Json.toJson(id.value) }.toSeq)
-    }
+  def writes(serialisableTaxIdsNames: Set[String]): Writes[TaxIds] = (ids: TaxIds) => {
+    val values: Set[TaxIdWithName] = ids.values.filterNot(p => !serialisableTaxIdsNames.contains(p.name))
+    JsObject(values.map(id => id.name -> Json.toJson(id.value)).toSeq)
   }
 
-  implicit def format(implicit serialisableTaxIds: SerialisableTaxId*): Format[TaxIds] = Format(reads(serialisableTaxIds.toSet), writes(serialisableTaxIds.map(_.taxIdName).toSet))
+  implicit def format(implicit serialisableTaxIds: SerialisableTaxId*): Format[TaxIds] =
+    Format(reads(serialisableTaxIds.toSet), writes(serialisableTaxIds.map(_.taxIdName).toSet))
 
-  val defaultSerialisableIds = Seq(
+  val defaultSerialisableIds: Seq[SerialisableTaxId] = Seq(
     SerialisableTaxId("nino", Nino.apply),
     SerialisableTaxId("sautr", SaUtr.apply),
     SerialisableTaxId("ctutr", CtUtr.apply),
@@ -94,4 +91,4 @@ object TaxIds {
   )
 }
 
-case class SerialisableTaxId(taxIdName: String, build: (String) => TaxIds.TaxIdWithName)
+case class SerialisableTaxId(taxIdName: String, build: String => TaxIds.TaxIdWithName)

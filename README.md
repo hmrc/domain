@@ -42,31 +42,31 @@ v6.0.0 - 24 Jun 21
 
 Types are provided for many common tax identifiers, such as:
 
-* [Employment Reference (EmpRef)](src/main/scala/uk/gov/hmrc/domain/EmpRef.scala)
-* [National Insurance Number (NINO)](src/main/scala/uk/gov/hmrc/domain/Nino.scala)
-* Unique Taxpayer References (UTR) - [Self Assessment](src/main/scala/uk/gov/hmrc/domain/SaUtr.scala), 
-[Corporation Tax](src/main/scala/uk/gov/hmrc/domain/CtUtr.scala), [Annual Tax on Enveloped Dwellings](src/main/scala/uk/gov/hmrc/domain/AtedUtr.scala),
-[Pension Scheme Administrator ID](src/main/scala/uk/gov/hmrc/domain/PsaId.scala),
-[Pension Scheme Practitioner ID](src/main/scala/uk/gov/hmrc/domain/PspId.scala),
-[Alcohol Wholesale Registration Scheme](src/main/scala/uk/gov/hmrc/domain/AwrsUtr.scala),
-* [Unique Agent Reference (UAR)](src/main/scala/uk/gov/hmrc/domain/Uar.scala)
-* [VAT Registration Number (VRN)](src/main/scala/uk/gov/hmrc/domain/Vrn.scala)
-* Agents - [Code](src/main/scala/uk/gov/hmrc/domain/AgentCode.scala), 
-[UserId](src/main/scala/uk/gov/hmrc/domain/AgentUserId.scala), 
-[PAYE Reference](src/main/scala/uk/gov/hmrc/domain/PayeAgentReference.scala),
-[Agent Business](src/main/scala/uk/gov/hmrc/domain/AgentBusinessUtr.scala)
+* [Employment Reference (EmpRef)](shared/src/main/scala/uk/gov/hmrc/domain/EmpRef.scala)
+* [National Insurance Number (NINO)](shared/src/main/scala/uk/gov/hmrc/domain/Nino.scala)
+* Unique Taxpayer References (UTR) - [Self Assessment](shared/src/main/scala/uk/gov/hmrc/domain/SaUtr.scala), 
+[Corporation Tax](shared/src/main/scala/uk/gov/hmrc/domain/CtUtr.scala), [Annual Tax on Enveloped Dwellings](shared/src/main/scala/uk/gov/hmrc/domain/AtedUtr.scala),
+[Pension Scheme Administrator ID](shared/src/main/scala/uk/gov/hmrc/domain/PsaId.scala),
+[Pension Scheme Practitioner ID](shared/src/main/scala/uk/gov/hmrc/domain/PspId.scala),
+[Alcohol Wholesale Registration Scheme](shared/src/main/scala/uk/gov/hmrc/domain/AwrsUtr.scala),
+* [Unique Agent Reference (UAR)](shared/src/main/scala/uk/gov/hmrc/domain/Uar.scala)
+* [VAT Registration Number (VRN)](shared/src/main/scala/uk/gov/hmrc/domain/Vrn.scala)
+* Agents - [Code](shared/src/main/scala/uk/gov/hmrc/domain/AgentCode.scala), 
+[UserId](shared/src/main/scala/uk/gov/hmrc/domain/AgentUserId.scala), 
+[PAYE Reference](shared/src/main/scala/uk/gov/hmrc/domain/PayeAgentReference.scala),
+[Agent Business](shared/src/main/scala/uk/gov/hmrc/domain/AgentBusinessUtr.scala)
 
 #### JSON handling
 
 `Reads` and `Writes` have been provided for Play's JSON library for all identifiers, and format validation is present for 
 some. JSON objects with multiple tax identifiers as properties can be serialized or deserialized to a 
-[TaxIds](src/main/scala/uk/gov/hmrc/domain/taxIds.scala):
+[TaxIds](shared/src/main/scala/uk/gov/hmrc/domain/taxIds.scala):
 
 ```scala
 import play.api.libs.json._
 import uk.gov.hmrc.domain._
 
-implicit val format = TaxIds.format(TaxIds.defaultSerialisableIds: _*)
+implicit val format: Format[TaxIds] = TaxIds.format(TaxIds.defaultSerialisableIds: _*)
 
 val input =
   """{
@@ -98,6 +98,11 @@ libraryDependencies += "uk.gov.hmrc" %% "domain" % "[LIB VERSION]-play-[PLAY VER
 for example
 ```scala
 libraryDependencies += "uk.gov.hmrc" %% "domain" % "8.3.0-play-28"
+```
+
+### Running tests
+```shell
+sbt clean coverage test coverageReport
 ```
 
 ## License ##
