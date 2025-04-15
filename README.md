@@ -5,6 +5,11 @@ domain
 Micro-library for typing and validating UK tax identifiers.
 
 #### Change History
+v12.0 - 15 April 25
+- remove support for scala 2.13
+- remove support for play 2.8 and play 2.9
+- update library dependencies
+
 v11.0 - 17 Mar 25
 - update library dependencies
 
@@ -61,21 +66,29 @@ some. JSON objects with multiple tax identifiers as properties can be serialized
 import play.api.libs.json._
 import uk.gov.hmrc.domain._
 
-implicit val format =  TaxIds.format(TaxIds.defaultSerialisableIds :_*)
+implicit val format = TaxIds.format(TaxIds.defaultSerialisableIds: _*)
 
 val input =
-        """{
-          |"nino": "NM439088A",
-          |"sautr": "some-sa-utr"
+  """{
+    |"nino": "NM439088A",
+    |"sautr": "some-sa-utr"
         }""".stripMargin
 val taxIds = Json.parse(input).as[TaxIds]
 
-taxIds.nino  // Some(NM439088A)
+taxIds.nino // Some(NM439088A)
 taxIds.saUtr // Some(some-sa-utr)
 taxIds.ctUtr // None
 ```
 
 ### Installing
+Add the following to your SBT build:
+```scala
+libraryDependencies += "uk.gov.hmrc" %% "domain-play-[PLAY VERSION]" % "[LIB VERSION]"
+```
+for example
+```scala
+libraryDependencies += "uk.gov.hmrc" %% "domain-play-30" % "12.0.0"
+```
 
 #### Before version 9.x.x
 Add the following to your SBT build:
@@ -85,16 +98,6 @@ libraryDependencies += "uk.gov.hmrc" %% "domain" % "[LIB VERSION]-play-[PLAY VER
 for example
 ```scala
 libraryDependencies += "uk.gov.hmrc" %% "domain" % "8.3.0-play-28"
-```
-
-#### After version 9.x.x
-Add the following to your SBT build:
-```scala
-libraryDependencies += "uk.gov.hmrc" %% "domain-play-[PLAY VERSION]" % "[LIB VERSION]"
-```
-for example
-```scala
-libraryDependencies += "uk.gov.hmrc" %% "domain-play-30" % "10.0.0"
 ```
 
 ## License ##
