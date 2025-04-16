@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.domain
 
-import play.api.libs.json._
+import play.api.libs.json.*
 
 case class TaxCode(code: String) {
   require("^([K]*([1-9][0-9]{0,5}|0)[TLPY]*|BR|NT|D[01])$".r.findFirstMatchIn(code).isDefined)
@@ -29,13 +29,12 @@ object TaxCodeFormats {
   class TaxCodeReads extends Reads[TaxCode] {
     override def reads(json: JsValue): JsResult[TaxCode] = {
       json match {
-        case JsString(code) => {
+        case JsString(code) =>
           try {
             JsSuccess(TaxCode(code))
           } catch {
             case e: IllegalArgumentException => JsError(s"The code $code is not a legal tax code")
           }
-        }
         case _ => JsError("Expected a single string")
       }
     }

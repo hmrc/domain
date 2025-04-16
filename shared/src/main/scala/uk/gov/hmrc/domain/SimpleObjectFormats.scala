@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.domain
 
-import play.api.libs.json.{JsObject, JsString, _}
+import play.api.libs.json.{JsObject, JsString, *}
 
 import scala.util.{Failure, Success, Try}
 
@@ -34,6 +34,6 @@ class SimpleObjectReads[T](val fieldName: String, val constructor: String => T) 
     }
   } match {
     case Success(jsResult)  => jsResult
-    case Failure(exception) => JsError(exception.getMessage())
+    case Failure(exception) => JsError(exception.getMessage)
   }
 }

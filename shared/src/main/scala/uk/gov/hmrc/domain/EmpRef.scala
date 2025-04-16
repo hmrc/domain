@@ -18,28 +18,27 @@ package uk.gov.hmrc.domain
 
 import java.net.{URLDecoder, URLEncoder}
 
-import play.api.libs.json._
+import play.api.libs.json.*
 
 case class EmpRef(taxOfficeNumber: String, taxOfficeReference: String) extends TaxIdentifier {
-  override def toString = value
+  override def toString: String = value
 
-  def value = taxOfficeNumber + "/" + taxOfficeReference
+  def value: String = taxOfficeNumber + "/" + taxOfficeReference
 
-  def encodedValue = URLEncoder.encode(value, "UTF-8")
+  def encodedValue: String = URLEncoder.encode(value, "UTF-8")
 }
 
 object EmpRef extends ((String, String) => EmpRef) {
 
   implicit val empRefWrite: Writes[EmpRef] = new SimpleObjectWrites[EmpRef](_.value)
-  implicit val empRefRead: Reads[EmpRef] = new Reads[EmpRef] {
-    override def reads(js: JsValue): JsResult[EmpRef] = js match {
-      case v: JsString => v.validate[String].map(EmpRef.fromIdentifiers)
-      case v: JsObject => for {
+  implicit val empRefRead: Reads[EmpRef] = {
+    case v: JsString => v.validate[String].map(EmpRef.fromIdentifiers)
+    case v: JsObject =>
+      for {
         ton <- (v \ "taxOfficeNumber").validate[String]
         tor <- (v \ "taxOfficeReference").validate[String]
       } yield EmpRef(ton, tor)
-      case noParsed => throw new Exception(s"Could not read Json value of empRef in $noParsed")
-    }
+    case noParsed => throw new Exception(s"Could not read Json value of empRef in $noParsed")
   }
 
   def fromIdentifiers(slashSeparatedIdentifiers: String): EmpRef = {
@@ -50,5 +49,5 @@ object EmpRef extends ((String, String) => EmpRef) {
     }
   }
 
-  def decode(encodedEmpRef: String) = URLDecoder.decode(encodedEmpRef, "UTF-8")
+  def decode(encodedEmpRef: String): String = URLDecoder.decode(encodedEmpRef, "UTF-8")
 }

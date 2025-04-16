@@ -19,10 +19,11 @@ package uk.gov.hmrc.domain
 import play.api.libs.json.{Reads, Writes}
 
 case class PayeAgentReference(value: String) extends TaxIdentifier {
-  override def toString = value
+  override def toString: String = value
 }
 
 object PayeAgentReference extends (String => PayeAgentReference) {
   implicit val agencyPayeReferenceWrite: Writes[PayeAgentReference] = new SimpleObjectWrites[PayeAgentReference](_.value)
-  implicit val agencyPayeReferenceRead: Reads[PayeAgentReference] = new SimpleObjectReads[PayeAgentReference]("payeAgentReference", PayeAgentReference.apply)
+  implicit val agencyPayeReferenceRead: Reads[PayeAgentReference] =
+    new SimpleObjectReads[PayeAgentReference]("payeAgentReference", PayeAgentReference.apply)
 }

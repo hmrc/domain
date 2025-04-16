@@ -98,9 +98,9 @@ class AtedUtrSpec extends AnyWordSpec with Matchers {
     }
 
     "fail when the length is wrong too short" in {
-      AtedUtr.isValid("XN120000010000") should equal(false)
+      AtedUtr.isValid("XN120000010000")   should equal(false)
       AtedUtr.isValid("XN12000001000011") should equal(false)
-      AtedUtr.isValid("XNAT0000010000") should equal(false)
+      AtedUtr.isValid("XNAT0000010000")   should equal(false)
       AtedUtr.isValid("XNAT000001000011") should equal(false)
     }
 

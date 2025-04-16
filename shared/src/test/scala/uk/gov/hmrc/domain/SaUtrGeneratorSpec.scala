@@ -25,7 +25,7 @@ class SaUtrGeneratorSpec extends AnyWordSpec with Checkers {
 
   "SaUtr Generation" should {
     "generate valid SaUtrs for all random seeds" in {
-      check(Prop.forAll { (seed: Int) => SelfAssessmentReferenceChecker.isValid(new SaUtrGenerator(seed).nextSaUtr.utr) })
+      check(Prop.forAll((seed: Int) => SelfAssessmentReferenceChecker.isValid(new SaUtrGenerator(seed).nextSaUtr.utr)))
     }
   }
 }
