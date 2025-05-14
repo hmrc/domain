@@ -3,7 +3,7 @@ import sbt.*
 object LibDependencies {
 
   private val compile = Seq(
-    "org.playframework" %% "play" % "3.0.7"
+    "org.playframework" %% "play-json" % "3.0.4"
   )
 
   private val test = Seq(
