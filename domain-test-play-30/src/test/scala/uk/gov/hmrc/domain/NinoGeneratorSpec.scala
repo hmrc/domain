@@ -16,28 +16,15 @@
 
 package uk.gov.hmrc.domain
 
-import org.scalatest.wordspec.AnyWordSpec
 import org.scalacheck.Prop
+import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.scalacheck.Checkers
 
-class GeneratorSpec extends AnyWordSpec with Checkers {
+class NinoGeneratorSpec extends AnyWordSpec with Checkers {
 
   "Nino Generation" should {
     "generate valid NINOs for all random seeds" in {
-      check(Prop.forAll((seed: Int) => Nino.isValid(new Generator(seed).nextNino.nino)))
+      check(Prop.forAll((seed: Int) => Nino.isValid(new NinoGenerator(seed).nextNino.nino)))
     }
-  }
-
-  "AtedUtr Generation" should {
-
-    "generate valid AtedUtrs for all random seeds" in {
-      check(Prop.forAll((seed: Int) => AtedUtr.isValid(new Generator(seed).nextAtedUtr.utr)))
-    }
-
-    "generate a batch of unique AtedUtrs" in {
-      val atedUtrs = new Generator().atedUtrBatch(100000)
-      assert(atedUtrs.distinct.length == atedUtrs.length)
-    }
-
   }
 }

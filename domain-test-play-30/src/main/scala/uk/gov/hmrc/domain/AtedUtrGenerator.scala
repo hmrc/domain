@@ -19,18 +19,9 @@ package uk.gov.hmrc.domain
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
-// TODO: Sabi move it to the test lib
-// TODO: Sabi refactor to give every class its Named Generator - add migration tips to the README
 // TODO: Sabi: add Java Documentation
-class Generator(random: Random = new Random) extends Modulus23Check {
+class AtedUtrGenerator(random: Random = new Random) extends Modulus23Check {
   def this(seed: Int) = this(new scala.util.Random(seed))
-
-  def nextNino: Nino = {
-    val prefix = Nino.validPrefixes(random.nextInt(Nino.validPrefixes.length))
-    val number = random.nextInt(1000000)
-    val suffix = Nino.validSuffixes(random.nextInt(Nino.validSuffixes.length))
-    Nino(f"$prefix$number%06d$suffix")
-  }
 
   def atedUtrBatch(amountToGenerate: Int): List[AtedUtr] = {
     require(amountToGenerate <= 900000,

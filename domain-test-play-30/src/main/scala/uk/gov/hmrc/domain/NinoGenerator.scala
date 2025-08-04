@@ -16,16 +16,16 @@
 
 package uk.gov.hmrc.domain
 
-import org.scalacheck.Prop
-import org.scalatestplus.scalacheck.Checkers
-import uk.gov.hmrc.referencechecker.SelfAssessmentReferenceChecker
-import org.scalatest.wordspec.AnyWordSpec
+import scala.util.Random
 
-class SaUtrGeneratorSpec extends AnyWordSpec with Checkers {
+// TODO: Sabi: add Java Documentation
+class NinoGenerator(random: Random = new Random) extends Modulus23Check {
+  def this(seed: Int) = this(new scala.util.Random(seed))
 
-  "SaUtr Generation" should {
-    "generate valid SaUtrs for all random seeds" in {
-      check(Prop.forAll((seed: Int) => SelfAssessmentReferenceChecker.isValid(new SaUtrGenerator(seed).nextSaUtr.utr)))
-    }
+  def nextNino: Nino = {
+    val prefix = Nino.validPrefixes(random.nextInt(Nino.validPrefixes.length))
+    val number = random.nextInt(1000000)
+    val suffix = Nino.validSuffixes(random.nextInt(Nino.validSuffixes.length))
+    Nino(f"$prefix$number%06d$suffix")
   }
 }
