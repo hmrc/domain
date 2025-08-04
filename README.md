@@ -32,25 +32,25 @@ v9.0 - 05 Dec 2023
 
 Types are provided for many common tax identifiers, such as:
 
-* [Employment Reference (EmpRef)](shared/src/main/scala/uk/gov/hmrc/domain/EmpRef.scala)
-* [National Insurance Number (NINO)](shared/src/main/scala/uk/gov/hmrc/domain/Nino.scala)
-* Unique Taxpayer References (UTR) - [Self Assessment](shared/src/main/scala/uk/gov/hmrc/domain/SaUtr.scala), 
-[Corporation Tax](shared/src/main/scala/uk/gov/hmrc/domain/CtUtr.scala), [Annual Tax on Enveloped Dwellings](shared/src/main/scala/uk/gov/hmrc/domain/AtedUtr.scala),
-[Pension Scheme Administrator ID](shared/src/main/scala/uk/gov/hmrc/domain/PsaId.scala),
-[Pension Scheme Practitioner ID](shared/src/main/scala/uk/gov/hmrc/domain/PspId.scala),
-[Alcohol Wholesale Registration Scheme](shared/src/main/scala/uk/gov/hmrc/domain/AwrsUtr.scala),
-* [Unique Agent Reference (UAR)](shared/src/main/scala/uk/gov/hmrc/domain/Uar.scala)
-* [VAT Registration Number (VRN)](shared/src/main/scala/uk/gov/hmrc/domain/Vrn.scala)
-* Agents - [Code](shared/src/main/scala/uk/gov/hmrc/domain/AgentCode.scala), 
-[UserId](shared/src/main/scala/uk/gov/hmrc/domain/AgentUserId.scala), 
-[PAYE Reference](shared/src/main/scala/uk/gov/hmrc/domain/PayeAgentReference.scala),
-[Agent Business](shared/src/main/scala/uk/gov/hmrc/domain/AgentBusinessUtr.scala)
+* [Employment Reference (EmpRef)](domain-play-30/src/main/scala/uk/gov/hmrc/domain/EmpRef.scala)
+* [National Insurance Number (NINO)](domain-play-30/src/main/scala/uk/gov/hmrc/domain/Nino.scala)
+* Unique Taxpayer References (UTR) - [Self Assessment](domain-play-30/src/main/scala/uk/gov/hmrc/domain/SaUtr.scala), 
+[Corporation Tax](domain-play-30/src/main/scala/uk/gov/hmrc/domain/CtUtr.scala), [Annual Tax on Enveloped Dwellings](domain-play-30/src/main/scala/uk/gov/hmrc/domain/AtedUtr.scala),
+[Pension Scheme Administrator ID](domain-play-30/src/main/scala/uk/gov/hmrc/domain/PsaId.scala),
+[Pension Scheme Practitioner ID](domain-play-30/src/main/scala/uk/gov/hmrc/domain/PspId.scala),
+[Alcohol Wholesale Registration Scheme](domain-play-30/src/main/scala/uk/gov/hmrc/domain/AwrsUtr.scala),
+* [Unique Agent Reference (UAR)](domain-play-30/src/main/scala/uk/gov/hmrc/domain/Uar.scala)
+* [VAT Registration Number (VRN)](domain-play-30/src/main/scala/uk/gov/hmrc/domain/Vrn.scala)
+* Agents - [Code](domain-play-30/src/main/scala/uk/gov/hmrc/domain/AgentCode.scala), 
+[UserId](domain-play-30/src/main/scala/uk/gov/hmrc/domain/AgentUserId.scala), 
+[PAYE Reference](domain-play-30/src/main/scala/uk/gov/hmrc/domain/PayeAgentReference.scala),
+[Agent Business](domain-play-30/src/main/scala/uk/gov/hmrc/domain/AgentBusinessUtr.scala)
 
 ## JSON handling
 
 `Reads` and `Writes` have been provided for Play's JSON library for all identifiers, and format validation is present for 
 some. JSON objects with multiple tax identifiers as properties can be serialized or deserialized to a 
-[TaxIds](shared/src/main/scala/uk/gov/hmrc/domain/taxIds.scala):
+[TaxIds](domain-play-30/src/main/scala/uk/gov/hmrc/domain/taxIds.scala):
 
 ```scala
 import play.api.libs.json._
@@ -74,10 +74,12 @@ taxIds.ctUtr // None
 You must install the Test library to access the Test Generators. See further info in the [Installing section](#Installing)
 
 ### How to Use the Test Generators
-[//]: # (TODO: Sabi finish the examples)
 ```scala
-
+val atedUtr = AtedUtrGenerator().nextAtedUtr.utr
+val nino = NinoGenerator().nextNino.nino
+val saUtr = SaUtrGenerator().nextSaUtr.utr
 ```
+
 ### Migrating from v12 to v13
 1. Install the test library. See further info in the [Installing section](#Installing)
 2. `Generator` class has been broken into individual Named Generators

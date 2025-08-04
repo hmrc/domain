@@ -18,12 +18,24 @@ package uk.gov.hmrc.domain
 
 import scala.util.Random
 
-class SaUtrGenerator(random: Random = new Random) extends Modulus11Check {
-  def this(seed: Int) = this(new scala.util.Random(seed))
+/** A generator that should be used Only for Testing!
+  *
+  * Generates an SaUtr from a random seed.
+  *
+  * You can use a specific seed to generate an SaUtr so it is going to be more predictable.
+  *
+  * @example
+  *   SaUtrGenerator(seed).nextSaUtr.utr
+  */
+case class SaUtrGenerator(private val random: Random = new Random) extends Modulus11Check {
 
   def nextSaUtr: SaUtr = {
     val suffix = f"${random.nextInt(100000)}%09d"
     val checkCharacter = calculateCheckCharacter(suffix)
     SaUtr(s"$checkCharacter$suffix")
   }
+}
+
+object SaUtrGenerator {
+  def apply(seed: Int): SaUtrGenerator = SaUtrGenerator(Random(seed))
 }

@@ -18,9 +18,15 @@ package uk.gov.hmrc.domain
 
 import scala.util.Random
 
-// TODO: Sabi: add Java Documentation
-class NinoGenerator(random: Random = new Random) extends Modulus23Check {
-  def this(seed: Int) = this(new scala.util.Random(seed))
+/** A generator that should be used Only for Testing!
+  *
+  * Generates a Nino from a random seed.
+  *
+  * You can use a specific seed to generate a Nino so it is going to be more predictable.
+  * @example
+  *   NinoGenerator(seed).nextNino.nino
+  */
+case class NinoGenerator(private val random: Random = new Random) extends Modulus23Check {
 
   def nextNino: Nino = {
     val prefix = Nino.validPrefixes(random.nextInt(Nino.validPrefixes.length))
@@ -28,4 +34,8 @@ class NinoGenerator(random: Random = new Random) extends Modulus23Check {
     val suffix = Nino.validSuffixes(random.nextInt(Nino.validSuffixes.length))
     Nino(f"$prefix$number%06d$suffix")
   }
+}
+
+object NinoGenerator {
+  def apply(seed: Int): NinoGenerator = NinoGenerator(Random(seed))
 }

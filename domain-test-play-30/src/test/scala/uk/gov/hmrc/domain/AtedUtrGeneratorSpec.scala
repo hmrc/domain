@@ -24,11 +24,11 @@ class AtedUtrGeneratorSpec extends AnyWordSpec with Checkers {
 
   "AtedUtr Generation" should {
     "generate valid AtedUtrs for all random seeds" in {
-      check(Prop.forAll((seed: Int) => AtedUtr.isValid(new AtedUtrGenerator(seed).nextAtedUtr.utr)))
+      check(Prop.forAll((seed: Int) => AtedUtr.isValid(AtedUtrGenerator(seed).nextAtedUtr.utr)))
     }
 
     "generate a batch of unique AtedUtrs" in {
-      val atedUtrs = new AtedUtrGenerator().atedUtrBatch(100000)
+      val atedUtrs = AtedUtrGenerator().atedUtrBatch(100000)
       assert(atedUtrs.distinct.length == atedUtrs.length)
     }
   }

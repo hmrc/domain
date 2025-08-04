@@ -19,9 +19,15 @@ package uk.gov.hmrc.domain
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
-// TODO: Sabi: add Java Documentation
-class AtedUtrGenerator(random: Random = new Random) extends Modulus23Check {
-  def this(seed: Int) = this(new scala.util.Random(seed))
+/** A generator that should be used Only for Testing!
+  *
+  * Generates an AtedUtr from a random seed.
+  *
+  * You can use a specific seed to generate an AtedUtr so it is going to be more predictable.
+  * @example
+  *   AtedUtrGenerator(seed).nextAtedUtr.utr
+  */
+case class AtedUtrGenerator(private val random: Random = new Random) extends Modulus23Check {
 
   def atedUtrBatch(amountToGenerate: Int): List[AtedUtr] = {
     require(amountToGenerate <= 900000,
@@ -44,5 +50,8 @@ class AtedUtrGenerator(random: Random = new Random) extends Modulus23Check {
     val checkCharacter = calculateCheckCharacter(weighting)
     AtedUtr(f"X${checkCharacter}AT00000$suffix")
   }
+}
 
+object AtedUtrGenerator {
+  def apply(seed: Int): AtedUtrGenerator = AtedUtrGenerator(Random(seed))
 }
