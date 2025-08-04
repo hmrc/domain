@@ -41,6 +41,7 @@ Types are provided for many common tax identifiers, such as:
 [Alcohol Wholesale Registration Scheme](domain-play-30/src/main/scala/uk/gov/hmrc/domain/AwrsUtr.scala),
 * [Unique Agent Reference (UAR)](domain-play-30/src/main/scala/uk/gov/hmrc/domain/Uar.scala)
 * [VAT Registration Number (VRN)](domain-play-30/src/main/scala/uk/gov/hmrc/domain/Vrn.scala)
+* [Economic Operators Registration and Identification (EORI)](domain-play-30/src/main/scala/uk/gov/hmrc/domain/Eori.scala)
 * Agents - [Code](domain-play-30/src/main/scala/uk/gov/hmrc/domain/AgentCode.scala), 
 [UserId](domain-play-30/src/main/scala/uk/gov/hmrc/domain/AgentUserId.scala), 
 [PAYE Reference](domain-play-30/src/main/scala/uk/gov/hmrc/domain/PayeAgentReference.scala),
@@ -73,11 +74,19 @@ taxIds.ctUtr // None
 ## Test Generator
 You must install the Test library to access the Test Generators. See further info in the [Installing section](#Installing)
 
+### List of Generators
+- `AtedUtrGenerator`
+- `EoriGenerator`
+- `NinoGenerator`
+- `SaUtrGenerator`
+- `VrnGenerator`
+
 ### How to Use the Test Generators
 ```scala
 val atedUtr = AtedUtrGenerator().nextAtedUtr.utr
 val nino = NinoGenerator().nextNino.nino
-val saUtr = SaUtrGenerator().nextSaUtr.utr
+val seed = 123456
+val saUtr = SaUtrGenerator(seed).nextSaUtr.utr
 ```
 
 ### Migrating from v12 to v13
