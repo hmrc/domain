@@ -19,7 +19,7 @@ package uk.gov.hmrc.domain
 import play.api.libs.json.{Reads, Writes}
 
 case class AgentCode(value: String) extends TaxIdentifier {
-  override def toString = value
+  override def toString: String = value
 }
 
 object AgentCode extends (String => AgentCode) {

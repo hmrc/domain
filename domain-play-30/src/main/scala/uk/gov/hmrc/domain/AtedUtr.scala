@@ -20,9 +20,9 @@ import play.api.libs.json.{Reads, Writes}
 
 case class AtedUtr(utr: String) extends TaxIdentifier with SimpleName {
   require(AtedUtr.isValid(utr))
-  override def toString = utr
+  override def toString: String = utr
   val name = "atedutr"
-  def value = utr
+  def value: String = utr
 }
 
 object AtedUtr extends Modulus23Check with (String => AtedUtr) {
@@ -34,7 +34,7 @@ object AtedUtr extends Modulus23Check with (String => AtedUtr) {
     """^[Xx][A-Z]AT00000\d{6}$"""
   )
 
-  def isValid(utr: String) =
+  def isValid(utr: String): Boolean =
     validFormats.exists(utr.matches) &&
       isCheckCorrect(utr.toUpperCase, 1)
 }

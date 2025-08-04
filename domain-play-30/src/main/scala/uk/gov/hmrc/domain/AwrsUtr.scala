@@ -19,9 +19,9 @@ package uk.gov.hmrc.domain
 import play.api.libs.json.{Reads, Writes}
 
 case class AwrsUtr(utr: String) extends TaxIdentifier with SimpleName {
-  override def toString = utr
+  override def toString: String = utr
   val name = "awrsutr"
-  def value = utr
+  def value: String = utr
 }
 
 object AwrsUtr extends (String => AwrsUtr) {

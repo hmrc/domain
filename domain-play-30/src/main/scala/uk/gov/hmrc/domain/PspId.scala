@@ -20,9 +20,9 @@ import play.api.libs.json.{Reads, Writes}
 
 case class PspId(id: String) extends TaxIdentifier with SimpleName {
   require(PspId.isValid(id))
-  override def toString = id
+  override def toString: String = id
   val name = "pspid"
-  def value = id
+  def value: String = id
 }
 
 object PspId extends (String => PspId) {
@@ -31,5 +31,5 @@ object PspId extends (String => PspId) {
 
   private val validFormat = "^\\d{8}$"
 
-  def isValid(id: String) = !id.isEmpty && id.matches(validFormat)
+  def isValid(id: String): Boolean = id.nonEmpty && id.matches(validFormat)
 }
