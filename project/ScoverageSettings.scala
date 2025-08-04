@@ -1,9 +1,9 @@
 import sbt.Keys.parallelExecution
 import scoverage.ScoverageKeys
-import sbt._
+import sbt.{Def, *}
 
 object ScoverageSettings {
-  def apply() = Seq( // Semicolon-separated list of regexes matching classes to exclude
+  def apply(): Seq[Def.Setting[?]] = Seq( // Semicolon-separated list of regexes matching classes to exclude
     ScoverageKeys.coverageExcludedPackages := "<empty>;Reverse.*;.*(config|views.*);.*(AuthService|BuildInfo|Routes).*",
     ScoverageKeys.coverageExcludedFiles := Seq(
       "" +

@@ -25,7 +25,7 @@ trait ModulusCheck {
   protected def isCheckCorrect(utr: String, checkPosition: Int): Boolean =
     utr.charAt(checkPosition) == getCheckCharacter(utr, checkPosition + 1)
 
-  protected def calculateCheckCharacter(utr: String) = getCheckCharacter(utr, 0)
+  protected def calculateCheckCharacter(utr: String): Char = getCheckCharacter(utr, 0)
 
   private def getCheckCharacter(utr: String, offset: Int): Char = {
     val sum = weights.zipWithIndex.collect {
@@ -47,7 +47,7 @@ trait Modulus11Check extends ModulusCheck {
 
   override protected val checkString = "21987654321"
   override protected val mod = 11
-  override protected val weights = List(6, 7, 8, 9, 10, 5, 4, 3, 2)
+  override protected val weights: List[Int] = List(6, 7, 8, 9, 10, 5, 4, 3, 2)
 
 }
 
@@ -55,6 +55,6 @@ trait Modulus23Check extends ModulusCheck {
 
   override protected val checkString = "ABCDEFGHXJKLMNYPQRSTZVW"
   override protected val mod = 23
-  override protected val weights = List(9, 10, 11, 12, 13, 8, 7, 6, 5, 4, 3, 2, 1)
+  override protected val weights: List[Int] = List(9, 10, 11, 12, 13, 8, 7, 6, 5, 4, 3, 2, 1)
 
 }

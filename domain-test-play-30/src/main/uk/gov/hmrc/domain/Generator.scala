@@ -19,6 +19,9 @@ package uk.gov.hmrc.domain
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
+// TODO: Sabi move it to the test lib
+// TODO: Sabi refactor to give every class its Named Generator - add migration tips to the README
+// TODO: Sabi: add Java Documentation
 class Generator(random: Random = new Random) extends Modulus23Check {
   def this(seed: Int) = this(new scala.util.Random(seed))
 

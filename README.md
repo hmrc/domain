@@ -1,44 +1,34 @@
 domain
 ======
-[![Build Status](https://travis-ci.org/hmrc/domain.svg)](https://travis-ci.org/hmrc/domain) [ ![Download](https://api.bintray.com/packages/hmrc/releases/domain/images/download.svg) ](https://bintray.com/hmrc/releases/domain/_latestVersion)
+![](https://img.shields.io/github/v/release/hmrc/domain)
 
 Micro-library for typing and validating UK tax identifiers.
 
-#### Change History
-v12.0 - 15 April 25
+## Change History
+v13.0 - 01 Aug 2025
+- added additional Test Generators; now full coverage
+- use the test jar to obtain the generators
+- additional README clarifications
+
+v12.0 - 15 April 2025
 - remove support for scala 2.13
 - remove support for play 2.8 and play 2.9
 - update library dependencies
 
-v11.0 - 17 Mar 25
+v11.0 - 17 Mar 2025
 - update library dependencies
 
-v10.0 - 17 Jun 24
+v10.0 - 17 Jun 2024
 - add Scala 3.0 support. Remove Scala 2.12 support, noting Scala 2.13 is still supported.
 - update library dependencies
 
-v9.0 - 05 Dec 23
+v9.0 - 05 Dec 2023
 - add support for Play 2.9 & Play 3.0, noting Play 2.8 is still supported
 - update Scala 2.13 version
 - update library dependencies
 - add 'Change History' section to README
 
-v8.3.0 - 23 May 22
-- update broken sbt build
-
-v8.1.0 - 06 May 22
-- update library dependencies
-
-v8.0.0 - 14 Mar 22
-- add Scala 2.13 support
-
-v7.0.0 - 21 Jan 22
-- drop Play 2.6 and Play 2.7 support
-
-v6.0.0 - 24 Jun 21
-- Scala 2.12 only and add Play 2.8 support
-
-#### Identifier Types
+## Identifier Types
 
 Types are provided for many common tax identifiers, such as:
 
@@ -56,7 +46,7 @@ Types are provided for many common tax identifiers, such as:
 [PAYE Reference](shared/src/main/scala/uk/gov/hmrc/domain/PayeAgentReference.scala),
 [Agent Business](shared/src/main/scala/uk/gov/hmrc/domain/AgentBusinessUtr.scala)
 
-#### JSON handling
+## JSON handling
 
 `Reads` and `Writes` have been provided for Play's JSON library for all identifiers, and format validation is present for 
 some. JSON objects with multiple tax identifiers as properties can be serialized or deserialized to a 
@@ -80,29 +70,54 @@ taxIds.saUtr // Some(some-sa-utr)
 taxIds.ctUtr // None
 ```
 
-### Installing
+## Test Generator
+You must install the Test library to access the Test Generators. See further info in the [Installing section](#Installing)
+
+### How to Use the Test Generators
+[//]: # (TODO: Sabi finish the examples)
+```scala
+
+```
+### Migrating from v12 to v13
+1. Install the test library. See further info in the [Installing section](#Installing)
+2. `Generator` class has been broken into individual Named Generators
+```scala
+val generator = new Generator()
+generator.nextNino
+```
+is now
+```scala
+val ninoGenerator = NinoGenerator()
+ninoGenerator.nextNino
+``` 
+
+## Installing
 Add the following to your SBT build:
 ```scala
 libraryDependencies += "uk.gov.hmrc" %% "domain-play-[PLAY VERSION]" % "[LIB VERSION]"
 ```
-for example
+or for the test library
 ```scala
-libraryDependencies += "uk.gov.hmrc" %% "domain-play-30" % "12.0.0"
+libraryDependencies += "uk.gov.hmrc" %% "domain-test-play-[PLAY VERSION]" % "[LIB VERSION]" % Test
+```
+### For example
+```scala
+libraryDependencies += "uk.gov.hmrc" %% "domain-play-30" % "13.0.0"
+```
+or for the test library
+```scala
+libraryDependencies += "uk.gov.hmrc" %% "domain-test-play-30" % "13.0.0" % Test
 ```
 
-#### Before version 9.x.x
-Add the following to your SBT build:
-```scala
-libraryDependencies += "uk.gov.hmrc" %% "domain" % "[LIB VERSION]-play-[PLAY VERSION]"
-```
-for example
-```scala
-libraryDependencies += "uk.gov.hmrc" %% "domain" % "8.3.0-play-28"
-```
-
+## for Devs
 ### Running tests
 ```shell
 sbt clean coverage test coverageReport
+```
+
+### Publishing artifacts locally
+```shell
+sbt publishLocal
 ```
 
 ## License ##
