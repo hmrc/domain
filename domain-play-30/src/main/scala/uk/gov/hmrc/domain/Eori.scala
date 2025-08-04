@@ -18,18 +18,17 @@ package uk.gov.hmrc.domain
 
 import play.api.libs.json.{Reads, Writes}
 
-case class Vrn(vrn: String) extends TaxIdentifier with SimpleName {
-  require(Vrn.isValid(vrn), s"$vrn is not a valid vrn.")
-  override def toString: String = vrn
-  val name = "vrn"
-  def value: String = vrn
+case class Eori(eori: String) extends TaxIdentifier with SimpleName {
+  require(Eori.isValid(eori), s"$eori is not a valid eori.")
+
+  override val name: String = "eori"
+  override def value: String = eori
 }
 
-object Vrn extends (String => Vrn) {
-  implicit val vrnWrite: Writes[Vrn] = new SimpleObjectWrites[Vrn](_.value)
-  implicit val vrnRead: Reads[Vrn] = new SimpleObjectReads[Vrn]("vrn", Vrn.apply)
+object Eori extends (String => Eori) {
+  implicit val eoriWrite: Writes[Eori] = new SimpleObjectWrites[Eori](_.value)
+  implicit val eoriRead: Reads[Eori] = new SimpleObjectReads[Eori]("eori", Eori.apply)
 
-  private val validFormat = "^[0-9]{9}$"
-  private val obsoleteMongoFormat = "^[0-9]{5}$"
-  def isValid(id: String): Boolean = id.nonEmpty && (id.matches(validFormat) || id.matches(obsoleteMongoFormat))
+  private val validFormat = "^GB[0-9]{12}$"
+  def isValid(id: String): Boolean = id.nonEmpty && id.matches(validFormat)
 }
