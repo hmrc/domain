@@ -89,17 +89,36 @@ val seed = 123456
 val saUtr = SaUtrGenerator(seed).nextSaUtr.utr
 ```
 
+#### An Example Test
+```scala
+"test example" in {
+  val seed: Int = 734895
+  val ninoGenerator: NinoGenerator = NinoGenerator(seed)
+  val saUtrGenerator: SaUtrGenerator = SaUtrGenerator(seed)
+  val nino: Nino = ninoGenerator.nextNino
+  val saUtr: SaUtr = saUtrGenerator.nextSaUtr
+
+  Nino.isValid(nino.nino)                           shouldBe true
+  SelfAssessmentReferenceChecker.isValid(saUtr.utr) shouldBe true
+}
+```
+
 ### Migrating from v12 to v13
 1. Install the test library. See further info in the [Installing section](#Installing)
 2. `Generator` class has been broken into individual Named Generators
 ```scala
 val generator = new Generator()
 generator.nextNino
+generator.atedUtrBatch(5)
+generator.nextAtedUtr
 ```
 is now
 ```scala
 val ninoGenerator = NinoGenerator()
 ninoGenerator.nextNino
+val atedUtrGenerator = AtedUtrGenerator()
+atedUtrGenerator.atedUtrBatch(5)
+atedUtrGenerator.nextAtedUtr
 ``` 
 
 ## Installing
