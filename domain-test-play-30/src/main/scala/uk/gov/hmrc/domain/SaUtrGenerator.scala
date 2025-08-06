@@ -20,9 +20,9 @@ import scala.util.Random
 
 /** A generator that should be used Only for Testing!
   *
-  * Generates an SaUtr from a random seed.
+  * Rules for the SaUtr: https://design.tax.service.gov.uk/hmrc-design-patterns/unique-taxpayer-reference/
   *
-  * You can use a specific seed to generate an SaUtr so it is going to be more predictable.
+  * Generates an SaUtr from a random seed. You can use a specific seed to generate an SaUtr so it is going to be more predictable.
   *
   * @example
   *   SaUtrGenerator(seed).nextSaUtr.utr

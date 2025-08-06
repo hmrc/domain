@@ -18,6 +18,14 @@ package uk.gov.hmrc.domain
 
 import scala.util.Random
 
+/** A generator that should be used Only for Testing!
+  *
+  * Rules for the EORI: https://design.tax.service.gov.uk/hmrc-design-patterns/eori-numbers/
+  *
+  * Generates an Eori from a random seed. You can use a specific seed to generate an Eori so it is going to be more predictable.
+  * @example
+  *   EoriGenerator(seed).nextEori.eori
+  */
 case class EoriGenerator(private val random: Random = new Random) {
   private val countryCode = "GB"
   private val vrn = VrnGenerator(random).nextVrn

@@ -21,9 +21,9 @@ import scala.util.Random
 
 /** A generator that should be used Only for Testing!
   *
-  * Generates an AtedUtr from a random seed.
+  * Rules for the AtedUtr: https://design.tax.service.gov.uk/hmrc-design-patterns/unique-taxpayer-reference/
   *
-  * You can use a specific seed to generate an AtedUtr so it is going to be more predictable.
+  * Generates an AtedUtr from a random seed. You can use a specific seed to generate an AtedUtr so it is going to be more predictable.
   * @example
   *   AtedUtrGenerator(seed).nextAtedUtr.utr
   */

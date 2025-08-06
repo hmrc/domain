@@ -75,11 +75,11 @@ taxIds.ctUtr // None
 You must install the Test library to access the Test Generators. See further info in the [Installing section](#Installing)
 
 ### List of Generators
-- `AtedUtrGenerator`
-- `EoriGenerator`
-- `NinoGenerator`
-- `SaUtrGenerator`
-- `VrnGenerator`
+- `AtedUtrGenerator` - Rules for the AtedUtr: https://design.tax.service.gov.uk/hmrc-design-patterns/unique-taxpayer-reference/
+- `EoriGenerator` - Rules for the EORI: https://design.tax.service.gov.uk/hmrc-design-patterns/eori-numbers/
+- `NinoGenerator` - Rules for the Nino: https://en.wikipedia.org/wiki/National_Insurance_number#Format
+- `SaUtrGenerator` - Rules for the SaUtr: https://design.tax.service.gov.uk/hmrc-design-patterns/unique-taxpayer-reference/
+- `VrnGenerator` - Rules for the VRN: https://design.tax.service.gov.uk/hmrc-design-patterns/vat-registration-number/
 
 ### How to Use the Test Generators
 ```scala

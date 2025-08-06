@@ -20,9 +20,9 @@ import scala.util.Random
 
 /** A generator that should be used Only for Testing!
   *
-  * Generates a Nino from a random seed.
+  * Rules for the Nino: https://en.wikipedia.org/wiki/National_Insurance_number#Format
   *
-  * You can use a specific seed to generate a Nino so it is going to be more predictable.
+  * Generates a Nino from a random seed. You can use a specific seed to generate a Nino so it is going to be more predictable.
   * @example
   *   NinoGenerator(seed).nextNino.nino
   */

@@ -18,6 +18,15 @@ package uk.gov.hmrc.domain
 
 import scala.util.Random
 
+/** A generator that should be used Only for Testing!
+  *
+  * Rules for the VRN: https://design.tax.service.gov.uk/hmrc-design-patterns/vat-registration-number/
+  *
+  * Generates a VRN from a random seed. You can use a specific seed to generate a VRN so it is going to be more predictable.
+  *
+  * @example
+  *   VrnGenerator(seed).nextVrn.vrn
+  */
 case class VrnGenerator(private val random: Random = new Random) {
 
   def nextVrn: Vrn = {
