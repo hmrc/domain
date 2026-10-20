@@ -164,15 +164,15 @@ class DomainTypeFormatsSpec extends AnyWordSpec with Matchers {
   "EmpRef reader" should {
 
     "be able to read obsolete EmpRef structure from Mongo" in {
-      val dbStructure = JsObject(Seq("taxOfficeNumber" -> JsString("12345"), "taxOfficeReference" -> JsString("ref")))
+      val dbStructure = JsObject(Seq("taxOfficeNumber" -> JsString("123"), "taxOfficeReference" -> JsString("ref")))
       val result = EmpRef.empRefRead.reads(dbStructure)
-      result.get shouldBe EmpRef("12345", "ref")
+      result.get shouldBe EmpRef("123", "ref")
     }
 
     "be able to read string representation of EmpRef" in {
-      val restStructure = JsString("12345/ref")
+      val restStructure = JsString("123/ref")
       val result = EmpRef.empRefRead.reads(restStructure)
-      result.get shouldBe EmpRef("12345", "ref")
+      result.get shouldBe EmpRef("123", "ref")
     }
 
   }
