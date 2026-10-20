@@ -42,10 +42,10 @@ object EmpRef extends ((String, String) => EmpRef) {
   }
 
   def fromIdentifiers(slashSeparatedIdentifiers: String): EmpRef = {
-    val empRefPattern = """([^/]*)/([^/]*)""".r
+    val empRefPattern = """(\d{3})/([a-zA-Z0-9]+)""".r
     URLDecoder.decode(slashSeparatedIdentifiers, "UTF-8") match {
       case empRefPattern(first, second) => EmpRef(first, second)
-      case _                            => throw new IllegalArgumentException("EmpRef requires two identifiers separated by a slash")
+      case _                            => throw new IllegalArgumentException("EmpRef is three numbers, a slash, and then numbers and letters")
     }
   }
 
